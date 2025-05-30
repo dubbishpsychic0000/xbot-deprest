@@ -1,0 +1,55 @@
+name: Twitter Bot Scheduler
+
+on:
+  schedule:
+    # Run every 2 hours
+    - cron: '0 */2 * * *'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Create .env file
+      run: |
+        echo "TWITTER_API_KEY=${{ secrets.TWITTER_API_KEY }}" >> .env
+        echo "TWITTER_API_SECRET=${{ secrets.TWITTER_API_SECRET }}" >> .env
+        echo "TWITTER_ACCESS_TOKEN=${{ secrets.TWITTER_ACCESS_TOKEN }}" >> .env
+        echo "TWITTER_ACCESS_TOKEN_SECRET=${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}" >> .env
+        echo "TWITTER_BEARER_TOKEN=${{ secrets.TWITTER_BEARER_TOKEN }}" >> .env
+        echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+    
+    - name: Run reply bot
+      run: |
+        python main.py reply --target "elonmusk" --limit 3
+      continue-on-error: true
+    
+    - name: Run quote bot
+      run: |
+        python main.py quote --query "#AI" --limit 2
+      continue-on-error: true
+    
+    - name: Run standalone tweet
+      run: |
+        python main.py standalone --topic "AI trends"
+      continue-on-error: true
+    
+    - name: Upload logs
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: bot-logs
+        path: bot.log
