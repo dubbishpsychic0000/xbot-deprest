@@ -2,5 +2,7 @@ twscrape>=0.10.0
 httpx>=0.25.0
 python-dotenv>=1.0.0
 tweepy>=4.14.0
-schedule>=1.2.0 
-google-genai
+schedule>=1.2.0
+google-genai>=0.5.0
+aiofiles>=23.0.0
+pillow>=10.0.0
