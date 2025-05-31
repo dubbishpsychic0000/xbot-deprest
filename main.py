@@ -1,8 +1,11 @@
 import asyncio
 import argparse
 import random
+import schedule
+import time
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional
-from config import logger, validate_config
+from config import logger, validate_config, TARGET_ACCOUNTS
 from twscrape_client import fetch_tweets
 from media_handler import process_tweet_media
 from ai_generator import generate_ai_content
@@ -11,7 +14,9 @@ from poster import post_content
 class TwitterBot:
     def __init__(self):
         self.validate_setup()
-    
+        self.last_processed_tweets = set()  # Track processed tweets to avoid duplicates
+        self.running = False
+        
     def validate_setup(self):
         """Validate configuration and setup"""
         try:
@@ -32,6 +37,10 @@ class TwitterBot:
             return results
         
         for tweet in tweets:
+            # Skip if we've already processed this tweet
+            if tweet['id'] in self.last_processed_tweets:
+                continue
+                
             try:
                 # Generate AI reply
                 reply_text = await generate_ai_content("reply", tweet['text'])
@@ -42,10 +51,11 @@ class TwitterBot:
                 reply_id = post_content("reply", reply_text, reply_to_id=tweet['id'])
                 if reply_id:
                     results.append(reply_id)
-                    logger.info(f"Posted reply to tweet {tweet['id']}")
+                    self.last_processed_tweets.add(tweet['id'])
+                    logger.info(f"Posted reply to tweet {tweet['id']} from @{username}")
                 
                 # Rate limiting
-                await asyncio.sleep(2)
+                await asyncio.sleep(random.randint(3, 7))
                 
             except Exception as e:
                 logger.error(f"Failed to process tweet {tweet['id']}: {e}")
@@ -63,6 +73,10 @@ class TwitterBot:
             return results
         
         for tweet in tweets:
+            # Skip if we've already processed this tweet
+            if tweet['id'] in self.last_processed_tweets:
+                continue
+                
             try:
                 # Generate AI quote tweet
                 quote_text = await generate_ai_content("quote", tweet['text'])
@@ -73,10 +87,11 @@ class TwitterBot:
                 quote_id = post_content("quote", quote_text, quoted_tweet_id=tweet['id'])
                 if quote_id:
                     results.append(quote_id)
+                    self.last_processed_tweets.add(tweet['id'])
                     logger.info(f"Posted quote tweet for {tweet['id']}")
                 
                 # Rate limiting
-                await asyncio.sleep(2)
+                await asyncio.sleep(random.randint(3, 7))
                 
             except Exception as e:
                 logger.error(f"Failed to process tweet {tweet['id']}: {e}")
@@ -133,7 +148,7 @@ class TwitterBot:
             return results
         
         for tweet in tweets:
-            if tweet.get('media'):
+            if tweet.get('media') and tweet['id'] not in self.last_processed_tweets:
                 try:
                     # Download media
                     media_paths = await process_tweet_media(tweet)
@@ -146,19 +161,115 @@ class TwitterBot:
                         reply_id = post_content("reply", reply_text, reply_to_id=tweet['id'])
                         if reply_id:
                             results.append(reply_id)
+                            self.last_processed_tweets.add(tweet['id'])
                             logger.info(f"Posted media reply to {tweet['id']}")
                     
-                    await asyncio.sleep(2)
+                    await asyncio.sleep(random.randint(3, 7))
                     
                 except Exception as e:
                     logger.error(f"Failed to process media tweet {tweet['id']}: {e}")
         
         return results
+    
+    async def run_hourly_cycle(self):
+        """Run the main hourly cycle for replies and quotes"""
+        logger.info("Starting hourly bot cycle...")
+        
+        # AI/ML related search queries for quote tweets
+        search_queries = [
+            "artificial intelligence",
+            "machine learning", 
+            "deep learning",
+            "neural networks",
+            "AI breakthrough",
+            "ChatGPT OR GPT-4",
+            "OpenAI",
+            "transformer models",
+            "AI ethics",
+            "AGI artificial general intelligence"
+        ]
+        
+        try:
+            # 1. Reply to target accounts
+            reply_results = []
+            if TARGET_ACCOUNTS:
+                for username in TARGET_ACCOUNTS[:3]:  # Limit to 3 accounts per cycle
+                    username = username.strip()
+                    if username:
+                        logger.info(f"Processing replies for @{username}")
+                        results = await self.run_reply_bot(username, limit=3)
+                        reply_results.extend(results)
+                        
+                        # Small delay between accounts
+                        await asyncio.sleep(random.randint(5, 10))
+            
+            # 2. Generate quote tweets from search
+            quote_results = []
+            selected_queries = random.sample(search_queries, min(2, len(search_queries)))
+            
+            for query in selected_queries:
+                logger.info(f"Searching and quoting tweets for: {query}")
+                results = await self.run_quote_bot(query, limit=2)
+                quote_results.extend(results)
+                
+                # Delay between search queries
+                await asyncio.sleep(random.randint(10, 15))
+            
+            # 3. Occasionally post a standalone tweet (20% chance)
+            standalone_result = None
+            if random.random() < 0.2:
+                logger.info("Posting standalone tweet")
+                standalone_result = await self.run_standalone_bot("AI and machine learning")
+            
+            # Clean up old processed tweets (keep only last 1000)
+            if len(self.last_processed_tweets) > 1000:
+                # Remove oldest 200 entries
+                old_tweets = list(self.last_processed_tweets)[:200]
+                for tweet_id in old_tweets:
+                    self.last_processed_tweets.discard(tweet_id)
+            
+            logger.info(f"Hourly cycle completed - Replies: {len(reply_results)}, Quotes: {len(quote_results)}, Standalone: {1 if standalone_result else 0}")
+            
+        except Exception as e:
+            logger.error(f"Error in hourly cycle: {e}")
+    
+    async def start_continuous_mode(self):
+        """Start the bot in continuous mode with hourly cycles"""
+        logger.info("Starting Twitter bot in continuous mode...")
+        self.running = True
+        
+        # Run first cycle immediately
+        await self.run_hourly_cycle()
+        
+        # Then run every hour
+        while self.running:
+            try:
+                # Wait for next hour
+                await asyncio.sleep(3600)  # 1 hour = 3600 seconds
+                
+                if self.running:
+                    await self.run_hourly_cycle()
+                    
+            except KeyboardInterrupt:
+                logger.info("Received interrupt signal, stopping bot...")
+                self.running = False
+                break
+            except Exception as e:
+                logger.error(f"Error in continuous mode: {e}")
+                # Continue running even if there's an error
+                await asyncio.sleep(300)  # Wait 5 minutes before retrying
+    
+    def stop(self):
+        """Stop the continuous mode"""
+        self.running = False
+        logger.info("Bot stopping...")
 
 async def main():
     """Main CLI interface"""
     parser = argparse.ArgumentParser(description="AI-Powered Twitter Bot")
-    parser.add_argument("mode", choices=["reply", "quote", "thread", "standalone", "media"], help="Bot operation mode")
+    parser.add_argument("mode", 
+                       choices=["reply", "quote", "thread", "standalone", "media", "continuous"], 
+                       help="Bot operation mode")
     parser.add_argument("--target", help="Target username for reply/media mode")
     parser.add_argument("--query", help="Search query for quote mode")
     parser.add_argument("--topic", help="Topic for thread/standalone mode")
@@ -170,7 +281,12 @@ async def main():
     bot = TwitterBot()
     
     try:
-        if args.mode == "reply":
+        if args.mode == "continuous":
+            # Run in continuous mode with hourly cycles
+            logger.info("Starting continuous mode - bot will run hourly cycles")
+            await bot.start_continuous_mode()
+        
+        elif args.mode == "reply":
             if not args.target:
                 logger.error("--target required for reply mode")
                 return
@@ -209,6 +325,7 @@ async def main():
     
     except KeyboardInterrupt:
         logger.info("Bot stopped by user")
+        bot.stop()
     except Exception as e:
         logger.error(f"Bot execution failed: {e}")
 
