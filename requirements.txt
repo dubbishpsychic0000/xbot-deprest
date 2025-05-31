@@ -1,27 +1,25 @@
-# Google GenAI SDK (new unified SDK)
-google-genai>=0.3.0
+# Google GenAI SDK (correct version)
+google-genai>=0.5.0
 
-# Twitter scraping
-twscrape>=0.17.0
+# Twitter API
+tweepy>=4.14.0
 
-# Async support
-asyncio
-aiohttp>=3.8.0
+# Web scraping
+selenium>=4.15.0
+webdriver-manager>=4.0.0
+
+# Async HTTP
+aiohttp>=3.9.0
+httpx>=0.25.0
 
 # Utilities
 python-dotenv>=1.0.0
-loguru>=0.7.0
+python-dateutil>=2.8.0
 
-# Optional for enhanced features
-playwright>=1.40.0  # For advanced scraping if needed
-requests>=2.31.0
-beautifulsoup4>=4.12.0
-tweepy
-panda
-selenium
-selenium
-webdriver-manager
-# For Excel output (legacy support)
+# Data processing
+pandas>=2.0.0
 openpyxl>=3.1.0
-pandas
-python-dateutil
+
+# Optional
+beautifulsoup4>=4.12.0
+requests>=2.31.0
