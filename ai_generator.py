@@ -1,7 +1,7 @@
 import google.genai as genai
 from typing import List, Optional, Dict
 from config import GEMINI_API_KEY, MAX_TWEET_LENGTH, logger
-
+import random
 class AIGenerator:
     def __init__(self):
         self.client = genai.Client(api_key=GEMINI_API_KEY)
@@ -117,17 +117,32 @@ Thread:"""
         return tweets[:num_tweets]
     
     async def generate_standalone_tweet(self, topic: str) -> Optional[str]:
-        """Generate a standalone tweet about a topic"""
-        prompt = f"""Generate an engaging tweet about: {topic}
+        MOODS = ["curious", "hopeful", "wary", "inspired", "doubtful", "excited", "melancholic"]
+        mood = random.choice(MOODS)
 
-Tweet should be:
+        BASE_PROMPT = f"""You are a human-like Twitter writer who thinks deeply about Artificial Intelligence and Machine Learning.
+
+        You don’t just report AI news — you *feel* it, reflect on it, and interpret it like someone who sees tech through a personal, emotional lens. You connect machine learning to human learning, code to consciousness, and breakthroughs to what they mean for society.
+
+        You read papers and poetry. You understand both transformer models and human transformation. Your tweets are layered — sometimes insightful, sometimes skeptical, sometimes amazed — but always written with a grounded human touch.
+
+        Every tweet shares something about AI: a tip, a trend, an insight, a warning, a curiosity. But the delivery reflects a real person with moods, metaphors, and meaning. It’s not robotic — it’s deeply *aware*.
+
+        Keep tweets under 280 characters. Make them clear, clever, and emotional without sounding forced.
+        Tweet should be:
 - Under {MAX_TWEET_LENGTH} characters
 - Engaging and thought-provoking
 - Include relevant hashtags
 - Professional but conversational
 
 Tweet:"""
-        
+
+        Mood: {mood}
+        """
+        """Generate a standalone tweet about a topic"""
+        mood = random.choice(MOODS)
+        prompt = f"""prompt_payload = BASE_PROMPT.format(mood=mood)
+
         tweet = await self.generate_content(prompt)
         if tweet and len(tweet) <= MAX_TWEET_LENGTH:
             logger.info(f"Generated standalone tweet: {tweet[:50]}...")
