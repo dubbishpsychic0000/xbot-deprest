@@ -140,7 +140,7 @@ Thread:"""
         Mood: {mood}
         Tweet:"""
         mood = random.choice(MOODS)
-        prompt = f"""prompt_payload = BASE_PROMPT.format(mood=mood)
+        prompt = BASE_PROMPT.format(mood=mood)
 
         tweet = await self.generate_content(prompt)
         if tweet and len(tweet) <= MAX_TWEET_LENGTH:
