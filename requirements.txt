@@ -1,8 +1,18 @@
-twscrape>=0.10.0
-httpx>=0.25.0
+# Google GenAI SDK (new unified SDK)
+google-genai>=0.3.0
+
+# Twitter scraping
+twscrape>=1.7.0
+
+# Async support
+asyncio
+aiohttp>=3.8.0
+
+# Utilities
 python-dotenv>=1.0.0
-tweepy>=4.14.0
-schedule>=1.2.0
-google-genai>=0.5.0
-aiofiles>=23.0.0
-pillow>=10.0.0
+loguru>=0.7.0
+
+# Optional for enhanced features
+playwright>=1.40.0  # For advanced scraping if needed
+requests>=2.31.0
+beautifulsoup4>=4.12.0
