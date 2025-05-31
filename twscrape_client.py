@@ -17,8 +17,11 @@ import hashlib
 from datetime import datetime
 
 # Twitter login credentials
-username_str = "your_tw_username"
-password_str = "your_pw"
+from dotenv import load_dotenv
+load_dotenv()
+
+username_str = os.getenv("TWITTER_USERNAME")
+password_str = os.getenv("TWITTER_PASSWORD")
 
 # Set up Chrome options
 options = Options()
