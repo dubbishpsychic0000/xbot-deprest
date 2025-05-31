@@ -19,3 +19,7 @@ beautifulsoup4>=4.12.0
 tweepy
 panda
 selenium
+selenium
+webdriver-manager
+pandas
+python-dateutil
