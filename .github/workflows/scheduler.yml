@@ -1,26 +1,33 @@
-name: Twitter Bot Random Scheduler
+name: Twitter Bot Continuous Runner
 
 on:
   schedule:
-    - cron: '15 */4 * * *'  # Every 4 hours
-    - cron: '45 2,8,14,20 * * *'  # 4 times daily with offset
-  
+    # Run every hour to ensure the bot stays active
+    - cron: '0 * * * *'  # Every hour at minute 0
+    
   workflow_dispatch:
     inputs:
       bot_mode:
         description: 'Bot operation mode'
         required: true
-        default: 'standalone'
+        default: 'continuous'
         type: choice
         options:
+          - continuous
           - standalone
           - reply
           - quote
           - thread
+      duration_hours:
+        description: 'How many hours to run (for continuous mode)'
+        required: false
+        default: '23'
+        type: string
 
 jobs:
   twitter-bot:
     runs-on: ubuntu-latest
+    timeout-minutes: 1440  # 24 hours max
     
     steps:
     - name: Checkout repository
@@ -41,6 +48,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install schedule  # Add schedule dependency
+    
+    - name: Setup Chrome for Selenium
+      run: |
+        # Download and setup ChromeDriver
+        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+        echo "Chrome version: $CHROME_VERSION"
     
     - name: Create environment file
       run: |
@@ -61,15 +75,19 @@ jobs:
     - name: Validate configuration
       run: python -c "from config import validate_config; validate_config()"
     
-    - name: Run bot
+    - name: Run bot in background with timeout
       run: |
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          python main.py ${{ inputs.bot_mode }} --topic "AI and machine learning"
+          if [ "${{ inputs.bot_mode }}" == "continuous" ]; then
+            # Run continuous mode with timeout
+            timeout ${{ inputs.duration_hours }}h python main.py continuous || echo "Bot completed scheduled run"
+          else
+            # Run single mode
+            python main.py ${{ inputs.bot_mode }} --topic "AI and machine learning"
+          fi
         else
-          # Random mode for scheduled runs
-          modes=("standalone" "reply" "quote" "thread")
-          mode=${modes[$RANDOM % ${#modes[@]}]}
-          python main.py $mode --topic "AI and machine learning" --limit 3
+          # Scheduled run - run for 23 hours to avoid overlap
+          timeout 23h python main.py continuous || echo "Bot completed scheduled run"
         fi
     
     - name: Upload logs
@@ -78,4 +96,11 @@ jobs:
       with:
         name: bot-logs-${{ github.run_number }}
         path: bot.log
-        retention-days: 7
+        retention-days: 3
+    
+    - name: Cleanup
+      if: always()
+      run: |
+        # Clean up any Chrome processes
+        pkill -f chrome || true
+        pkill -f chromedriver || true
