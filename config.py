@@ -14,16 +14,21 @@ TWITTER_ACCESS_TOKEN = os.getenv('TWITTER_ACCESS_TOKEN')
 TWITTER_ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
 TWITTER_BEARER_TOKEN = os.getenv('TWITTER_BEARER_TOKEN')
 
+# Twitter scraping credentials
+TWITTER_USERNAME = os.getenv('TWITTER_USERNAME')
+TWITTER_PASSWORD = os.getenv('TWITTER_PASSWORD')
+TWITTER_EMAIL = os.getenv('TWITTER_EMAIL')
+
 # Bot Configuration
 BOT_USERNAME = os.getenv('BOT_USERNAME', 'default_bot')
 TARGET_ACCOUNTS = os.getenv('TARGET_ACCOUNTS', '').split(',') if os.getenv('TARGET_ACCOUNTS') else []
 
-# Twitter Configuration
+# Constants
 MAX_TWEET_LENGTH = 280
-RATE_LIMIT_DELAY = 2  # seconds between requests
-THREAD_DELAY = 3  # seconds between thread tweets
+RATE_LIMIT_DELAY = 2
+THREAD_DELAY = 3
 
-# Logging configuration
+# Logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -34,29 +39,24 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Validate configuration
 def validate_config():
     missing_vars = []
     
-    if not GEMINI_API_KEY:
-        missing_vars.append("GEMINI_API_KEY")
+    required_vars = {
+        'GEMINI_API_KEY': GEMINI_API_KEY,
+        'TWITTER_API_KEY': TWITTER_API_KEY,
+        'TWITTER_API_SECRET': TWITTER_API_SECRET,
+        'TWITTER_ACCESS_TOKEN': TWITTER_ACCESS_TOKEN,
+        'TWITTER_ACCESS_TOKEN_SECRET': TWITTER_ACCESS_TOKEN_SECRET,
+        'TWITTER_USERNAME': TWITTER_USERNAME,
+        'TWITTER_PASSWORD': TWITTER_PASSWORD
+    }
     
-    if not TWITTER_API_KEY:
-        missing_vars.append("TWITTER_API_KEY")
-    
-    if not TWITTER_API_SECRET:
-        missing_vars.append("TWITTER_API_SECRET")
-    
-    if not TWITTER_ACCESS_TOKEN:
-        missing_vars.append("TWITTER_ACCESS_TOKEN")
-    
-    if not TWITTER_ACCESS_TOKEN_SECRET:
-        missing_vars.append("TWITTER_ACCESS_TOKEN_SECRET")
+    for var_name, var_value in required_vars.items():
+        if not var_value:
+            missing_vars.append(var_name)
     
     if missing_vars:
         raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
     
     logger.info("Configuration validated successfully")
-
-if __name__ == "__main__":
-    validate_config()
