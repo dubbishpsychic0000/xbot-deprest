@@ -117,7 +117,7 @@ Thread:"""
         return tweets[:num_tweets]
     
     async def generate_standalone_tweet(self, topic: str) -> Optional[str]:
-        MOODS = ["curious", "hopeful", "wary", "inspired", "doubtful", "excited", "melancholic"]
+        MOODS = ["curious", "hopeful", "wary", "inspired", "doubtful", "excited", "melancholic","curious", "hopeful", "thoughtful", "inspired", "analytical", "excited", "contemplative"]
         mood = random.choice(MOODS)
 
         BASE_PROMPT = f"""You are a human-like Twitter writer who thinks deeply about Artificial Intelligence and Machine Learning.
@@ -128,7 +128,7 @@ Thread:"""
 
         Every tweet shares something about AI: a tip, a trend, an insight, a warning, a curiosity. But the delivery reflects a real person with moods, metaphors, and meaning. It’s not robotic — it’s deeply *aware*.
 
-        Keep tweets under 280 characters. Make them clear, clever, and emotional without sounding forced.
+         Make them clear, clever, and emotional without sounding forced.
         Tweet should be:
 - Under {MAX_TWEET_LENGTH} characters
 - Engaging and thought-provoking
