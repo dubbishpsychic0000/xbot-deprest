@@ -2,18 +2,24 @@
 """
 Quick setup script to add Twitter accounts for scraping
 Run this BEFORE using the bot
+Uses .env file for credentials
 """
 
 import asyncio
+import os
 from twscrape import API
 import logging
+from dotenv import load_dotenv
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def setup_accounts():
-    """Add Twitter accounts for scraping"""
+    """Add Twitter accounts for scraping using .env credentials"""
+    # Load environment variables from .env file
+    load_dotenv()
+    
     api = API()
     
     print("=" * 60)
@@ -23,16 +29,28 @@ async def setup_accounts():
     print("1. Use a SEPARATE Twitter account, not your main one!")
     print("2. This account may get rate-limited or suspended!")
     print("3. Don't use accounts with valuable data!")
+    print("4. Keep your .env file secure and never commit it to git!")
     print("=" * 60)
     
-    # Get account credentials
-    username = input("Enter Twitter username: ").strip()
-    password = input("Enter Twitter password: ").strip()
-    email = input("Enter email address: ").strip()
-    email_password = input("Enter email password (press Enter if same as Twitter): ").strip()
+    # Get account credentials from environment variables
+    username = os.getenv('TWITTER_USERNAME')
+    password = os.getenv('TWITTER_PASSWORD')
+    email = os.getenv('TWITTER_EMAIL')
+    email_password = os.getenv('TWITTER_EMAIL_PASSWORD', password)  # Default to Twitter password if not set
     
-    if not email_password:
-        email_password = password
+    # Validate that required credentials are present
+    if not all([username, password, email]):
+        print("❌ Missing required credentials in .env file!")
+        print("\nRequired environment variables:")
+        print("- TWITTER_USERNAME")
+        print("- TWITTER_PASSWORD") 
+        print("- TWITTER_EMAIL")
+        print("- EMAIL_PASSWORD (optional, defaults to TWITTER_PASSWORD)")
+        print("\nPlease check your .env file and try again.")
+        return
+    
+    print(f"Setting up account for: {username}")
+    print(f"Email: {email}")
     
     try:
         print("\nAdding account...")
@@ -62,10 +80,11 @@ async def setup_accounts():
     except Exception as e:
         print(f"\n❌ Setup failed: {e}")
         print("\nTroubleshooting:")
-        print("1. Check your credentials are correct")
+        print("1. Check your .env file credentials are correct")
         print("2. Make sure the account isn't already logged in elsewhere")
         print("3. Try with a different account")
         print("4. Check if the account has 2FA enabled (not supported)")
+        print("5. Ensure your .env file is in the same directory as this script")
 
 if __name__ == "__main__":
     asyncio.run(setup_accounts())
