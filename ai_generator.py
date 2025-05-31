@@ -135,11 +135,10 @@ Thread:"""
 - Include relevant hashtags
 - Professional but conversational
 
-Tweet:"""
+
 
         Mood: {mood}
-        """
-        """Generate a standalone tweet about a topic"""
+        Tweet:"""
         mood = random.choice(MOODS)
         prompt = f"""prompt_payload = BASE_PROMPT.format(mood=mood)
 
