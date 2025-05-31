@@ -2,7 +2,7 @@
 google-genai>=0.3.0
 
 # Twitter scraping
-twscrape>=1.7.0
+twscrape>=0.17.0
 
 # Async support
 asyncio
