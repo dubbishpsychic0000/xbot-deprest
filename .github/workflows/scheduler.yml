@@ -1,13 +1,68 @@
-name: Twitter Bot Scheduler
+name: Twitter Bot Random Scheduler
 
 on:
   schedule:
-    # Run every 2 hours
-    - cron: '0 */2 * * *'
+    # Run every 30 minutes as base frequency
+    - cron: '*/30 * * * *'
   workflow_dispatch: # Manual trigger
+    inputs:
+      mode:
+        description: 'Bot mode to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - reply
+        - quote
+        - standalone
+        - media
+      target:
+        description: 'Target username (for reply/media mode)'
+        required: false
+        default: 'elonmusk'
+      query:
+        description: 'Search query (for quote mode)'
+        required: false
+        default: '#AI'
+      topic:
+        description: 'Topic (for standalone mode)'
+        required: false
+        default: 'AI trends'
 
 jobs:
+  random-scheduler:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.decide.outputs.should_run }}
+      bot_mode: ${{ steps.decide.outputs.bot_mode }}
+    
+    steps:
+    - name: Random decision logic
+      id: decide
+      run: |
+        # Generate random number 0-100
+        RANDOM_NUM=$((RANDOM % 100))
+        echo "Random number: $RANDOM_NUM"
+        
+        # 40% chance to run the bot (adjust as needed)
+        if [ $RANDOM_NUM -lt 40 ]; then
+          echo "should_run=true" >> $GITHUB_OUTPUT
+          
+          # Randomly select bot mode
+          MODES=("reply" "quote" "standalone" "media")
+          MODE_INDEX=$((RANDOM % 4))
+          SELECTED_MODE=${MODES[$MODE_INDEX]}
+          echo "bot_mode=$SELECTED_MODE" >> $GITHUB_OUTPUT
+          echo "Selected mode: $SELECTED_MODE"
+        else
+          echo "should_run=false" >> $GITHUB_OUTPUT
+          echo "Skipping this run"
+        fi
+
   run-bot:
+    needs: random-scheduler
+    if: needs.random-scheduler.outputs.should_run == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     
     steps:
@@ -31,6 +86,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        
+        # Install additional dependencies that might be missing
+        pip install httpx playwright-stealth
     
     - name: Create .env file
       run: |
@@ -40,28 +98,176 @@ jobs:
         echo "TWITTER_ACCESS_TOKEN_SECRET=${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}" >> .env
         echo "TWITTER_BEARER_TOKEN=${{ secrets.TWITTER_BEARER_TOKEN }}" >> .env
         echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+        
+        # Add optional credentials if available
+        if [ -n "${{ secrets.TWITTER_USERNAME }}" ]; then
+          echo "TWITTER_USERNAME=${{ secrets.TWITTER_USERNAME }}" >> .env
+        fi
+        if [ -n "${{ secrets.TWITTER_PASSWORD }}" ]; then
+          echo "TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}" >> .env
+        fi
+        if [ -n "${{ secrets.TWITTER_EMAIL }}" ]; then
+          echo "TWITTER_EMAIL=${{ secrets.TWITTER_EMAIL }}" >> .env
+        fi
+        if [ -n "${{ secrets.TWITTER_EMAIL_PASSWORD }}" ]; then
+          echo "TWITTER_EMAIL_PASSWORD=${{ secrets.TWITTER_EMAIL_PASSWORD }}" >> .env
+        fi
     
-    - name: Run reply bot
+    - name: Setup Twitter accounts for scraping
       run: |
-        python main.py reply --target "elonmusk" --limit 3
+        # Try to setup accounts if credentials are available
+        if [ -n "${{ secrets.TWITTER_USERNAME }}" ] && [ -n "${{ secrets.TWITTER_PASSWORD }}" ]; then
+          echo "Setting up Twitter scraping accounts..."
+          timeout 60 python setup_accounts.py || echo "Account setup skipped/failed"
+        else
+          echo "No scraping credentials provided, skipping account setup"
+        fi
       continue-on-error: true
     
-    - name: Run quote bot
+    - name: Determine targets and topics
+      id: targets
       run: |
-        python main.py quote --query "#AI" --limit 2
+        # Define arrays of targets and topics for variety
+        REPLY_TARGETS=("elonmusk" "OpenAI" "DeepMind" "AnthropicAI" "sama" "jeffdean" "fchollet")
+        QUOTE_QUERIES=("#AI" "#MachineLearning" "#DeepLearning" "#AGI" "#NeuralNetworks" "#ChatGPT" "#LLM")
+        STANDALONE_TOPICS=("AI trends" "machine learning breakthroughs" "AI ethics" "future of AI" "AI in healthcare" "AI safety" "neural networks")
+        
+        # Select random items
+        REPLY_TARGET=${REPLY_TARGETS[$RANDOM % ${#REPLY_TARGETS[@]}]}
+        QUOTE_QUERY=${QUOTE_QUERIES[$RANDOM % ${#QUOTE_QUERIES[@]}]}
+        STANDALONE_TOPIC=${STANDALONE_TOPICS[$RANDOM % ${#STANDALONE_TOPICS[@]}]}
+        
+        echo "reply_target=$REPLY_TARGET" >> $GITHUB_OUTPUT
+        echo "quote_query=$QUOTE_QUERY" >> $GITHUB_OUTPUT
+        echo "standalone_topic=$STANDALONE_TOPIC" >> $GITHUB_OUTPUT
+        
+        echo "Selected targets:"
+        echo "  Reply: $REPLY_TARGET"
+        echo "  Quote: $QUOTE_QUERY"
+        echo "  Standalone: $STANDALONE_TOPIC"
+    
+    - name: Run bot (Auto mode)
+      if: github.event_name == 'schedule'
+      run: |
+        MODE="${{ needs.random-scheduler.outputs.bot_mode }}"
+        echo "Running bot in $MODE mode"
+        
+        # Add random delay (0-300 seconds = 0-5 minutes)
+        DELAY=$((RANDOM % 300))
+        echo "Adding random delay of $DELAY seconds..."
+        sleep $DELAY
+        
+        case $MODE in
+          "reply")
+            python main.py reply --target "${{ steps.targets.outputs.reply_target }}" --limit $((RANDOM % 3 + 2))
+            ;;
+          "quote")
+            python main.py quote --query "${{ steps.targets.outputs.quote_query }}" --limit $((RANDOM % 2 + 1))
+            ;;
+          "standalone")
+            python main.py standalone --topic "${{ steps.targets.outputs.standalone_topic }}"
+            ;;
+          "media")
+            python main.py media --target "${{ steps.targets.outputs.reply_target }}" --limit $((RANDOM % 2 + 1))
+            ;;
+        esac
       continue-on-error: true
     
-    - name: Run standalone tweet
+    - name: Run bot (Manual mode)
+      if: github.event_name == 'workflow_dispatch'
       run: |
-        python main.py standalone --topic "AI trends"
+        MODE="${{ github.event.inputs.mode }}"
+        
+        if [ "$MODE" = "all" ]; then
+          echo "Running all bot modes..."
+          
+          # Reply bot
+          python main.py reply --target "${{ github.event.inputs.target || steps.targets.outputs.reply_target }}" --limit 2
+          sleep 30
+          
+          # Quote bot  
+          python main.py quote --query "${{ github.event.inputs.query || steps.targets.outputs.quote_query }}" --limit 1
+          sleep 30
+          
+          # Standalone tweet
+          python main.py standalone --topic "${{ github.event.inputs.topic || steps.targets.outputs.standalone_topic }}"
+          
+        else
+          echo "Running bot in $MODE mode"
+          case $MODE in
+            "reply")
+              python main.py reply --target "${{ github.event.inputs.target || steps.targets.outputs.reply_target }}" --limit 3
+              ;;
+            "quote")
+              python main.py quote --query "${{ github.event.inputs.query || steps.targets.outputs.quote_query }}" --limit 2
+              ;;
+            "standalone")
+              python main.py standalone --topic "${{ github.event.inputs.topic || steps.targets.outputs.standalone_topic }}"
+              ;;
+            "media")
+              python main.py media --target "${{ github.event.inputs.target || steps.targets.outputs.reply_target }}" --limit 2
+              ;;
+          esac
+        fi
       continue-on-error: true
     
-    - name: Upload logs
+    - name: Health check and logging
+      if: always()
+      run: |
+        echo "=== Bot Execution Summary ==="
+        echo "Timestamp: $(date)"
+        echo "Mode: ${{ needs.random-scheduler.outputs.bot_mode || github.event.inputs.mode }}"
+        echo "Exit code: $?"
+        
+        # Check if log file exists and show last few lines
+        if [ -f "bot.log" ]; then
+          echo "=== Recent Log Entries ==="
+          tail -20 bot.log
+        else
+          echo "No log file found"
+        fi
+        
+        # Show disk usage
+        echo "=== Disk Usage ==="
+        df -h
+        
+        # Clean up old media files if they exist
+        if [ -d "media" ]; then
+          echo "=== Cleaning Media Directory ==="
+          find media -type f -mtime +7 -delete 2>/dev/null || true
+          ls -la media/ 2>/dev/null || echo "No media directory"
+        fi
+    
+    - name: Upload logs and artifacts
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: bot-logs-${{ github.run_number }}
+        name: bot-logs-${{ github.run_number }}-${{ github.run_attempt }}
         path: |
           bot.log
           *.log
-        retention-days: 30
+          media/
+        retention-days: 7
+        if-no-files-found: ignore
+    
+    - name: Notify on failure
+      if: failure()
+      run: |
+        echo "🚨 Bot execution failed!"
+        echo "Check the logs above for error details."
+        echo "Common issues:"
+        echo "1. API credentials expired or invalid"
+        echo "2. Rate limiting from Twitter/Gemini APIs"
+        echo "3. Network connectivity issues"
+        echo "4. Account suspension or restrictions"
+
+  cleanup:
+    needs: [random-scheduler, run-bot]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Cleanup old artifacts
+      run: |
+        echo "Cleanup job completed at $(date)"
+        echo "This job can be used for maintenance tasks if needed"
