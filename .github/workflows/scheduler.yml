@@ -2,9 +2,8 @@ name: Twitter Bot Random Scheduler
 
 on:
   schedule:
-    # Run every 2-4 hours with some randomization
-    - cron: '15 */3 * * *'  # Every 3 hours at minute 15
-    - cron: '45 1,5,9,13,17,21 * * *'  # Every 4 hours with offset
+    - cron: '15 */4 * * *'  # Every 4 hours
+    - cron: '45 2,8,14,20 * * *'  # 4 times daily with offset
   
   workflow_dispatch:
     inputs:
@@ -18,56 +17,25 @@ on:
           - reply
           - quote
           - thread
-          - media
-      target_user:
-        description: 'Target username (for reply/media modes)'
-        required: false
-        type: string
-      search_query:
-        description: 'Search query (for quote mode)'
-        required: false
-        type: string
-      topic:
-        description: 'Topic (for thread/standalone modes)'
-        required: false
-        type: string
-      tweet_limit:
-        description: 'Number of tweets to process'
-        required: false
-        default: '3'
-        type: string
-
-env:
-  PYTHONUNBUFFERED: 1
-  PYTHONIOENCODING: utf-8
 
 jobs:
   twitter-bot:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        python-version: [3.11]
-    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.11'
         cache: 'pip'
     
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb
-        # Install Chrome
-        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/chrome.list
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
+        sudo apt-get install -y wget unzip xvfb google-chrome-stable
     
     - name: Install Python dependencies
       run: |
@@ -77,178 +45,37 @@ jobs:
     - name: Create environment file
       run: |
         cat > .env << EOF
-        # Twitter API credentials
         TWITTER_API_KEY=${{ secrets.TWITTER_API_KEY }}
         TWITTER_API_SECRET=${{ secrets.TWITTER_API_SECRET }}
         TWITTER_ACCESS_TOKEN=${{ secrets.TWITTER_ACCESS_TOKEN }}
         TWITTER_ACCESS_TOKEN_SECRET=${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
         TWITTER_BEARER_TOKEN=${{ secrets.TWITTER_BEARER_TOKEN }}
-        
-        # Gemini AI API
         GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-        
-        # Twitter login credentials (for scraping)
         TWITTER_USERNAME=${{ secrets.TWITTER_USERNAME }}
         TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}
         TWITTER_EMAIL=${{ secrets.TWITTER_EMAIL }}
-        TWITTER_EMAIL_PASSWORD=${{ secrets.TWITTER_EMAIL_PASSWORD }}
-        
-        # Bot Configuration
         BOT_USERNAME=${{ secrets.BOT_USERNAME }}
         TARGET_ACCOUNTS=${{ secrets.TARGET_ACCOUNTS }}
         EOF
     
     - name: Validate configuration
-      run: |
-        python -c "from config import validate_config; validate_config()"
+      run: python -c "from config import validate_config; validate_config()"
     
-    - name: Determine bot operation
-      id: bot-config
+    - name: Run bot
       run: |
-        # If manual trigger, use provided inputs
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          echo "mode=${{ inputs.bot_mode }}" >> $GITHUB_OUTPUT
-          echo "target=${{ inputs.target_user }}" >> $GITHUB_OUTPUT
-          echo "query=${{ inputs.search_query }}" >> $GITHUB_OUTPUT
-          echo "topic=${{ inputs.topic }}" >> $GITHUB_OUTPUT
-          echo "limit=${{ inputs.tweet_limit }}" >> $GITHUB_OUTPUT
+          python main.py ${{ inputs.bot_mode }} --topic "AI and machine learning"
         else
-          # Random mode selection for scheduled runs
+          # Random mode for scheduled runs
           modes=("standalone" "reply" "quote" "thread")
-          topics=("AI and machine learning" "Programming tips" "Tech trends" "Digital innovation" "Automation" "Data science" "Cloud computing" "Cybersecurity")
-          users=("elonmusk" "OpenAI" "GoogleAI" "Microsoft" "github")
-          queries=("artificial intelligence" "machine learning" "programming" "tech news" "automation")
-          
-          # Random selection
-          random_mode=${modes[$RANDOM % ${#modes[@]}]}
-          random_topic=${topics[$RANDOM % ${#topics[@]}]}
-          random_user=${users[$RANDOM % ${#users[@]}]}
-          random_query=${queries[$RANDOM % ${#queries[@]}]}
-          random_limit=$((RANDOM % 3 + 2))  # 2-4 tweets
-          
-          echo "mode=$random_mode" >> $GITHUB_OUTPUT
-          echo "topic=$random_topic" >> $GITHUB_OUTPUT
-          echo "target=$random_user" >> $GITHUB_OUTPUT
-          echo "query=$random_query" >> $GITHUB_OUTPUT
-          echo "limit=$random_limit" >> $GITHUB_OUTPUT
-          
-          echo "Selected random mode: $random_mode"
-          echo "Topic: $random_topic"
-          echo "Target: $random_user"
-          echo "Query: $random_query"
-          echo "Limit: $random_limit"
+          mode=${modes[$RANDOM % ${#modes[@]}]}
+          python main.py $mode --topic "AI and machine learning" --limit 3
         fi
-    
-    - name: Create media directory
-      run: mkdir -p media
-    
-    - name: Run Twitter Bot - Standalone Tweet
-      if: steps.bot-config.outputs.mode == 'standalone'
-      run: |
-        python main.py standalone --topic "${{ steps.bot-config.outputs.topic }}"
-    
-    - name: Run Twitter Bot - Reply Mode
-      if: steps.bot-config.outputs.mode == 'reply'
-      run: |
-        python main.py reply --target "${{ steps.bot-config.outputs.target }}" --limit "${{ steps.bot-config.outputs.limit }}"
-    
-    - name: Run Twitter Bot - Quote Mode  
-      if: steps.bot-config.outputs.mode == 'quote'
-      run: |
-        python main.py quote --query "${{ steps.bot-config.outputs.query }}" --limit "${{ steps.bot-config.outputs.limit }}"
-    
-    - name: Run Twitter Bot - Thread Mode
-      if: steps.bot-config.outputs.mode == 'thread'
-      run: |
-        python main.py thread --topic "${{ steps.bot-config.outputs.topic }}" --tweets "${{ steps.bot-config.outputs.limit }}"
-    
-    - name: Run Twitter Bot - Media Mode
-      if: steps.bot-config.outputs.mode == 'media'
-      run: |
-        python main.py media --target "${{ steps.bot-config.outputs.target }}"
     
     - name: Upload logs
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: bot-logs-${{ github.run_number }}
-        path: |
-          bot.log
-          *.json
-          *.csv
+        path: bot.log
         retention-days: 7
-    
-    - name: Clean up temporary files
-      if: always()
-      run: |
-        rm -rf media/*.jpg media/*.png media/*.gif media/*.mp4
-        rm -f scroll_state.pkl
-        rm -f tweets_data.*
-    
-    - name: Rate limiting delay
-      run: |
-        # Add random delay to avoid hitting rate limits
-        sleep_time=$((RANDOM % 120 + 60))  # 60-180 seconds
-        echo "Sleeping for $sleep_time seconds to respect rate limits"
-        sleep $sleep_time
-
-  health-check:
-    runs-on: ubuntu-latest
-    needs: twitter-bot
-    if: always()
-    
-    steps:
-    - name: Check bot health
-      run: |
-        if [ "${{ needs.twitter-bot.result }}" == "success" ]; then
-          echo "✅ Twitter bot executed successfully"
-        elif [ "${{ needs.twitter-bot.result }}" == "failure" ]; then
-          echo "❌ Twitter bot failed"
-          exit 1
-        else
-          echo "⚠️ Twitter bot completed with status: ${{ needs.twitter-bot.result }}"
-        fi
-    
-    - name: Send notification (optional)
-      if: failure()
-      run: |
-        echo "Bot execution failed. Consider implementing notification logic here."
-        # You could add Slack/Discord webhook notifications here
-        # curl -X POST -H 'Content-type: application/json' \
-        #   --data '{"text":"Twitter bot failed in GitHub Actions"}' \
-        #   ${{ secrets.SLACK_WEBHOOK_URL }}
-
-# Additional scheduled jobs for specific operations
-  daily-maintenance:
-    runs-on: ubuntu-latest
-    if: github.event.schedule == '15 2 * * *'  # Daily at 2:15 AM
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
-        cache: 'pip'
-    
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-    
-    - name: Clean up old media files
-      run: |
-        python -c "
-        from media_handler import MediaHandler
-        handler = MediaHandler()
-        handler.cleanup_old_media(days=3)
-        "
-    
-    - name: Archive old logs
-      run: |
-        if [ -f bot.log ]; then
-          timestamp=$(date +%Y%m%d_%H%M%S)
-          cp bot.log "bot_${timestamp}.log"
-          > bot.log  # Clear current log
-        fi
