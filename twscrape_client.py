@@ -25,7 +25,14 @@ TWITTER_USERNAME = os.getenv("TWITTER_USERNAME")
 TWITTER_PASSWORD = os.getenv("TWITTER_PASSWORD")
 
 def setup_driver() -> webdriver.Chrome:
-    """Initialize and return a Chrome WebDriver with enhanced options."""
+    """Initialize and return a Chrome WebDriver with enhanced options and proper instance management."""
+    import tempfile
+    import uuid
+    import shutil
+    
+    # Create unique temporary directory for this Chrome instance
+    temp_dir = tempfile.mkdtemp(prefix=f"chrome_profile_{uuid.uuid4().hex[:8]}_")
+    
     options = Options()
     options.add_argument("--start-maximized")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -36,27 +43,64 @@ def setup_driver() -> webdriver.Chrome:
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    # Remove headless mode for better reliability
-    # options.add_argument("--headless")  # Commented out for better compatibility
+    
+    # Fix the user data directory issue
+    options.add_argument(f"--user-data-dir={temp_dir}")
+    options.add_argument("--profile-directory=Default")
+    
+    # Additional arguments to prevent crashes and conflicts
+    options.add_argument("--disable-background-timer-throttling")
+    options.add_argument("--disable-backgrounding-occluded-windows")
+    options.add_argument("--disable-renderer-backgrounding")
+    options.add_argument("--disable-features=TranslateUI")
+    options.add_argument("--disable-ipc-flooding-protection")
+    options.add_argument("--single-process")  # Use single process to avoid conflicts
+    
+    # Enable headless mode for server environments
+    options.add_argument("--headless")
+    options.add_argument("--disable-extensions")
     
     # Disable images for faster loading but keep notifications enabled
     prefs = {
         "profile.managed_default_content_settings.images": 2,
-        "profile.default_content_setting_values.notifications": 2
+        "profile.default_content_setting_values.notifications": 2,
+        "profile.default_content_settings.popups": 0
     }
     options.add_experimental_option("prefs", prefs)
 
-    try:
-        service = Service(executable_path=CM().install())
-        driver = webdriver.Chrome(service=service, options=options)
-        
-        # Execute script to hide automation indicators
-        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        
-        return driver
-    except Exception as e:
-        print(f"Failed to initialize Chrome driver: {e}")
-        raise
+    max_attempts = 3
+    for attempt in range(max_attempts):
+        try:
+            print(f"Initializing Chrome driver (attempt {attempt + 1}/{max_attempts})...")
+            service = Service(executable_path=CM().install())
+            driver = webdriver.Chrome(service=service, options=options)
+            
+            # Execute script to hide automation indicators
+            driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+            
+            # Store temp directory for cleanup
+            driver._temp_profile_dir = temp_dir
+            
+            print("Chrome driver initialized successfully")
+            return driver
+            
+        except Exception as e:
+            print(f"Chrome driver initialization attempt {attempt + 1} failed: {e}")
+            
+            # Clean up temp directory if driver creation failed
+            try:
+                shutil.rmtree(temp_dir, ignore_errors=True)
+            except:
+                pass
+                
+            if attempt < max_attempts - 1:
+                # Create new temp directory for next attempt
+                temp_dir = tempfile.mkdtemp(prefix=f"chrome_profile_{uuid.uuid4().hex[:8]}_")
+                options.arguments = [arg for arg in options.arguments if not arg.startswith("--user-data-dir=")]
+                options.add_argument(f"--user-data-dir={temp_dir}")
+                time.sleep(2)
+            else:
+                raise Exception(f"Failed to initialize Chrome driver after {max_attempts} attempts: {e}")
 
 def login(driver: webdriver.Chrome) -> bool:
     """Log in to Twitter (x.com) with enhanced error handling and multiple retry attempts."""
@@ -535,9 +579,10 @@ def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
     Scrape tweets from the Twitter home timeline.
     Returns a list of tweet dictionaries in bot-compatible format.
     """
-    driver = setup_driver()
-    
+    driver = None
     try:
+        driver = setup_driver()
+        
         # Login with enhanced retry logic
         print("Logging in to Twitter...")
         if not login(driver):
@@ -588,7 +633,21 @@ def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
         print(f"Error in scrape_timeline_tweets: {e}")
         return []
     finally:
-        driver.quit()
+        if driver:
+            try:
+                # Clean up temporary profile directory
+                temp_dir = getattr(driver, '_temp_profile_dir', None)
+                driver.quit()
+                
+                if temp_dir:
+                    import shutil
+                    try:
+                        shutil.rmtree(temp_dir, ignore_errors=True)
+                        print("Cleaned up temporary Chrome profile")
+                    except:
+                        pass
+            except Exception as e:
+                print(f"Error during driver cleanup: {e}")
 
 def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
     """
@@ -601,9 +660,10 @@ def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
         print("Invalid username provided")
         return []
     
-    driver = setup_driver()
-    
+    driver = None
     try:
+        driver = setup_driver()
+        
         # Login with enhanced retry logic
         print("Logging in to Twitter...")
         if not login(driver):
@@ -663,5 +723,19 @@ def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
         print(f"Error in scrape_user_tweets: {e}")
         return []
     finally:
-        driver.quit()
+        if driver:
+            try:
+                # Clean up temporary profile directory
+                temp_dir = getattr(driver, '_temp_profile_dir', None)
+                driver.quit()
+                
+                if temp_dir:
+                    import shutil
+                    try:
+                        shutil.rmtree(temp_dir, ignore_errors=True)
+                        print("Cleaned up temporary Chrome profile")
+                    except:
+                        pass
+            except Exception as e:
+                print(f"Error during driver cleanup: {e}")
         print("Script execution completed.")  # Match original script message
