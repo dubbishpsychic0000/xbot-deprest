@@ -183,17 +183,18 @@ class TwitterBot:
         return fresh_tweets
     
     def get_timeline_tweets_with_retry(self, limit: int = 50, max_retries: int = 3) -> List[Dict]:
-        """Get fresh tweets from timeline with retry logic - SYNCHRONOUS version"""
+        """Get fresh tweets from timeline with retry logic - synchronous version"""
         for attempt in range(1, max_retries + 1):
             try:
                 logger.info(f"Fetching {limit} tweets from timeline (attempt {attempt}/{max_retries})...")
                 
                 # Add delay before fetching to avoid overwhelming the system
                 if attempt > 1:
-                    # Use synchronous sleep instead of async
-                    time.sleep(30 * attempt)
+                    delay_time = 30 * attempt
+                    logger.info(f"Waiting {delay_time}s before retry...")
+                    time.sleep(delay_time)
                 
-                # Fetch tweets using the scraping function (synchronous)
+                # Fetch tweets using the scraping function (synchronous call)
                 all_tweets = scrape_timeline_tweets(limit)
                 
                 if not all_tweets:
@@ -255,10 +256,16 @@ class TwitterBot:
                 
                 logger.info(f"Generating reply for tweet from @{tweet.get('author', 'unknown')}")
                 
-                # Generate AI reply with retry
+                # Generate AI reply with retry (check if generate_ai_content is async)
                 reply_text = None
                 for attempt in range(2):
-                    reply_text = await generate_ai_content("reply", tweet.get('text', ''))
+                    try:
+                        # Try async first, fallback to sync
+                        reply_text = await generate_ai_content("reply", tweet.get('text', ''))
+                    except TypeError:
+                        # If function is not async, call it synchronously
+                        reply_text = generate_ai_content("reply", tweet.get('text', ''))
+                    
                     if reply_text:
                         break
                     await asyncio.sleep(5)
@@ -267,10 +274,16 @@ class TwitterBot:
                     logger.warning("Failed to generate reply text after retries")
                     continue
                 
-                # Post reply with retry (synchronous call)
+                # Post reply with retry (check if post_content is async)
                 reply_id = None
                 for attempt in range(2):
-                    reply_id = post_content("reply", reply_text, reply_to_id=tweet['id'])
+                    try:
+                        # Try async first, fallback to sync
+                        reply_id = await post_content("reply", reply_text, reply_to_id=tweet['id'])
+                    except TypeError:
+                        # If function is not async, call it synchronously
+                        reply_id = post_content("reply", reply_text, reply_to_id=tweet['id'])
+                    
                     if reply_id:
                         break
                     await self.handle_rate_limit('reply', attempt + 1)
@@ -321,10 +334,16 @@ class TwitterBot:
                 
                 logger.info(f"Generating quote tweet for tweet from @{tweet.get('author', 'unknown')}")
                 
-                # Generate AI quote tweet with retry
+                # Generate AI quote tweet with retry (check if generate_ai_content is async)
                 quote_text = None
                 for attempt in range(2):
-                    quote_text = await generate_ai_content("quote", tweet.get('text', ''))
+                    try:
+                        # Try async first, fallback to sync
+                        quote_text = await generate_ai_content("quote", tweet.get('text', ''))
+                    except TypeError:
+                        # If function is not async, call it synchronously
+                        quote_text = generate_ai_content("quote", tweet.get('text', ''))
+                    
                     if quote_text:
                         break
                     await asyncio.sleep(5)
@@ -333,10 +352,16 @@ class TwitterBot:
                     logger.warning("Failed to generate quote text after retries")
                     continue
                 
-                # Post quote tweet with retry (synchronous call)
+                # Post quote tweet with retry (check if post_content is async)
                 quote_id = None
                 for attempt in range(2):
-                    quote_id = post_content("quote", quote_text, quoted_tweet_id=tweet['id'])
+                    try:
+                        # Try async first, fallback to sync
+                        quote_id = await post_content("quote", quote_text, quoted_tweet_id=tweet['id'])
+                    except TypeError:
+                        # If function is not async, call it synchronously
+                        quote_id = post_content("quote", quote_text, quoted_tweet_id=tweet['id'])
+                    
                     if quote_id:
                         break
                     await self.handle_rate_limit('quote', attempt + 1)
@@ -365,10 +390,16 @@ class TwitterBot:
         try:
             logger.info(f"Generating thread about: {topic}")
             
-            # Generate thread content with retry
+            # Generate thread content with retry (check if generate_ai_content is async)
             thread_tweets = None
             for attempt in range(2):
-                thread_tweets = await generate_ai_content("thread", topic, num_tweets=num_tweets)
+                try:
+                    # Try async first, fallback to sync
+                    thread_tweets = await generate_ai_content("thread", topic, num_tweets=num_tweets)
+                except TypeError:
+                    # If function is not async, call it synchronously
+                    thread_tweets = generate_ai_content("thread", topic, num_tweets=num_tweets)
+                
                 if thread_tweets and isinstance(thread_tweets, list) and len(thread_tweets) > 0:
                     break
                 await asyncio.sleep(10)
@@ -377,10 +408,16 @@ class TwitterBot:
                 logger.error("Failed to generate thread content")
                 return None
             
-            # Post thread with retry (synchronous call)
+            # Post thread with retry (check if post_content is async)
             thread_ids = None
             for attempt in range(2):
-                thread_ids = post_content("thread", thread_tweets)
+                try:
+                    # Try async first, fallback to sync
+                    thread_ids = await post_content("thread", thread_tweets)
+                except TypeError:
+                    # If function is not async, call it synchronously
+                    thread_ids = post_content("thread", thread_tweets)
+                
                 if thread_ids:
                     break
                 await self.handle_rate_limit('thread', attempt + 1)
@@ -402,10 +439,16 @@ class TwitterBot:
         try:
             logger.info(f"Generating standalone tweet about: {topic}")
             
-            # Generate tweet content with retry
+            # Generate tweet content with retry (check if generate_ai_content is async)
             tweet_text = None
             for attempt in range(2):
-                tweet_text = await generate_ai_content("standalone", topic)
+                try:
+                    # Try async first, fallback to sync
+                    tweet_text = await generate_ai_content("standalone", topic)
+                except TypeError:
+                    # If function is not async, call it synchronously
+                    tweet_text = generate_ai_content("standalone", topic)
+                
                 if tweet_text:
                     break
                 await asyncio.sleep(5)
@@ -414,10 +457,16 @@ class TwitterBot:
                 logger.error("Failed to generate tweet content")
                 return None
             
-            # Post tweet with retry (synchronous call)
+            # Post tweet with retry (check if post_content is async)
             tweet_id = None
             for attempt in range(2):
-                tweet_id = post_content("tweet", tweet_text)
+                try:
+                    # Try async first, fallback to sync
+                    tweet_id = await post_content("tweet", tweet_text)
+                except TypeError:
+                    # If function is not async, call it synchronously
+                    tweet_id = post_content("tweet", tweet_text)
+                
                 if tweet_id:
                     break
                 await self.handle_rate_limit('tweet', attempt + 1)
