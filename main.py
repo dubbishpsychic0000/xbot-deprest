@@ -182,17 +182,18 @@ class TwitterBot:
         logger.info(f"Filtered to {len(fresh_tweets)} fresh tweets from {len(tweets)} total")
         return fresh_tweets
     
-    async def get_timeline_tweets_with_retry(self, limit: int = 50, max_retries: int = 3) -> List[Dict]:
-        """Get fresh tweets from timeline with retry logic"""
+    def get_timeline_tweets_with_retry(self, limit: int = 50, max_retries: int = 3) -> List[Dict]:
+        """Get fresh tweets from timeline with retry logic - SYNCHRONOUS version"""
         for attempt in range(1, max_retries + 1):
             try:
                 logger.info(f"Fetching {limit} tweets from timeline (attempt {attempt}/{max_retries})...")
                 
                 # Add delay before fetching to avoid overwhelming the system
                 if attempt > 1:
-                    await self.handle_rate_limit('timeline_fetch', attempt)
+                    # Use synchronous sleep instead of async
+                    time.sleep(30 * attempt)
                 
-                # Fetch tweets using the scraping function
+                # Fetch tweets using the scraping function (synchronous)
                 all_tweets = scrape_timeline_tweets(limit)
                 
                 if not all_tweets:
@@ -216,7 +217,7 @@ class TwitterBot:
             except Exception as e:
                 logger.error(f"Failed to get timeline tweets (attempt {attempt}): {e}")
                 if attempt < max_retries:
-                    await asyncio.sleep(30 * attempt)  # Progressive delay
+                    time.sleep(30 * attempt)  # Progressive delay
                 else:
                     self.failed_attempts += 1
         
@@ -227,8 +228,8 @@ class TwitterBot:
         """Generate and post replies to timeline tweets with improved error handling"""
         results = []
         
-        # Get fresh tweets from timeline
-        tweets = await self.get_timeline_tweets_with_retry(50)
+        # Get fresh tweets from timeline (synchronous call)
+        tweets = self.get_timeline_tweets_with_retry(50)
         if not tweets:
             logger.warning("No fresh tweets found for replies")
             return results
@@ -266,7 +267,7 @@ class TwitterBot:
                     logger.warning("Failed to generate reply text after retries")
                     continue
                 
-                # Post reply with retry
+                # Post reply with retry (synchronous call)
                 reply_id = None
                 for attempt in range(2):
                     reply_id = post_content("reply", reply_text, reply_to_id=tweet['id'])
@@ -297,8 +298,8 @@ class TwitterBot:
         """Generate and post quote tweets from timeline with improved error handling"""
         results = []
         
-        # Get fresh tweets from timeline
-        tweets = await self.get_timeline_tweets_with_retry(50)
+        # Get fresh tweets from timeline (synchronous call)
+        tweets = self.get_timeline_tweets_with_retry(50)
         if not tweets:
             logger.warning("No fresh tweets found for quoting")
             return results
@@ -332,7 +333,7 @@ class TwitterBot:
                     logger.warning("Failed to generate quote text after retries")
                     continue
                 
-                # Post quote tweet with retry
+                # Post quote tweet with retry (synchronous call)
                 quote_id = None
                 for attempt in range(2):
                     quote_id = post_content("quote", quote_text, quoted_tweet_id=tweet['id'])
@@ -376,7 +377,7 @@ class TwitterBot:
                 logger.error("Failed to generate thread content")
                 return None
             
-            # Post thread with retry
+            # Post thread with retry (synchronous call)
             thread_ids = None
             for attempt in range(2):
                 thread_ids = post_content("thread", thread_tweets)
@@ -413,7 +414,7 @@ class TwitterBot:
                 logger.error("Failed to generate tweet content")
                 return None
             
-            # Post tweet with retry
+            # Post tweet with retry (synchronous call)
             tweet_id = None
             for attempt in range(2):
                 tweet_id = post_content("tweet", tweet_text)
