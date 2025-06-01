@@ -1,3 +1,5 @@
+#this is what you need to modify but keep functions names and output form
+
 import time
 import os
 import hashlib
@@ -286,126 +288,44 @@ def login(driver: webdriver.Chrome) -> bool:
     return False
 
 def extract_tweet_data_original_format(tweet_element) -> Optional[Tuple[str, str, str, str]]:
-    """Enhanced tweet extraction for 2025 with updated selectors."""
+    """
+    Simplified extraction (from the working script) that always succeeds on real tweets:
+      - tweet text via 'div[lang]'
+      - timestamp via the <time> tag
+      - external_link via the first <a aria-label …>
+      - images via 'div[data-testid="tweetPhoto"] img'
+    """
     try:
-        # Enhanced tweet text extraction with 2025 selectors
-        tweet_text = ""
-        text_selectors = [
-            'div[data-testid="tweetText"]',
-            'div[data-testid="tweetText"] span',
-            'div[lang] span',
-            'span[data-testid="tweetText"]',
-            '.css-1jxf684',  # Updated CSS class
-            '.css-146c3p1',  # Updated CSS class
-            '[data-testid="tweetText"] > div',
-            '[data-testid="tweetText"] > span'
-        ]
-        
-        for selector in text_selectors:
-            try:
-                elements = tweet_element.find_elements(By.CSS_SELECTOR, selector)
-                if elements:
-                    # Get all text from all matching elements
-                    texts = [elem.text.strip() for elem in elements if elem.text.strip()]
-                    if texts:
-                        tweet_text = ' '.join(texts)
-                        break
-            except NoSuchElementException:
-                continue
-
-        # Enhanced timestamp extraction
-        tweet_date = ""
+        # 1) Tweet text
         try:
-            time_selectors = [
-                "time[datetime]",
-                "time",
-                "a[href*='status'] time",
-                "[data-testid='Time'] time"
-            ]
-            
-            for selector in time_selectors:
-                try:
-                    time_elem = tweet_element.find_element(By.CSS_SELECTOR, selector)
-                    timestamp = time_elem.get_attribute("datetime")
-                    if timestamp:
-                        tweet_date = parse(timestamp).isoformat().split("T")[0]
-                        break
-                    else:
-                        # Try title or text content
-                        timestamp = time_elem.get_attribute("title") or time_elem.text
-                        if timestamp:
-                            try:
-                                tweet_date = parse(timestamp).isoformat().split("T")[0]
-                                break
-                            except:
-                                continue
-                except NoSuchElementException:
-                    continue
+            tweet_text = tweet_element.find_element(By.CSS_SELECTOR, 'div[lang]').text.strip()
+        except NoSuchElementException:
+            tweet_text = ""
+        
+        # 2) Tweet date
+        try:
+            time_elem = tweet_element.find_element(By.TAG_NAME, "time")
+            timestamp = time_elem.get_attribute("datetime")
+            tweet_date = parse(timestamp).isoformat().split("T")[0]
         except Exception:
-            pass
+            tweet_date = ""
         
-        if not tweet_date:
-            tweet_date = datetime.now().isoformat().split("T")[0]
-
-        # Enhanced external link extraction
-        external_link = ""
-        link_selectors = [
-            "a[href*='/status/']",
-            "a[role='link'][href*='status']",
-            "time[datetime] + a",
-            "a[href*='/x.com/'][href*='/status/']",
-            "a[href*='/twitter.com/'][href*='/status/']"
-        ]
+        # 3) External link
+        try:
+            anchor = tweet_element.find_element(By.CSS_SELECTOR, "a[aria-label][dir]")
+            external_link = anchor.get_attribute("href")
+        except Exception:
+            external_link = ""
         
-        for selector in link_selectors:
-            try:
-                if selector == "time[datetime] + a":
-                    # Get sibling link of time element
-                    time_elem = tweet_element.find_element(By.CSS_SELECTOR, "time[datetime]")
-                    try:
-                        parent_link = time_elem.find_element(By.XPATH, "./ancestor::a[@href]")
-                        href = parent_link.get_attribute("href")
-                    except:
-                        continue
-                else:
-                    anchor = tweet_element.find_element(By.CSS_SELECTOR, selector)
-                    href = anchor.get_attribute("href")
-                
-                if href and "/status/" in href:
-                    external_link = href
-                    break
-            except NoSuchElementException:
-                continue
-
-        # Enhanced image extraction with 2025 selectors
-        tweet_images = []
-        image_selectors = [
-            'div[data-testid="tweetPhoto"] img',
-            'img[alt*="Image"]',
-            'div[data-testid="card.layoutLarge.media"] img',
-            'img[src*="pbs.twimg.com"]',
-            'div[data-testid="tweet"] img[src*="twimg.com"]',
-            '[role="img"] img',
-            'div[aria-label*="Image"] img'
-        ]
-        
-        for selector in image_selectors:
-            try:
-                images = tweet_element.find_elements(By.CSS_SELECTOR, selector)
-                for img in images:
-                    src = img.get_attribute("src")
-                    if (src and 
-                        ("pbs.twimg.com" in src or "twimg.com" in src) and 
-                        src not in tweet_images and
-                        "profile_images" not in src):  # Exclude profile images
-                        tweet_images.append(src)
-            except Exception:
-                continue
-
+        # 4) Images
+        try:
+            images = tweet_element.find_elements(By.CSS_SELECTOR, 'div[data-testid="tweetPhoto"] img')
+            tweet_images = [img.get_attribute("src") for img in images]
+        except Exception:
+            tweet_images = []
         images_links = ', '.join(tweet_images) if tweet_images else "No Images"
 
         return (tweet_text, tweet_date, external_link, images_links)
-
     except Exception as e:
         print(f"Failed to extract tweet data: {e}")
         return None
@@ -699,7 +619,7 @@ def _scrape_tweets_common(driver: webdriver.Chrome, limit: int, page_type: str, 
         try:
             os.remove(state_file)
             print("Scroll state file cleaned up.")
-        except Exception:
+        except:
             pass
 
     return tweets_data
