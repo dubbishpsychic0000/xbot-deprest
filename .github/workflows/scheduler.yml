@@ -1,8 +1,8 @@
-name: Twitter Bot Continuous Runner
+name: Twitter Bot Scheduler
 
 on:
   schedule:
-    # Run every hour to ensure the bot stays active
+    # Run every hour to handle all scheduled tasks
     - cron: '0 * * * *'  # Every hour at minute 0
     
   workflow_dispatch:
@@ -15,9 +15,13 @@ on:
         options:
           - continuous
           - standalone
-          - reply
-          - quote
           - thread
+          - engage
+          - test
+      topic:
+        description: 'Topic for content generation (optional)'
+        required: false
+        type: string
       duration_hours:
         description: 'How many hours to run (for continuous mode)'
         required: false
@@ -42,19 +46,18 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb google-chrome-stable
+        sudo apt-get install -y wget unzip xvfb
+        
+        # Install Google Chrome
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
     
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install schedule  # Add schedule dependency
-    
-    - name: Setup Chrome for Selenium
-      run: |
-        # Download and setup ChromeDriver
-        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-        echo "Chrome version: $CHROME_VERSION"
     
     - name: Create environment file
       run: |
@@ -75,32 +78,91 @@ jobs:
     - name: Validate configuration
       run: python -c "from config import validate_config; validate_config()"
     
-    - name: Run bot in background with timeout
+    - name: Setup virtual display for headless Chrome
+      run: |
+        export DISPLAY=:99
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        sleep 3
+    
+    - name: Run bot
+      env:
+        DISPLAY: :99
       run: |
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           if [ "${{ inputs.bot_mode }}" == "continuous" ]; then
             # Run continuous mode with timeout
-            timeout ${{ inputs.duration_hours }}h python main.py continuous || echo "Bot completed scheduled run"
-          else
-            # Run single mode
-            python main.py ${{ inputs.bot_mode }} --topic "AI and machine learning"
+            timeout ${{ inputs.duration_hours }}h python main.py continuous --duration ${{ inputs.duration_hours }} || echo "Bot completed scheduled run"
+          elif [ "${{ inputs.bot_mode }}" == "standalone" ]; then
+            if [ -n "${{ inputs.topic }}" ]; then
+              python main.py standalone --topic "${{ inputs.topic }}"
+            else
+              python main.py standalone
+            fi
+          elif [ "${{ inputs.bot_mode }}" == "thread" ]; then
+            if [ -n "${{ inputs.topic }}" ]; then
+              python main.py thread --topic "${{ inputs.topic }}"
+            else
+              python main.py thread
+            fi
+          elif [ "${{ inputs.bot_mode }}" == "engage" ]; then
+            python main.py engage
+          elif [ "${{ inputs.bot_mode }}" == "test" ]; then
+            python main.py test
           fi
         else
-          # Scheduled run - run for 23 hours to avoid overlap
-          timeout 23h python main.py continuous || echo "Bot completed scheduled run"
+          # Scheduled run - run for 50 minutes to avoid overlap with next hourly run
+          timeout 50m python main.py continuous --duration 1 || echo "Bot completed scheduled run"
         fi
     
-    - name: Upload logs
+    - name: Upload logs and artifacts
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: bot-logs-${{ github.run_number }}
-        path: bot.log
-        retention-days: 3
+        path: |
+          bot.log
+          *.xlsx
+          *_scroll_state.pkl
+        retention-days: 7
+        if-no-files-found: ignore
     
-    - name: Cleanup
+    - name: Cleanup processes and files
       if: always()
       run: |
-        # Clean up any Chrome processes
+        # Clean up Chrome processes
         pkill -f chrome || true
         pkill -f chromedriver || true
+        pkill -f Xvfb || true
+        
+        # Clean up temporary files but keep state files for resume capability
+        rm -f /tmp/chrome* || true
+        rm -f /tmp/.org.chromium.* || true
+        
+        # Clean up old media files if any
+        find . -name "*.jpg" -o -name "*.png" -o -name "*.gif" -o -name "*.mp4" -mtime +1 -delete || true
+
+  # Separate job for health check and monitoring
+  health-check:
+    runs-on: ubuntu-latest
+    needs: twitter-bot
+    if: always()
+    
+    steps:
+    - name: Check bot health
+      run: |
+        if [ "${{ needs.twitter-bot.result }}" == "success" ]; then
+          echo "✅ Bot executed successfully"
+        elif [ "${{ needs.twitter-bot.result }}" == "failure" ]; then
+          echo "❌ Bot execution failed"
+          exit 1
+        elif [ "${{ needs.twitter-bot.result }}" == "cancelled" ]; then
+          echo "⚠️ Bot execution was cancelled"
+        else
+          echo "❓ Bot execution status unknown: ${{ needs.twitter-bot.result }}"
+        fi
+    
+    - name: Notify on failure (optional)
+      if: needs.twitter-bot.result == 'failure'
+      run: |
+        echo "Bot failed to execute properly. Check logs for details."
+        # Add notification logic here if needed (webhook, email, etc.)
