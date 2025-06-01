@@ -39,7 +39,7 @@ def setup_driver() -> webdriver.Chrome:
     options.add_argument("--disable-blink-features=AutomationControlled")
     
     # Comment out headless for debugging - same as working script approach
-    # options.add_argument("--headless")
+    options.add_argument("--headless")
     
     try:
         print("Initializing Chrome driver...")
