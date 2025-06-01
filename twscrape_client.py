@@ -17,6 +17,8 @@ from dateutil.parser import parse
 from datetime import datetime
 import pandas as pd
 from dotenv import load_dotenv
+import random
+import requests
 
 load_dotenv()
 
@@ -25,7 +27,7 @@ TWITTER_USERNAME = os.getenv("TWITTER_USERNAME")
 TWITTER_PASSWORD = os.getenv("TWITTER_PASSWORD")
 
 def setup_driver() -> webdriver.Chrome:
-    """Initialize and return a Chrome WebDriver with enhanced options and proper instance management."""
+    """Initialize and return a Chrome WebDriver with enhanced 2025 anti-detection options."""
     import tempfile
     import uuid
     import shutil
@@ -34,6 +36,8 @@ def setup_driver() -> webdriver.Chrome:
     temp_dir = tempfile.mkdtemp(prefix=f"chrome_profile_{uuid.uuid4().hex[:8]}_")
     
     options = Options()
+    
+    # Enhanced anti-detection measures for 2025
     options.add_argument("--start-maximized")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
@@ -41,30 +45,52 @@ def setup_driver() -> webdriver.Chrome:
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    options.add_argument("--disable-web-security")
+    options.add_argument("--allow-running-insecure-content")
+    options.add_argument("--disable-features=VizDisplayCompositor")
     
-    # Fix the user data directory issue
+    # Randomize window size
+    window_sizes = ["1920,1080", "1366,768", "1536,864", "1440,900"]
+    selected_size = random.choice(window_sizes)
+    options.add_argument(f"--window-size={selected_size}")
+    
+    # Randomize user agent from 2025 browsers
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+    ]
+    options.add_argument(f"--user-agent={random.choice(user_agents)}")
+    
+    # Profile settings
     options.add_argument(f"--user-data-dir={temp_dir}")
     options.add_argument("--profile-directory=Default")
     
-    # Additional arguments to prevent crashes and conflicts
+    # Additional performance and stealth arguments
     options.add_argument("--disable-background-timer-throttling")
     options.add_argument("--disable-backgrounding-occluded-windows")
     options.add_argument("--disable-renderer-backgrounding")
     options.add_argument("--disable-features=TranslateUI")
     options.add_argument("--disable-ipc-flooding-protection")
-    options.add_argument("--single-process")  # Use single process to avoid conflicts
+    options.add_argument("--disable-plugins-discovery")
+    options.add_argument("--disable-preconnect")
     
-    # Enable headless mode for server environments
-    options.add_argument("--headless")
-    options.add_argument("--disable-extensions")
+    # Memory and performance optimizations
+    options.add_argument("--memory-pressure-off")
+    options.add_argument("--max_old_space_size=4096")
     
-    # Disable images for faster loading but keep notifications enabled
+    # Comment out headless for debugging, uncomment for production
+    # options.add_argument("--headless=new")
+    
+    # Enhanced preferences for 2025
     prefs = {
-        "profile.managed_default_content_settings.images": 2,
+        "profile.managed_default_content_settings.images": 1,  # Enable images for better detection
         "profile.default_content_setting_values.notifications": 2,
-        "profile.default_content_settings.popups": 0
+        "profile.default_content_settings.popups": 0,
+        "profile.managed_default_content_settings.media_stream": 2,
+        "profile.default_content_setting_values.geolocation": 2,
+        "profile.managed_default_content_settings.geolocation": 2
     }
     options.add_experimental_option("prefs", prefs)
 
@@ -75,8 +101,23 @@ def setup_driver() -> webdriver.Chrome:
             service = Service(executable_path=CM().install())
             driver = webdriver.Chrome(service=service, options=options)
             
-            # Execute script to hide automation indicators
-            driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+            # Enhanced stealth scripts for 2025
+            stealth_scripts = [
+                "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})",
+                "Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]})",
+                "Object.defineProperty(navigator, 'languages', {get: () => ['en-US', 'en']})",
+                "Object.defineProperty(navigator, 'permissions', {get: () => ({query: () => Promise.resolve({state: 'granted'})})})",
+                "window.chrome = {runtime: {}};",
+                "Object.defineProperty(navigator, 'connection', {get: () => ({effectiveType: '4g'})});",
+                "Object.defineProperty(screen, 'colorDepth', {get: () => 24});",
+                "Object.defineProperty(navigator, 'deviceMemory', {get: () => 8});"
+            ]
+            
+            for script in stealth_scripts:
+                try:
+                    driver.execute_script(script)
+                except:
+                    continue
             
             # Store temp directory for cleanup
             driver._temp_profile_dir = temp_dir
@@ -98,12 +139,16 @@ def setup_driver() -> webdriver.Chrome:
                 temp_dir = tempfile.mkdtemp(prefix=f"chrome_profile_{uuid.uuid4().hex[:8]}_")
                 options.arguments = [arg for arg in options.arguments if not arg.startswith("--user-data-dir=")]
                 options.add_argument(f"--user-data-dir={temp_dir}")
-                time.sleep(2)
+                time.sleep(random.uniform(2, 5))
             else:
                 raise Exception(f"Failed to initialize Chrome driver after {max_attempts} attempts: {e}")
 
+def human_like_delay():
+    """Add human-like delays to avoid detection."""
+    time.sleep(random.uniform(1.5, 4.0))
+
 def login(driver: webdriver.Chrome) -> bool:
-    """Log in to Twitter (x.com) with enhanced error handling and multiple retry attempts."""
+    """Enhanced login function for 2025 with better detection avoidance."""
     if not TWITTER_USERNAME or not TWITTER_PASSWORD:
         print("Twitter credentials not found in environment variables")
         return False
@@ -112,20 +157,27 @@ def login(driver: webdriver.Chrome) -> bool:
     for attempt in range(max_attempts):
         try:
             print(f"Login attempt {attempt + 1}/{max_attempts}...")
-            driver.get("https://x.com/i/flow/login")
-            time.sleep(10)  # Increased wait time
             
-            # Wait for and find username input with multiple selectors
+            # Navigate to login with random delay
+            driver.get("https://x.com/i/flow/login")
+            human_like_delay()
+            time.sleep(random.uniform(8, 15))
+            
+            # Enhanced username input detection for 2025
             username_selectors = [
                 'input[autocomplete="username"]',
                 'input[name="text"]',
-                'input[data-testid="ocfEnterTextTextInput"]'
+                'input[data-testid="ocfEnterTextTextInput"]',
+                'input[placeholder*="username"]',
+                'input[placeholder*="email"]',
+                'input[placeholder*="phone"]',
+                'input[type="text"]'
             ]
             
             username_inp = None
             for selector in username_selectors:
                 try:
-                    username_inp = WebDriverWait(driver, 20).until(
+                    username_inp = WebDriverWait(driver, 25).until(
                         EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
                     )
                     print(f"Found username input with selector: {selector}")
@@ -136,34 +188,38 @@ def login(driver: webdriver.Chrome) -> bool:
             if not username_inp:
                 print("Could not find username input field")
                 continue
-                
-            # Clear and enter username with retry logic
-            for i in range(3):
-                try:
-                    username_inp.clear()
-                    time.sleep(1)
-                    username_inp.send_keys(TWITTER_USERNAME)
-                    time.sleep(2)
-                    username_inp.send_keys(Keys.RETURN)
-                    print("Username entered successfully")
-                    break
-                except Exception as e:
-                    print(f"Username entry attempt {i+1} failed: {e}")
-                    time.sleep(2)
             
-            time.sleep(8)  # Increased wait time
+            # Human-like typing for username
+            username_inp.click()
+            human_like_delay()
+            username_inp.clear()
+            human_like_delay()
             
-            # Wait for and find password input with multiple selectors
+            # Type username character by character with random delays
+            for char in TWITTER_USERNAME:
+                username_inp.send_keys(char)
+                time.sleep(random.uniform(0.05, 0.15))
+            
+            human_like_delay()
+            username_inp.send_keys(Keys.RETURN)
+            print("Username entered successfully")
+            
+            # Wait for password field with extended timeout
+            time.sleep(random.uniform(5, 12))
+            
+            # Enhanced password input detection
             password_selectors = [
                 'input[name="password"]',
                 'input[type="password"]',
-                'input[data-testid="ocfEnterTextTextInput"]'
+                'input[data-testid="ocfEnterTextTextInput"]',
+                'input[placeholder*="password"]',
+                'input[autocomplete="current-password"]'
             ]
             
             password_inp = None
             for selector in password_selectors:
                 try:
-                    password_inp = WebDriverWait(driver, 20).until(
+                    password_inp = WebDriverWait(driver, 25).until(
                         EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
                     )
                     print(f"Found password input with selector: {selector}")
@@ -174,109 +230,143 @@ def login(driver: webdriver.Chrome) -> bool:
             if not password_inp:
                 print("Could not find password input field")
                 continue
-                
-            # Clear and enter password with retry logic
-            for i in range(3):
-                try:
-                    password_inp.clear()
-                    time.sleep(1)
-                    password_inp.send_keys(TWITTER_PASSWORD)
-                    time.sleep(2)
-                    password_inp.send_keys(Keys.RETURN)
-                    print("Password entered successfully")
-                    break
-                except Exception as e:
-                    print(f"Password entry attempt {i+1} failed: {e}")
-                    time.sleep(2)
+            
+            # Human-like typing for password
+            password_inp.click()
+            human_like_delay()
+            password_inp.clear()
+            human_like_delay()
+            
+            # Type password character by character
+            for char in TWITTER_PASSWORD:
+                password_inp.send_keys(char)
+                time.sleep(random.uniform(0.05, 0.15))
+            
+            human_like_delay()
+            password_inp.send_keys(Keys.RETURN)
+            print("Password entered successfully")
 
             # Wait for login completion with extended timeout
             print("Waiting for login to complete...")
-            time.sleep(15)
+            time.sleep(random.uniform(10, 20))
             
-            # Check for successful login with multiple indicators
+            # Enhanced login verification
+            success_indicators = [
+                "home", "twitter.com", "x.com", "timeline"
+            ]
+            
             try:
-                WebDriverWait(driver, 60).until(
-                    lambda d: any(keyword in d.current_url.lower() for keyword in ["home", "twitter.com", "x.com"]) 
+                WebDriverWait(driver, 90).until(
+                    lambda d: any(keyword in d.current_url.lower() for keyword in success_indicators) 
                              and "login" not in d.current_url.lower()
+                             and "flow" not in d.current_url.lower()
                 )
                 print("Login successful!")
                 return True
+                
             except TimeoutException:
                 current_url = driver.current_url
                 print(f"Login verification timeout. Current URL: {current_url}")
                 
-                # Check if we're actually logged in despite timeout
-                if "login" not in current_url.lower() and any(keyword in current_url.lower() for keyword in ["home", "twitter.com", "x.com"]):
+                # Check if we're actually logged in
+                if ("login" not in current_url.lower() and 
+                    "flow" not in current_url.lower() and 
+                    any(keyword in current_url.lower() for keyword in success_indicators)):
                     print("Login appears successful based on URL")
                     return True
                     
                 print(f"Login attempt {attempt + 1} failed, retrying...")
-                time.sleep(5)
+                time.sleep(random.uniform(5, 10))
 
         except Exception as e:
             print(f"Login attempt {attempt + 1} failed with error: {e}")
-            time.sleep(5)
+            time.sleep(random.uniform(5, 10))
     
     print("All login attempts failed")
     return False
 
 def extract_tweet_data_original_format(tweet_element) -> Optional[Tuple[str, str, str, str]]:
-    """
-    Extract tweet data from a Selenium WebElement with enhanced selectors.
-    Returns tuple: (tweet_text, tweet_date, external_link, images_links)
-    """
+    """Enhanced tweet extraction for 2025 with updated selectors."""
     try:
-        # Extract tweet text with multiple selectors
+        # Enhanced tweet text extraction with 2025 selectors
         tweet_text = ""
         text_selectors = [
             'div[data-testid="tweetText"]',
-            'div[lang]',
-            'span[lang]',
-            '.css-901oao'
+            'div[data-testid="tweetText"] span',
+            'div[lang] span',
+            'span[data-testid="tweetText"]',
+            '.css-1jxf684',  # Updated CSS class
+            '.css-146c3p1',  # Updated CSS class
+            '[data-testid="tweetText"] > div',
+            '[data-testid="tweetText"] > span'
         ]
         
         for selector in text_selectors:
             try:
-                text_elem = tweet_element.find_element(By.CSS_SELECTOR, selector)
-                tweet_text = text_elem.text.strip()
-                if tweet_text:
-                    break
+                elements = tweet_element.find_elements(By.CSS_SELECTOR, selector)
+                if elements:
+                    # Get all text from all matching elements
+                    texts = [elem.text.strip() for elem in elements if elem.text.strip()]
+                    if texts:
+                        tweet_text = ' '.join(texts)
+                        break
             except NoSuchElementException:
                 continue
 
-        # Extract timestamp with improved parsing
+        # Enhanced timestamp extraction
         tweet_date = ""
         try:
-            time_elem = tweet_element.find_element(By.TAG_NAME, "time")
-            timestamp = time_elem.get_attribute("datetime")
-            if timestamp:
-                tweet_date = parse(timestamp).isoformat().split("T")[0]
-            else:
-                # Fallback to title or text
-                timestamp = time_elem.get_attribute("title") or time_elem.text
-                if timestamp:
-                    try:
+            time_selectors = [
+                "time[datetime]",
+                "time",
+                "a[href*='status'] time",
+                "[data-testid='Time'] time"
+            ]
+            
+            for selector in time_selectors:
+                try:
+                    time_elem = tweet_element.find_element(By.CSS_SELECTOR, selector)
+                    timestamp = time_elem.get_attribute("datetime")
+                    if timestamp:
                         tweet_date = parse(timestamp).isoformat().split("T")[0]
-                    except:
-                        tweet_date = datetime.now().isoformat().split("T")[0]
-        except NoSuchElementException:
+                        break
+                    else:
+                        # Try title or text content
+                        timestamp = time_elem.get_attribute("title") or time_elem.text
+                        if timestamp:
+                            try:
+                                tweet_date = parse(timestamp).isoformat().split("T")[0]
+                                break
+                            except:
+                                continue
+                except NoSuchElementException:
+                    continue
+        except Exception:
+            pass
+        
+        if not tweet_date:
             tweet_date = datetime.now().isoformat().split("T")[0]
 
-        # Extract external link with better selectors
+        # Enhanced external link extraction
         external_link = ""
         link_selectors = [
             "a[href*='/status/']",
             "a[role='link'][href*='status']",
-            "time[datetime]"
+            "time[datetime] + a",
+            "a[href*='/x.com/'][href*='/status/']",
+            "a[href*='/twitter.com/'][href*='/status/']"
         ]
         
         for selector in link_selectors:
             try:
-                if selector == "time[datetime]":
-                    # Get parent link of time element
-                    time_elem = tweet_element.find_element(By.CSS_SELECTOR, selector)
-                    parent_link = time_elem.find_element(By.XPATH, "./ancestor::a[@href]")
-                    href = parent_link.get_attribute("href")
+                if selector == "time[datetime] + a":
+                    # Get sibling link of time element
+                    time_elem = tweet_element.find_element(By.CSS_SELECTOR, "time[datetime]")
+                    try:
+                        parent_link = time_elem.find_element(By.XPATH, "./ancestor::a[@href]")
+                        href = parent_link.get_attribute("href")
+                    except:
+                        continue
                 else:
                     anchor = tweet_element.find_element(By.CSS_SELECTOR, selector)
                     href = anchor.get_attribute("href")
@@ -287,13 +377,16 @@ def extract_tweet_data_original_format(tweet_element) -> Optional[Tuple[str, str
             except NoSuchElementException:
                 continue
 
-        # Extract images with enhanced selectors
+        # Enhanced image extraction with 2025 selectors
         tweet_images = []
         image_selectors = [
             'div[data-testid="tweetPhoto"] img',
             'img[alt*="Image"]',
             'div[data-testid="card.layoutLarge.media"] img',
-            'img[src*="pbs.twimg.com"]'
+            'img[src*="pbs.twimg.com"]',
+            'div[data-testid="tweet"] img[src*="twimg.com"]',
+            '[role="img"] img',
+            'div[aria-label*="Image"] img'
         ]
         
         for selector in image_selectors:
@@ -301,7 +394,10 @@ def extract_tweet_data_original_format(tweet_element) -> Optional[Tuple[str, str
                 images = tweet_element.find_elements(By.CSS_SELECTOR, selector)
                 for img in images:
                     src = img.get_attribute("src")
-                    if src and "pbs.twimg.com" in src and src not in tweet_images:
+                    if (src and 
+                        ("pbs.twimg.com" in src or "twimg.com" in src) and 
+                        src not in tweet_images and
+                        "profile_images" not in src):  # Exclude profile images
                         tweet_images.append(src)
             except Exception:
                 continue
@@ -315,10 +411,7 @@ def extract_tweet_data_original_format(tweet_element) -> Optional[Tuple[str, str
         return None
 
 def extract_tweet_data_bot_format(tweet_element) -> Optional[Dict]:
-    """
-    Extract tweet data from a Selenium WebElement and return in bot-compatible format.
-    Returns dict with keys: id, text, url, created_at, author, media
-    """
+    """Extract tweet data and return in bot-compatible format with 2025 enhancements."""
     try:
         # Get original format data first
         original_data = extract_tweet_data_original_format(tweet_element)
@@ -350,13 +443,15 @@ def extract_tweet_data_bot_format(tweet_element) -> Optional[Dict]:
             if not tweet_url:
                 tweet_url = f"https://x.com/status/{fallback_hash}"
 
-        # Extract author username with better selectors
+        # Enhanced author extraction for 2025
         author = "unknown"
         author_selectors = [
             'div[data-testid="User-Name"] a span',
-            'div[data-testid="User-Name"] span',
+            'div[data-testid="User-Names"] span',
             '[data-testid="User-Name"] span',
-            'a[role="link"] span'
+            'a[role="link"] span',
+            'div[data-testid="User-Name"] div span',
+            'span[class*="username"]'
         ]
         
         for selector in author_selectors:
@@ -415,18 +510,17 @@ async def fetch_tweets(source_type: str, source: str, limit: int = 20) -> List[D
         return []
 
 def _scrape_tweets_common(driver: webdriver.Chrome, limit: int, page_type: str, username: str = None) -> List[Dict]:
-    """
-    Common tweet scraping logic for both timeline and user tweets.
-    Uses improved scrolling mechanics from the original script.
-    """
+    """Enhanced common tweet scraping logic for 2025."""
     # State management
     state_file = f"{page_type}_scroll_state.pkl" if not username else f"user_{username}_scroll_state.pkl"
     
-    # Initialize variables (matching original script structure)
+    # Initialize variables
     scroll_count = 0
     tweets_collected = set()
     tweets_data = []
     last_height = driver.execute_script("return window.pageYOffset;")
+    consecutive_failures = 0
+    max_consecutive_failures = 5
 
     # Load previous state if exists
     if os.path.exists(state_file):
@@ -444,24 +538,26 @@ def _scrape_tweets_common(driver: webdriver.Chrome, limit: int, page_type: str, 
         except Exception as e:
             print(f"Error saving state: {e}")
 
-    # Improved scrolling parameters (from original script)
-    scroll_pause_time = 15  # Match original script timing
-    
-    # Tweet selectors
+    # Enhanced tweet selectors for 2025
     tweet_selectors = [
         'article[data-testid="tweet"]',
         'div[data-testid="tweet"]',
-        'article[role="article"]'
+        'article[role="article"]',
+        'div[data-testid="cellInnerDiv"] article',
+        '[data-testid="tweet"]'
     ]
 
     print(f"Starting to scrape {page_type} tweets...")
 
-    # Infinite scrolling loop (matching original script logic)
-    while len(tweets_data) < limit:
+    # Enhanced scrolling loop with better failure handling
+    while len(tweets_data) < limit and consecutive_failures < max_consecutive_failures:
         try:
             print(f"\n--- Scroll iteration {scroll_count + 1} ---")
             
-            # Find tweets using multiple selectors
+            # Add random delay before processing
+            human_like_delay()
+            
+            # Find tweets using enhanced selectors
             tweets = []
             for selector in tweet_selectors:
                 try:
@@ -475,17 +571,31 @@ def _scrape_tweets_common(driver: webdriver.Chrome, limit: int, page_type: str, 
             
             if not tweets:
                 print("No tweets found, scrolling to load more...")
-                driver.execute_script("window.scrollBy(0, 3000);")  # Match original scroll distance
-                time.sleep(scroll_pause_time)
+                consecutive_failures += 1
+                
+                # More aggressive scrolling when no tweets found
+                scroll_distances = [2000, 3000, 4000]
+                for distance in scroll_distances:
+                    driver.execute_script(f"window.scrollBy(0, {distance});")
+                    time.sleep(random.uniform(2, 5))
+                
+                time.sleep(random.uniform(8, 15))
                 continue
+            
+            # Reset failure counter when tweets are found
+            consecutive_failures = 0
 
-            # Process tweets
+            # Process tweets with enhanced error handling
             processed_count = 0
             for i, tweet in enumerate(tweets):
                 if len(tweets_data) >= limit:
                     break
                     
                 try:
+                    # Add small delay between processing tweets
+                    if i % 5 == 0:
+                        time.sleep(random.uniform(0.5, 1.5))
+                    
                     # Extract data in original format
                     original_data = extract_tweet_data_original_format(tweet)
                     if not original_data:
@@ -493,12 +603,13 @@ def _scrape_tweets_common(driver: webdriver.Chrome, limit: int, page_type: str, 
                     
                     tweet_text, tweet_date, external_link, images_links = original_data
 
-                    # Skip empty tweets
-                    if not tweet_text.strip() and images_links == "No Images":
+                    # Skip empty tweets and ads/promoted content
+                    if (not tweet_text.strip() and images_links == "No Images") or \
+                       any(keyword in tweet_text.lower() for keyword in ["promoted", "ad", "sponsored"]):
                         continue
 
-                    # Check for duplicates (matching original script logic)
-                    tweet_signature = (tweet_text, tweet_date, external_link, images_links)
+                    # Enhanced duplicate detection
+                    tweet_signature = (tweet_text.strip(), tweet_date, external_link, images_links)
                     if tweet_signature in tweets_collected:
                         continue
                     
@@ -506,60 +617,79 @@ def _scrape_tweets_common(driver: webdriver.Chrome, limit: int, page_type: str, 
                     
                     # Convert to bot format
                     bot_format_data = extract_tweet_data_bot_format(tweet)
-                    if bot_format_data:
+                    if bot_format_data and bot_format_data.get('text', '').strip():
                         tweets_data.append(bot_format_data)
                         processed_count += 1
                         
-                        # Print progress (matching original script format)
-                        print(f"Date: {tweet_date}, Tweet: {tweet_text}, Link: {external_link}, Images: {images_links}")
+                        # Print progress
+                        print(f"Tweet {len(tweets_data)}: {tweet_text[:100]}...")
                 
                 except Exception as e:
                     print(f"Error processing tweet {i+1}: {e}")
                     continue
 
-            print(f"Processed {processed_count} new tweets")
+            print(f"Processed {processed_count} new tweets (Total: {len(tweets_data)})")
             
             if len(tweets_data) >= limit:
                 print(f"Reached limit of {limit} tweets")
                 break
 
-            # Enhanced scrolling logic (from original script)
-            driver.execute_script("window.scrollBy(0, 3000);")
-            time.sleep(scroll_pause_time)
+            # Enhanced scrolling with randomization
+            scroll_distance = random.randint(2500, 4000)
+            driver.execute_script(f"window.scrollBy(0, {scroll_distance});")
+            
+            # Random pause time to avoid detection
+            pause_time = random.uniform(8, 18)
+            time.sleep(pause_time)
 
-            # Update heights
+            # Enhanced height tracking
             new_height = driver.execute_script("return document.body.scrollHeight")
-            print(f"Scroll count: {scroll_count}, New height: {new_height}, Last height: {last_height}")
+            current_scroll = driver.execute_script("return window.pageYOffset;")
+            print(f"Scroll: {scroll_count}, Height: {new_height}, Position: {current_scroll}")
 
-            # Check if scrolling is stuck (matching original script logic)
+            # Enhanced stuck detection
             if new_height == last_height:
-                print("Scrolling stuck, waiting...")
-                time.sleep(scroll_pause_time * 2)  # Wait longer to see if page loads
-                new_height = driver.execute_script("return document.body.scrollHeight")
-
+                print("Scrolling appears stuck, implementing recovery...")
+                
+                # Try multiple recovery strategies
+                recovery_strategies = [
+                    lambda: driver.execute_script("window.scrollTo(0, document.body.scrollHeight);"),
+                    lambda: driver.refresh(),
+                    lambda: driver.execute_script("location.reload();")
+                ]
+                
+                for strategy in recovery_strategies:
+                    try:
+                        strategy()
+                        time.sleep(random.uniform(10, 20))
+                        new_height_check = driver.execute_script("return document.body.scrollHeight")
+                        if new_height_check != new_height:
+                            new_height = new_height_check
+                            break
+                    except:
+                        continue
+                
                 if new_height == last_height:
-                    print("Scrolling still stuck, attempting to break...")
-                    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                    time.sleep(scroll_pause_time * 4)  # Wait and attempt to scroll down again
-                    new_height = driver.execute_script("return document.body.scrollHeight")
-
-                    if new_height == last_height:
-                        print("Scrolling broken, exiting...")
+                    consecutive_failures += 1
+                    if consecutive_failures >= max_consecutive_failures:
+                        print("Maximum consecutive failures reached, stopping...")
                         break
 
             last_height = new_height
             scroll_count += 1
 
-            # Save state periodically (matching original script frequency)
-            if scroll_count % 10 == 0:
+            # Save state periodically
+            if scroll_count % 8 == 0:
                 save_state()
 
         except WebDriverException as e:
             print(f"WebDriver error during scraping: {e}")
-            break
+            consecutive_failures += 1
+            time.sleep(random.uniform(5, 10))
         except Exception as e:
             print(f"Unexpected error during scraping: {e}")
-            break
+            consecutive_failures += 1
+            time.sleep(random.uniform(3, 8))
 
     # Final save and cleanup
     save_state()
@@ -575,10 +705,7 @@ def _scrape_tweets_common(driver: webdriver.Chrome, limit: int, page_type: str, 
     return tweets_data
 
 def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
-    """
-    Scrape tweets from the Twitter home timeline.
-    Returns a list of tweet dictionaries in bot-compatible format.
-    """
+    """Enhanced timeline scraping for 2025."""
     driver = None
     try:
         driver = setup_driver()
@@ -589,25 +716,51 @@ def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
             print("Login failed!")
             return []
 
-        # Navigate to home timeline
-        print("Navigating to home timeline...")
-        driver.get("https://x.com/home")
+        # Navigate to home timeline with retry
+        max_nav_attempts = 3
+        for attempt in range(max_nav_attempts):
+            try:
+                print(f"Navigating to home timeline (attempt {attempt + 1})...")
+                driver.get("https://x.com/home")
+                human_like_delay()
+                
+                # Wait for timeline to load with multiple fallback strategies
+                timeline_selectors = [
+                    'article[data-testid="tweet"]',
+                    'div[data-testid="tweet"]', 
+                    '[data-testid="primaryColumn"]',
+                    'main[role="main"]'
+                ]
+                
+                timeline_loaded = False
+                for selector in timeline_selectors:
+                    try:
+                        WebDriverWait(driver, 45).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+                        )
+                        print(f"Timeline loaded successfully with selector: {selector}")
+                        timeline_loaded = True
+                        break
+                    except TimeoutException:
+                        continue
+                
+                if timeline_loaded:
+                    break
+                elif attempt == max_nav_attempts - 1:
+                    print("Timeline loading failed, but continuing...")
+                    
+            except Exception as e:
+                print(f"Navigation attempt {attempt + 1} failed: {e}")
+                if attempt < max_nav_attempts - 1:
+                    time.sleep(random.uniform(5, 10))
         
-        # Wait for timeline to load with extended timeout
-        try:
-            WebDriverWait(driver, 60).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'article[data-testid="tweet"]'))
-            )
-            print("Timeline loaded successfully!")
-        except TimeoutException:
-            print("Timeline loading timeout - continuing anyway")
-        
-        time.sleep(25)  # Match original script timing
+        # Additional wait for content to stabilize
+        time.sleep(random.uniform(15, 25))
 
-        # Use common scraping logic
+        # Use enhanced common scraping logic
         tweets_data = _scrape_tweets_common(driver, limit, "timeline")
 
-        # Save to Excel file for compatibility (matching original script format)
+        # Save to Excel file for compatibility
         if tweets_data:
             try:
                 original_format_data = []
@@ -650,10 +803,7 @@ def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
                 print(f"Error during driver cleanup: {e}")
 
 def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
-    """
-    Scrape tweets from a specific user's profile.
-    Returns a list of tweet dictionaries in bot-compatible format.
-    """
+    """Enhanced user tweet scraping for 2025."""
     # Clean username
     username = username.replace('@', '').strip()
     if not username:
@@ -670,34 +820,66 @@ def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
             print("Login failed!")
             return []
 
-        # Navigate to user profile
-        profile_url = f"https://x.com/{username}"
-        print(f"Navigating to user profile: {profile_url}")
-        driver.get(profile_url)
+        # Navigate to user profile with retry mechanism
+        max_nav_attempts = 3
+        for attempt in range(max_nav_attempts):
+            try:
+                profile_url = f"https://x.com/{username}"
+                print(f"Navigating to user profile: {profile_url} (attempt {attempt + 1})")
+                driver.get(profile_url)
+                human_like_delay()
+                
+                # Enhanced profile loading detection
+                profile_indicators = [
+                    'article[data-testid="tweet"]',
+                    'div[data-testid="tweet"]',
+                    '[data-testid="UserName"]',
+                    '[data-testid="primaryColumn"]',
+                    'div[data-testid="emptyState"]'  # For accounts with no tweets
+                ]
+                
+                profile_loaded = False
+                for selector in profile_indicators:
+                    try:
+                        WebDriverWait(driver, 45).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+                        )
+                        print(f"Profile loaded successfully with indicator: {selector}")
+                        profile_loaded = True
+                        break
+                    except TimeoutException:
+                        continue
+                
+                # Check for account issues
+                error_indicators = [
+                    "this account doesn't exist",
+                    "account suspended", 
+                    "user not found",
+                    "something went wrong",
+                    "doesn't exist"
+                ]
+                
+                page_content = driver.page_source.lower()
+                for error in error_indicators:
+                    if error in page_content:
+                        print(f"Account issue detected: {error}")
+                        return []
+                
+                if profile_loaded or attempt == max_nav_attempts - 1:
+                    break
+                    
+            except Exception as e:
+                print(f"Profile navigation attempt {attempt + 1} failed: {e}")
+                if attempt < max_nav_attempts - 1:
+                    time.sleep(random.uniform(5, 10))
         
-        # Wait for profile to load with extended timeout
-        try:
-            WebDriverWait(driver, 60).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'article[data-testid="tweet"]'))
-            )
-            print("Profile loaded successfully!")
-        except TimeoutException:
-            print("Profile loading timeout - checking if user exists...")
-            
-            # Check if profile exists
-            if any(phrase in driver.page_source.lower() for phrase in 
-                   ["this account doesn't exist", "account suspended", "user not found"]):
-                print(f"User @{username} does not exist or is suspended!")
-                return []
-            
-            print("Continuing anyway...")
-        
-        time.sleep(25)  # Match original script timing
+        # Additional wait for profile content to stabilize
+        time.sleep(random.uniform(15, 25))
 
-        # Use common scraping logic
+        # Use enhanced common scraping logic
         tweets_data = _scrape_tweets_common(driver, limit, "user", username)
 
-        # Save to Excel file (matching original script format)
+        # Save to Excel file
         if tweets_data:
             try:
                 original_format_data = []
@@ -711,8 +893,9 @@ def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
                     ])
                 
                 df = pd.DataFrame(original_format_data, columns=["Tweet", "Date", "Link", "Images"])
-                df.to_excel(f"{username}_tweets.xlsx", index=False)
-                print(f"Saved {len(original_format_data)} tweets to {username}_tweets.xlsx")
+                filename = f"{username}_tweets.xlsx"
+                df.to_excel(filename, index=False)
+                print(f"Saved {len(original_format_data)} tweets to {filename}")
             except Exception as e:
                 print(f"Failed to save Excel file: {e}")
 
@@ -738,4 +921,87 @@ def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
                         pass
             except Exception as e:
                 print(f"Error during driver cleanup: {e}")
-        print("Script execution completed.")  # Match original script message
+        print("Script execution completed.")
+
+# Additional utility functions for better reliability
+
+def check_rate_limit(driver: webdriver.Chrome) -> bool:
+    """Check if we've hit Twitter's rate limit."""
+    try:
+        rate_limit_indicators = [
+            "rate limit exceeded",
+            "too many requests",
+            "try again later",
+            "temporarily restricted"
+        ]
+        
+        page_content = driver.page_source.lower()
+        for indicator in rate_limit_indicators:
+            if indicator in page_content:
+                print(f"Rate limit detected: {indicator}")
+                return True
+        return False
+    except:
+        return False
+
+def handle_popup_dialogs(driver: webdriver.Chrome):
+    """Handle various popup dialogs that might appear."""
+    try:
+        popup_selectors = [
+            '[data-testid="confirmationSheetDialog"]',
+            '[role="dialog"]',
+            '[data-testid="modal"]',
+            'div[aria-modal="true"]'
+        ]
+        
+        for selector in popup_selectors:
+            try:
+                popup = driver.find_element(By.CSS_SELECTOR, selector)
+                if popup.is_displayed():
+                    # Try to find and click close button
+                    close_selectors = [
+                        '[data-testid="confirmationSheetCancel"]',
+                        '[aria-label="Close"]',
+                        'button[aria-label*="close"]',
+                        'button[aria-label*="Close"]'
+                    ]
+                    
+                    for close_selector in close_selectors:
+                        try:
+                            close_btn = popup.find_element(By.CSS_SELECTOR, close_selector)
+                            close_btn.click()
+                            print("Closed popup dialog")
+                            time.sleep(1)
+                            return
+                        except:
+                            continue
+            except:
+                continue
+    except:
+        pass
+
+def wait_for_stable_page(driver: webdriver.Chrome, timeout: int = 30):
+    """Wait for page to become stable (no major DOM changes)."""
+    try:
+        start_time = time.time()
+        last_height = driver.execute_script("return document.body.scrollHeight")
+        stable_count = 0
+        
+        while time.time() - start_time < timeout:
+            time.sleep(2)
+            current_height = driver.execute_script("return document.body.scrollHeight")
+            
+            if current_height == last_height:
+                stable_count += 1
+                if stable_count >= 3:  # Page stable for 6 seconds
+                    print("Page appears stable")
+                    return True
+            else:
+                stable_count = 0
+            
+            last_height = current_height
+        
+        print("Page stability timeout")
+        return False
+    except:
+        return False
