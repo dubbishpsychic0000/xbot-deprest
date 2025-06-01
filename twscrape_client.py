@@ -15,6 +15,7 @@ from webdriver_manager.chrome import ChromeDriverManager as CM
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
 from dateutil.parser import parse
 from datetime import datetime
+import pandas as pd
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -65,27 +66,74 @@ def login(driver: webdriver.Chrome) -> bool:
         print(f"[!] Login failed: {e}")
         return False
 
-def extract_tweet_data(tweet_element) -> Optional[Dict]:
+def extract_tweet_data_original_format(tweet_element) -> Optional[tuple]:
+    """
+    Extract tweet data from a Selenium WebElement and return in ORIGINAL format.
+    Returns tuple: (tweet_text, tweet_date, external_link, images_links)
+    """
+    try:
+        # Tweet text - exactly like the original
+        try:
+            tweet_text = tweet_element.find_element(By.CSS_SELECTOR, 'div[lang]').text
+        except NoSuchElementException:
+            tweet_text = ""
+            print("No tweet text found")
+
+        # Timestamp - exactly like the original
+        try:
+            timestamp = tweet_element.find_element(By.TAG_NAME, "time").get_attribute("datetime")
+            tweet_date = parse(timestamp).isoformat().split("T")[0]
+        except Exception as ex:
+            tweet_date = ""
+            print(f"Error parsing date: {ex}")
+
+        # External link - exactly like the original
+        try:
+            anchor = tweet_element.find_element(By.CSS_SELECTOR, "a[aria-label][dir]")
+            external_link = anchor.get_attribute("href")
+        except Exception as ex:
+            external_link = ""
+            print(f"Error finding external link: {ex}")
+
+        # Images - exactly like the original
+        try:
+            images = tweet_element.find_elements(By.CSS_SELECTOR, 'div[data-testid="tweetPhoto"] img')
+            tweet_images = [img.get_attribute("src") for img in images]
+        except Exception as ex:
+            tweet_images = []
+            print(f"Error finding images: {ex}")
+
+        images_links = ', '.join(tweet_images) if tweet_images else "No Images"
+
+        return (tweet_text, tweet_date, external_link, images_links)
+
+    except Exception as e:
+        print(f"[!] Failed to extract tweet data: {e}")
+        return None
+
+def extract_tweet_data_bot_format(tweet_element) -> Optional[Dict]:
     """
     Extract tweet data from a Selenium WebElement and return in bot-compatible format.
     Returns dict with keys: id, text, url, created_at, author, media
     """
     try:
-        # Tweet text
-        try:
-            tweet_text = tweet_element.find_element(By.CSS_SELECTOR, 'div[lang]').text
-        except NoSuchElementException:
-            tweet_text = ""
+        # First get the original format data
+        original_data = extract_tweet_data_original_format(tweet_element)
+        if not original_data:
+            return None
+        
+        tweet_text, tweet_date, external_link, images_links = original_data
 
-        # Timestamp → created_at (ISO format)
+        # Convert timestamp to ISO format for bot compatibility
         try:
-            timestamp_elem = tweet_element.find_element(By.TAG_NAME, "time")
-            timestamp_str = timestamp_elem.get_attribute("datetime")
-            created_at = parse(timestamp_str).isoformat()
+            if tweet_date:
+                created_at = f"{tweet_date}T00:00:00"  # Add time component
+            else:
+                created_at = datetime.now().isoformat()
         except Exception:
             created_at = datetime.now().isoformat()
 
-        # Tweet URL and ID
+        # Generate tweet URL and ID - try to get real URL first
         try:
             link_elem = tweet_element.find_element(By.CSS_SELECTOR, "a[href*='/status/']")
             tweet_url = link_elem.get_attribute("href")
@@ -96,7 +144,7 @@ def extract_tweet_data(tweet_element) -> Optional[Dict]:
             tweet_id = fallback_hash
             tweet_url = f"https://x.com/status/{fallback_hash}"
 
-        # Author username (without '@')
+        # Extract author username
         try:
             # Try multiple selectors for author
             author_selectors = [
@@ -107,29 +155,23 @@ def extract_tweet_data(tweet_element) -> Optional[Dict]:
             author = "unknown"
             for selector in author_selectors:
                 try:
-                    usr_elem = tweet_element.find_element(By.CSS_SELECTOR, selector)
-                    author_text = usr_elem.text
-                    if author_text and not author_text.startswith("@"):
-                        # Find the username (usually has @)
-                        usr_elems = tweet_element.find_elements(By.CSS_SELECTOR, 'div[data-testid="User-Name"] span')
-                        for elem in usr_elems:
-                            if elem.text.startswith("@"):
-                                author = elem.text.replace("@", "")
-                                break
-                    elif author_text.startswith("@"):
-                        author = author_text.replace("@", "")
-                    break
+                    usr_elems = tweet_element.find_elements(By.CSS_SELECTOR, selector)
+                    for elem in usr_elems:
+                        text = elem.text.strip()
+                        if text.startswith("@"):
+                            author = text.replace("@", "")
+                            break
+                    if author != "unknown":
+                        break
                 except:
                     continue
         except Exception:
             author = "unknown"
 
-        # Images/Media
-        try:
-            imgs = tweet_element.find_elements(By.CSS_SELECTOR, 'div[data-testid="tweetPhoto"] img')
-            media = [img.get_attribute("src") for img in imgs if img.get_attribute("src")]
-        except Exception:
-            media = []
+        # Convert images to list format
+        media = []
+        if images_links and images_links != "No Images":
+            media = [img.strip() for img in images_links.split(',') if img.strip()]
 
         # Skip if no meaningful content
         if not tweet_text.strip() and not media:
@@ -145,7 +187,7 @@ def extract_tweet_data(tweet_element) -> Optional[Dict]:
         }
 
     except Exception as e:
-        print(f"[!] Failed to extract tweet data: {e}")
+        print(f"[!] Failed to extract tweet data for bot format: {e}")
         return None
 
 async def fetch_tweets(source_type: str, source: str, limit: int = 20) -> List[Dict]:
@@ -160,16 +202,21 @@ async def fetch_tweets(source_type: str, source: str, limit: int = 20) -> List[D
     Returns:
         List of tweet dictionaries with keys: id, text, url, created_at, author, media
     """
-    return scrape_timeline_tweets(limit) if source_type == "timeline" else []
+    if source_type == "timeline":
+        return scrape_timeline_tweets(limit)
+    elif source_type == "user":
+        return scrape_user_tweets(source, limit)
+    else:
+        return []
 
 def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
     """
-    Scrape tweets from the Twitter home timeline.
+    Scrape tweets from the Twitter home timeline - MATCHES ORIGINAL SCRIPT EXACTLY.
     Returns a list of tweet dictionaries in bot-compatible format.
     """
     
     # State management files
-    scroll_state_file = "timeline_scroll_state.pkl"
+    scroll_state_file = "scroll_state.pkl"
     
     driver = setup_driver()
     
@@ -184,50 +231,224 @@ def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
         driver.get("https://x.com/home")
         time.sleep(25)  # Wait for timeline to load
 
-        # Load previous state if exists
+        # Initialize scrolling variables - EXACTLY like original
         scroll_count = 0
-        last_height = 0
-        tweets_collected = set()
-        tweets_data = []
+        tweets_collected = set()  # Use a set to avoid duplicates
+        tweets_data = []  # List to store tweet data
 
+        # Load previous state from pickle file if exists - EXACTLY like original
         if os.path.exists(scroll_state_file):
-            try:
-                with open(scroll_state_file, "rb") as f:
+            with open(scroll_state_file, "rb") as f:
+                try:
                     scroll_count, last_height, tweets_collected, tweets_data = pickle.load(f)
-                    print(f"Resumed from previous state. Already collected: {len(tweets_data)} tweets")
-            except Exception as e:
-                print(f"Error loading state: {e}. Starting fresh.")
+                    print("Resumed from previous state.")
+                except Exception as e:
+                    print(f"Error loading state from {scroll_state_file}: {e}")
+                    print("Starting fresh.")
+        else:
+            print("No previous state found. Starting fresh.")
+            last_height = driver.execute_script("return window.pageYOffset;")
 
+        # Function to save current state to pickle file - EXACTLY like original
         def save_state():
-            """Save current scraping state"""
             with open(scroll_state_file, "wb") as f:
                 pickle.dump((scroll_count, last_height, tweets_collected, tweets_data), f)
 
-        # 3) Scroll and collect tweets
+        # Scrolling variables - EXACTLY like original
         scroll_pause_time = 15
-        max_scrolls = max(10, limit // 3)  # Estimate scrolls needed
-        
-        while len(tweets_data) < limit and scroll_count < max_scrolls:
+        new_height = 0
+
+        # Main scrolling loop - EXACTLY like original logic
+        while True:  # Infinite loop for continuous scrolling
             try:
-                # Find all tweet elements on current page
-                tweet_elements = driver.find_elements(By.CSS_SELECTOR, 'article[data-testid="tweet"]')
-                
-                for tweet_element in tweet_elements:
-                    if len(tweets_data) >= limit:
-                        break
-                    
-                    # Extract tweet data
-                    tweet_data = extract_tweet_data(tweet_element)
-                    if not tweet_data:
+                tweets = driver.find_elements(By.CSS_SELECTOR, 'article[data-testid="tweet"]')
+
+                for tweet in tweets:
+                    # Extract in original format first
+                    original_data = extract_tweet_data_original_format(tweet)
+                    if not original_data:
                         continue
                     
-                    # Check for duplicates using tweet ID
-                    tweet_id = tweet_data["id"]
-                    if tweet_id not in tweets_collected:
-                        tweets_collected.add(tweet_id)
-                        tweets_data.append(tweet_data)
+                    tweet_text, tweet_date, external_link, images_links = original_data
+
+                    # Check for duplicates using original format - EXACTLY like original
+                    if (tweet_text, tweet_date, external_link, images_links) not in tweets_collected:
+                        tweets_collected.add((tweet_text, tweet_date, external_link, images_links))
                         
-                        print(f"Collected tweet {len(tweets_data)}/{limit}: @{tweet_data['author']} - {tweet_data['text'][:50]}...")
+                        # Convert to bot format for return
+                        bot_format_data = extract_tweet_data_bot_format(tweet)
+                        if bot_format_data:
+                            tweets_data.append(bot_format_data)
+                        
+                        # Print in original format - EXACTLY like original
+                        print(f"Date: {tweet_date}, Tweet: {tweet_text}, Link: {external_link}, Images: {images_links}")
+                        
+                        # Stop if we have enough tweets
+                        if len(tweets_data) >= limit:
+                            print(f"Reached limit of {limit} tweets, stopping...")
+                            break
+
+                # Break if we have enough tweets
+                if len(tweets_data) >= limit:
+                    break
+
+                # Scroll down - EXACTLY like original
+                driver.execute_script("window.scrollBy(0, 3000);")
+                time.sleep(scroll_pause_time)
+
+                # Update heights - EXACTLY like original
+                new_height = driver.execute_script("return document.body.scrollHeight")
+                print(f"Scroll count: {scroll_count}, New height: {new_height}, Last height: {last_height}")
+
+                # Check if scrolling is stuck - EXACTLY like original
+                if new_height == last_height:
+                    print("Scrolling stuck, waiting...")
+                    time.sleep(scroll_pause_time * 2)  # Wait longer to see if page loads
+                    new_height = driver.execute_script("return document.body.scrollHeight")
+
+                    if new_height == last_height:
+                        print("Scrolling still stuck, attempting to break...")
+                        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                        time.sleep(scroll_pause_time * 4)  # Wait and attempt to scroll down again
+                        new_height = driver.execute_script("return document.body.scrollHeight")
+
+                        if new_height == last_height:
+                            print("Scrolling broken, exiting...")
+                            break
+
+                last_height = new_height
+                scroll_count += 1
+
+                # Save state periodically - EXACTLY like original
+                if scroll_count % 10 == 0:  # Adjust frequency of state saving as needed
+                    save_state()
+
+            except WebDriverException as e:
+                print(f"An error occurred during scraping: {e}")
+                break
+
+        # Final save
+        save_state()
+
+        # Close the browser - EXACTLY like original
+        driver.quit()
+
+        # Create Excel file in original format for compatibility
+        try:
+            original_format_data = []
+            for tweet_data in tweets_data:
+                # Convert back to original format for Excel
+                media_str = ', '.join(tweet_data.get('media', [])) if tweet_data.get('media') else "No Images"
+                original_format_data.append([
+                    tweet_data.get('text', ''),
+                    tweet_data.get('created_at', '').split('T')[0],  # Extract date part
+                    tweet_data.get('url', ''),
+                    media_str
+                ])
+            
+            df = pd.DataFrame(original_format_data, columns=["Tweet", "Date", "Link", "Images"])
+            df.to_excel("tweets2.xlsx", index=False)
+            print(f"Saved {len(original_format_data)} tweets to tweets2.xlsx")
+        except Exception as e:
+            print(f"Failed to save Excel file: {e}")
+
+        # Print the total number of tweets collected - EXACTLY like original
+        print(f"Total tweets collected: {len(tweets_data)}")
+
+        # Delete the scroll state file after successful scraping - EXACTLY like original
+        if os.path.exists(scroll_state_file):
+            os.remove(scroll_state_file)
+
+        print("Script execution completed.")
+        
+        return tweets_data
+
+    except Exception as e:
+        print(f"Error in scrape_timeline_tweets: {e}")
+        driver.quit()
+        return []
+
+def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
+    """
+    Scrape tweets from a specific user's profile.
+    Returns a list of tweet dictionaries in bot-compatible format.
+    """
+    # Remove @ if present
+    username = username.replace('@', '')
+    
+    # State management files
+    scroll_state_file = f"user_{username}_scroll_state.pkl"
+    
+    driver = setup_driver()
+    
+    try:
+        # 1) Log in first
+        if not login(driver):
+            print("Login failed!")
+            driver.quit()
+            return []
+
+        # 2) Navigate to user profile - like your original script
+        profile_url = f"https://x.com/{username}"
+        driver.get(profile_url)
+        time.sleep(25)  # Wait for profile to load
+
+        # Initialize scrolling variables - EXACTLY like original
+        scroll_count = 0
+        tweets_collected = set()  # Use a set to avoid duplicates
+        tweets_data = []  # List to store tweet data
+
+        # Load previous state from pickle file if exists
+        if os.path.exists(scroll_state_file):
+            with open(scroll_state_file, "rb") as f:
+                try:
+                    scroll_count, last_height, tweets_collected, tweets_data = pickle.load(f)
+                    print("Resumed from previous state.")
+                except Exception as e:
+                    print(f"Error loading state from {scroll_state_file}: {e}")
+                    print("Starting fresh.")
+        else:
+            print("No previous state found. Starting fresh.")
+            last_height = driver.execute_script("return window.pageYOffset;")
+
+        # Function to save current state to pickle file
+        def save_state():
+            with open(scroll_state_file, "wb") as f:
+                pickle.dump((scroll_count, last_height, tweets_collected, tweets_data), f)
+
+        # Scrolling variables
+        scroll_pause_time = 15
+        new_height = 0
+
+        # Main scrolling loop - same logic as timeline
+        while True:  # Infinite loop for continuous scrolling
+            try:
+                tweets = driver.find_elements(By.CSS_SELECTOR, 'article[data-testid="tweet"]')
+
+                for tweet in tweets:
+                    # Extract in original format first
+                    original_data = extract_tweet_data_original_format(tweet)
+                    if not original_data:
+                        continue
+                    
+                    tweet_text, tweet_date, external_link, images_links = original_data
+
+                    # Check for duplicates using original format
+                    if (tweet_text, tweet_date, external_link, images_links) not in tweets_collected:
+                        tweets_collected.add((tweet_text, tweet_date, external_link, images_links))
+                        
+                        # Convert to bot format for return
+                        bot_format_data = extract_tweet_data_bot_format(tweet)
+                        if bot_format_data:
+                            tweets_data.append(bot_format_data)
+                        
+                        # Print in original format
+                        print(f"Date: {tweet_date}, Tweet: {tweet_text}, Link: {external_link}, Images: {images_links}")
+                        
+                        # Stop if we have enough tweets
+                        if len(tweets_data) >= limit:
+                            print(f"Reached limit of {limit} tweets, stopping...")
+                            break
 
                 # Break if we have enough tweets
                 if len(tweets_data) >= limit:
@@ -237,55 +458,75 @@ def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
                 driver.execute_script("window.scrollBy(0, 3000);")
                 time.sleep(scroll_pause_time)
 
-                # Check scroll progress
+                # Update heights
                 new_height = driver.execute_script("return document.body.scrollHeight")
-                print(f"Scroll {scroll_count + 1}: Height {new_height}, Collected: {len(tweets_data)}")
+                print(f"Scroll count: {scroll_count}, New height: {new_height}, Last height: {last_height}")
 
-                # Handle stuck scrolling
+                # Check if scrolling is stuck
                 if new_height == last_height:
                     print("Scrolling stuck, waiting...")
                     time.sleep(scroll_pause_time * 2)
                     new_height = driver.execute_script("return document.body.scrollHeight")
-                    
+
                     if new_height == last_height:
-                        print("Still stuck, trying to scroll to bottom...")
+                        print("Scrolling still stuck, attempting to break...")
                         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                        time.sleep(scroll_pause_time * 2)
+                        time.sleep(scroll_pause_time * 4)
                         new_height = driver.execute_script("return document.body.scrollHeight")
-                        
+
                         if new_height == last_height:
-                            print("Scrolling completely stuck, breaking...")
+                            print("Scrolling broken, exiting...")
                             break
 
                 last_height = new_height
                 scroll_count += 1
 
                 # Save state periodically
-                if scroll_count % 5 == 0:
+                if scroll_count % 10 == 0:
                     save_state()
 
             except WebDriverException as e:
-                print(f"Web driver error during scraping: {e}")
+                print(f"An error occurred during scraping: {e}")
                 break
-            except Exception as e:
-                print(f"Error during scraping: {e}")
-                continue
 
-        # Final save and cleanup
+        # Final save
         save_state()
-        
-        # Clean up state file if we got enough tweets
-        if len(tweets_data) >= limit and os.path.exists(scroll_state_file):
-            os.remove(scroll_state_file)
-            print("Scraping completed successfully, cleaned up state file.")
 
+        # Close the browser
         driver.quit()
-        
+
+        # Create Excel file in original format for compatibility
+        try:
+            original_format_data = []
+            for tweet_data in tweets_data:
+                # Convert back to original format for Excel
+                media_str = ', '.join(tweet_data.get('media', [])) if tweet_data.get('media') else "No Images"
+                original_format_data.append([
+                    tweet_data.get('text', ''),
+                    tweet_data.get('created_at', '').split('T')[0],  # Extract date part
+                    tweet_data.get('url', ''),
+                    media_str
+                ])
+            
+            df = pd.DataFrame(original_format_data, columns=["Tweet", "Date", "Link", "Images"])
+            df.to_excel(f"{username}_tweets.xlsx", index=False)
+            print(f"Saved {len(original_format_data)} tweets to {username}_tweets.xlsx")
+        except Exception as e:
+            print(f"Failed to save Excel file: {e}")
+
+        # Print the total number of tweets collected
         print(f"Total tweets collected: {len(tweets_data)}")
-        return tweets_data[:limit]
+
+        # Delete the scroll state file after successful scraping
+        if os.path.exists(scroll_state_file):
+            os.remove(scroll_state_file)
+
+        print("Script execution completed.")
+        
+        return tweets_data
 
     except Exception as e:
-        print(f"Error in scrape_timeline_tweets: {e}")
+        print(f"Error in scrape_user_tweets: {e}")
         driver.quit()
         return []
 
@@ -301,20 +542,15 @@ def save_tweets_to_files(tweets_data: List[Dict], filename_base: str = "timeline
         json.dump(tweets_data, f, indent=2, ensure_ascii=False)
     print(f"Saved {len(tweets_data)} tweets to {json_filename}")
     
-    # Save as Excel (for human review)
+    # Save as Excel (for human review) - in original format
     try:
-        import pandas as pd
-        
-        # Flatten the data for Excel
         excel_data = []
         for tweet in tweets_data:
             excel_data.append({
-                "ID": tweet["id"],
-                "Author": tweet["author"],
-                "Text": tweet["text"],
-                "Created_At": tweet["created_at"],
-                "URL": tweet["url"],
-                "Media": ", ".join(tweet["media"]) if tweet["media"] else "No Media"
+                "Tweet": tweet.get("text", ""),
+                "Date": tweet.get("created_at", "").split("T")[0],  # Extract date part
+                "Link": tweet.get("url", ""),
+                "Images": ", ".join(tweet.get("media", [])) if tweet.get("media") else "No Images"
             })
         
         df = pd.DataFrame(excel_data)
@@ -347,5 +583,7 @@ if __name__ == "__main__":
             print(f"URL: {tweet['url']}")
             if tweet['media']:
                 print(f"Media: {len(tweet['media'])} items")
+                for j, media_url in enumerate(tweet['media']):
+                    print(f"  Media {j+1}: {media_url}")
     else:
         print("No tweets collected!")
