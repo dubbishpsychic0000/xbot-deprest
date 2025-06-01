@@ -330,7 +330,7 @@ if __name__ == "__main__":
     print("Starting Twitter timeline scraping...")
     
     # Scrape tweets from timeline
-    tweets = scrape_timeline_tweets(limit=50)  # Adjust limit as needed
+    tweets = scrape_timeline_tweets(limit=10)  # Adjust limit as needed
     
     if tweets:
         # Save to files
