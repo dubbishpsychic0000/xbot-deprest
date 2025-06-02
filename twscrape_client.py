@@ -9,10 +9,15 @@ import pandas as pd
 from dotenv import load_dotenv
 import random
 import time
+import logging
 
-# Import twscrape - latest version 0.17.0
+# Import twscrape - latest version
 from twscrape import API, gather, Tweet, User
 from twscrape.logger import set_log_level
+
+# Configuration du logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -26,49 +31,59 @@ TWITTER_COOKIES = os.getenv("TWITTER_COOKIES", "")
 # Global API instance
 api = None
 
+class TwitterScraperError(Exception):
+    """Exception personnalisée pour le scraper Twitter"""
+    pass
+
 def setup_driver() -> bool:
     """Initialize twscrape API instance with anti-detection options."""
     global api
     try:
-        print("Initializing twscrape API...")
+        logger.info("Initializing twscrape API...")
         
         # Initialize API with accounts database
         api = API("accounts.db")
         
         # Set debug level for troubleshooting
-        set_log_level("INFO")
+        set_log_level("DEBUG")  # Changé en DEBUG pour plus d'informations
         
-        print("twscrape API initialized successfully")
+        logger.info("twscrape API initialized successfully")
         return True
         
     except Exception as e:
-        print(f"Failed to initialize twscrape API: {e}")
+        logger.error(f"Failed to initialize twscrape API: {e}")
         return False
 
-def human_like_delay():
-    """Add human-like delays to avoid detection."""
-    time.sleep(random.uniform(1, 3))
-
-async def login() -> bool:
-    """Login function using twscrape account management."""
-    global api
-    
+def validate_credentials() -> bool:
+    """Valide que les credentials nécessaires sont présents"""
     if not TWITTER_USERNAME or not TWITTER_PASSWORD:
-        print("Twitter credentials not found in environment variables")
+        logger.error("TWITTER_USERNAME et TWITTER_PASSWORD sont requis dans le fichier .env")
         return False
-        
+    
+    if not TWITTER_EMAIL:
+        logger.warning("TWITTER_EMAIL manquant - peut causer des problèmes de vérification")
+    
+    return True
+
+async def reset_account_if_needed(username: str) -> bool:
+    """Reset un compte s'il est dans un état invalide"""
     try:
-        print("Setting up Twitter account...")
-        
-        # Check if account already exists
-        accounts = await api.pool.accounts_info()
-        account_exists = any(acc.username == TWITTER_USERNAME for acc in accounts)
-        
-        if not account_exists:
-            print(f"Adding new account: {TWITTER_USERNAME}")
+        # Supprimer le compte existant s'il pose problème
+        await api.pool.delete_accounts(username)
+        logger.info(f"Compte {username} supprimé pour reset")
+        return True
+    except Exception as e:
+        logger.warning(f"Impossible de supprimer le compte {username}: {e}")
+        return False
+
+async def add_account_with_retry(max_retries: int = 3) -> bool:
+    """Ajoute un compte avec retry logic"""
+    for attempt in range(max_retries):
+        try:
+            logger.info(f"Tentative {attempt + 1}/{max_retries} d'ajout du compte")
             
-            # Add account with cookies if available (more stable)
             if TWITTER_COOKIES:
+                # Méthode privilégiée avec cookies
                 await api.pool.add_account(
                     username=TWITTER_USERNAME,
                     password=TWITTER_PASSWORD,
@@ -76,98 +91,149 @@ async def login() -> bool:
                     email_password=TWITTER_EMAIL_PASSWORD,
                     cookies=TWITTER_COOKIES
                 )
-                print("Account added with cookies")
+                logger.info("Compte ajouté avec cookies")
             else:
-                # Add account with login/password (requires email verification)
+                # Méthode avec login/password
                 await api.pool.add_account(
                     username=TWITTER_USERNAME,
                     password=TWITTER_PASSWORD,
                     email=TWITTER_EMAIL,
                     email_password=TWITTER_EMAIL_PASSWORD
                 )
-                print("Account added with login credentials")
-        else:
-            print(f"Account {TWITTER_USERNAME} already exists")
+                logger.info("Compte ajouté avec credentials")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Échec tentative {attempt + 1}: {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(5)  # Attendre avant retry
+                
+    return False
+
+async def login() -> bool:
+    """Login function using twscrape account management."""
+    global api
+    
+    if not validate_credentials():
+        return False
         
-        # Login to all accounts
-        print("Logging in to Twitter accounts...")
-        await api.pool.login_all()
+    try:
+        logger.info("Configuration du compte Twitter...")
         
-        # Check if login was successful
-        logged_in_accounts = [acc for acc in await api.pool.accounts_info() if acc.logged_in]
-        if not logged_in_accounts:
-            print("No accounts successfully logged in")
+        # Vérifier les comptes existants
+        accounts = await api.pool.accounts_info()
+        account_exists = False
+        account_active = False
+        
+        for acc in accounts:
+            acc_username = acc.get('username') if isinstance(acc, dict) else getattr(acc, 'username', None)
+            acc_active = acc.get('active') if isinstance(acc, dict) else getattr(acc, 'active', False)
+            acc_logged_in = acc.get('logged_in') if isinstance(acc, dict) else getattr(acc, 'logged_in', False)
+            
+            if acc_username == TWITTER_USERNAME:
+                account_exists = True
+                account_active = acc_active
+                logger.info(f"Compte trouvé: {acc_username}, actif: {acc_active}, connecté: {acc_logged_in}")
+                break
+        
+        # Si le compte n'existe pas, l'ajouter
+        if not account_exists:
+            logger.info(f"Ajout du nouveau compte: {TWITTER_USERNAME}")
+            if not await add_account_with_retry():
+                logger.error("Impossible d'ajouter le compte")
+                return False
+            # Vérifier à nouveau après ajout
+            accounts = await api.pool.accounts_info()
+            for acc in accounts:
+                acc_username = acc.get('username') if isinstance(acc, dict) else getattr(acc, 'username', None)
+                if acc_username == TWITTER_USERNAME:
+                    account_active = acc.get('active') if isinstance(acc, dict) else getattr(acc, 'active', False)
+                    break
+        
+        # Si le compte n'est pas actif, essayer de forcer la connexion
+        if not account_active:
+            logger.warning("Compte inactif, tentative de login forcé...")
+            try:
+                await api.pool.login_all()
+                await asyncio.sleep(5)  # Attendre plus longtemps
+            except Exception as e:
+                logger.warning(f"Login forcé échoué: {e}")
+        
+        # Vérifier le statut final - accepter les comptes actifs même s'ils ne sont pas "logged_in"
+        accounts = await api.pool.accounts_info()
+        usable_accounts = []
+        
+        for acc in accounts:
+            acc_username = acc.get('username') if isinstance(acc, dict) else getattr(acc, 'username', None)
+            acc_active = acc.get('active') if isinstance(acc, dict) else getattr(acc, 'active', False)
+            acc_logged_in = acc.get('logged_in') if isinstance(acc, dict) else getattr(acc, 'logged_in', False)
+            
+            # Accepter les comptes actifs (twscrape peut fonctionner avec des comptes "active" même s'ils ne sont pas "logged_in")
+            if acc_active or acc_logged_in:
+                usable_accounts.append(acc)
+                logger.info(f"Compte utilisable: {acc_username} (actif: {acc_active}, connecté: {acc_logged_in})")
+        
+        if not usable_accounts:
+            logger.error("Aucun compte utilisable trouvé")
+            await print_troubleshooting_info()
             return False
             
-        print(f"Successfully logged in {len(logged_in_accounts)} account(s)")
+        logger.info(f"Comptes utilisables trouvés: {len(usable_accounts)}")
         return True
                 
     except Exception as e:
-        print(f"Login failed with error: {e}")
+        logger.error(f"Échec de la connexion: {e}")
+        await print_troubleshooting_info()
         return False
 
-def extract_tweet_data_original_format(tweet: Tweet) -> Optional[Tuple[str, str, str, str]]:
-    """Extract tweet data in original format - matching working script exactly."""
-    try:
-        # Extract tweet text
-        tweet_text = tweet.rawContent or ""
-        
-        # Extract timestamp and format as date
-        tweet_date = ""
-        if tweet.date:
-            tweet_date = tweet.date.strftime("%Y-%m-%d")
-        
-        # Extract external link - use tweet URL
-        external_link = tweet.url or ""
-        
-        # Extract images
-        tweet_images = []
-        if hasattr(tweet, 'media') and tweet.media:
-            for media in tweet.media:
-                if hasattr(media, 'mediaUrl') and media.mediaUrl:
-                    tweet_images.append(media.mediaUrl)
-                elif hasattr(media, 'url') and media.url:
-                    tweet_images.append(media.url)
-
-        images_links = ', '.join(tweet_images) if tweet_images else "No Images"
-
-        return (tweet_text, tweet_date, external_link, images_links)
-
-    except Exception as e:
-        print(f"Failed to extract tweet data: {e}")
-        return None
+async def print_troubleshooting_info():
+    """Affiche des informations de dépannage"""
+    logger.info("\n=== INFORMATIONS DE DÉPANNAGE ===")
+    logger.info("1. Vérifiez que vos credentials sont corrects dans .env:")
+    logger.info(f"   - TWITTER_USERNAME défini: {'✓' if TWITTER_USERNAME else '✗'}")
+    logger.info(f"   - TWITTER_PASSWORD défini: {'✓' if TWITTER_PASSWORD else '✗'}")
+    logger.info(f"   - TWITTER_EMAIL défini: {'✓' if TWITTER_EMAIL else '✗'}")
+    logger.info(f"   - TWITTER_COOKIES défini: {'✓' if TWITTER_COOKIES else '✗'}")
+    
+    if not TWITTER_COOKIES:
+        logger.info("\n2. IMPORTANT: Twitter bloque souvent les connexions par mot de passe.")
+        logger.info("   Récupérez vos cookies depuis votre navigateur:")
+        logger.info("   - Connectez-vous à twitter.com dans votre navigateur")
+        logger.info("   - F12 → Application/Storage → Cookies → twitter.com")
+        logger.info("   - Copiez tous les cookies et ajoutez-les dans TWITTER_COOKIES")
+    
+    logger.info("\n3. Autres solutions:")
+    logger.info("   - Supprimez accounts.db et relancez")
+    logger.info("   - Utilisez un VPN si vous êtes bloqué")
+    logger.info("   - Vérifiez que votre compte n'est pas suspendu")
+    logger.info("================================\n")
 
 def extract_tweet_data_bot_format(tweet: Tweet) -> Optional[Dict]:
     """Extract tweet data and return in bot-compatible format."""
     try:
-        # Get original format data first
-        original_data = extract_tweet_data_original_format(tweet)
-        if not original_data:
+        # Vérifier que le tweet a du contenu
+        tweet_text = getattr(tweet, 'rawContent', '') or getattr(tweet, 'text', '')
+        if not tweet_text or not tweet_text.strip():
             return None
-        
-        tweet_text, tweet_date, external_link, images_links = original_data
 
-        # Convert timestamp to ISO format
-        try:
-            if tweet.date:
-                created_at = tweet.date.isoformat()
-            else:
-                created_at = datetime.now().isoformat()
-        except Exception:
-            created_at = datetime.now().isoformat()
+        # Timestamp
+        created_at = datetime.now().isoformat()
+        if hasattr(tweet, 'date') and tweet.date:
+            created_at = tweet.date.isoformat()
 
-        # Extract tweet URL and ID
-        tweet_url = tweet.url or external_link
-        tweet_id = str(tweet.id) if tweet.id else ""
+        # Tweet ID et URL
+        tweet_id = str(tweet.id) if hasattr(tweet, 'id') and tweet.id else None
+        tweet_url = getattr(tweet, 'url', '')
         
-        # Fallback ID generation
         if not tweet_id:
+            # Générer un ID de fallback
             fallback_hash = hashlib.md5(f"{tweet_text}_{created_at}".encode()).hexdigest()[:16]
             tweet_id = fallback_hash
             if not tweet_url:
                 tweet_url = f"https://x.com/status/{fallback_hash}"
 
-        # Extract author
+        # Auteur
         author = "unknown"
         if hasattr(tweet, 'user') and tweet.user:
             if hasattr(tweet.user, 'username') and tweet.user.username:
@@ -175,18 +241,17 @@ def extract_tweet_data_bot_format(tweet: Tweet) -> Optional[Dict]:
             elif hasattr(tweet.user, 'displayname') and tweet.user.displayname:
                 author = tweet.user.displayname
 
-        # Convert images to list
+        # Médias
         media = []
-        if images_links and images_links != "No Images":
-            media = [img.strip() for img in images_links.split(',') if img.strip()]
-
-        # Skip if no meaningful content
-        if not tweet_text.strip() and not media:
-            return None
+        if hasattr(tweet, 'media') and tweet.media:
+            for media_item in tweet.media:
+                media_url = getattr(media_item, 'mediaUrl', None) or getattr(media_item, 'url', None)
+                if media_url:
+                    media.append(media_url)
 
         return {
             "id": tweet_id,
-            "text": tweet_text,
+            "text": tweet_text.strip(),
             "url": tweet_url,
             "created_at": created_at,
             "author": author,
@@ -194,20 +259,20 @@ def extract_tweet_data_bot_format(tweet: Tweet) -> Optional[Dict]:
         }
 
     except Exception as e:
-        print(f"Failed to extract tweet data for bot format: {e}")
+        logger.error(f"Erreur lors de l'extraction des données du tweet: {e}")
         return None
 
 async def fetch_tweets(source_type: str, source: str, limit: int = 20) -> List[Dict]:
     """
-    Main function to fetch tweets - compatible with your bot's interface.
+    Fonction principale pour récupérer des tweets
     
     Args:
-        source_type: "timeline", "user", or "search"
-        source: username (for user) or query (for search) or ignored (for timeline)
-        limit: maximum number of tweets to fetch
+        source_type: "timeline", "user", ou "search"
+        source: nom d'utilisateur (pour user) ou requête (pour search)
+        limit: nombre maximum de tweets à récupérer
     
     Returns:
-        List of tweet dictionaries with keys: id, text, url, created_at, author, media
+        Liste de dictionnaires de tweets
     """
     if source_type == "timeline":
         return await async_scrape_timeline_tweets(limit)
@@ -216,101 +281,31 @@ async def fetch_tweets(source_type: str, source: str, limit: int = 20) -> List[D
     elif source_type == "search":
         return await async_scrape_search_tweets(source, limit)
     else:
-        print(f"Unsupported source_type: {source_type}")
-        return []
-
-async def async_scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
-    """Async version of timeline scraping using twscrape."""
-    global api
-    
-    try:
-        print(f"Starting to scrape timeline tweets (limit: {limit})...")
-        
-        # Get user ID for timeline (use first available account)
-        accounts = await api.pool.accounts_info()
-        if not accounts or not any(acc.logged_in for acc in accounts):
-            print("No logged in accounts available")
-            return []
-        
-        # Get current user's timeline - this is tricky with twscrape
-        # We'll use search with a broad query as fallback
-        print("Fetching timeline tweets...")
-        tweets_data = []
-        
-        try:
-            # Try to get user's own tweets if possible
-            logged_in_account = next(acc for acc in accounts if acc.logged_in)
-            user_info = await api.user_by_login(logged_in_account.username)
-            if user_info:
-                tweets = await gather(api.user_tweets(user_info.id, limit=limit))
-                
-                for tweet in tweets:
-                    if len(tweets_data) >= limit:
-                        break
-                    
-                    bot_format_data = extract_tweet_data_bot_format(tweet)
-                    if bot_format_data and bot_format_data.get('text', '').strip():
-                        tweets_data.append(bot_format_data)
-                        
-                        # Print progress
-                        original_data = extract_tweet_data_original_format(tweet)
-                        if original_data:
-                            tweet_text, tweet_date, external_link, images_links = original_data
-                            print(f"Date: {tweet_date}, Tweet: {tweet_text}, Link: {external_link}, Images: {images_links}")
-                            
-        except Exception as e:
-            print(f"Error fetching timeline: {e}")
-            # Fallback to search with popular terms
-            return await async_scrape_search_tweets("lang:en", limit)
-
-        # Save to Excel file for compatibility
-        if tweets_data:
-            try:
-                original_format_data = []
-                for tweet_data in tweets_data:
-                    media_str = ', '.join(tweet_data.get('media', [])) if tweet_data.get('media') else "No Images"
-                    original_format_data.append([
-                        tweet_data.get('text', ''),
-                        tweet_data.get('created_at', '').split('T')[0],
-                        tweet_data.get('url', ''),
-                        media_str
-                    ])
-                
-                df = pd.DataFrame(original_format_data, columns=["Tweet", "Date", "Link", "Images"])
-                df.to_excel("tweets2.xlsx", index=False)
-                print(f"Total tweets collected: {len(original_format_data)}")
-            except Exception as e:
-                print(f"Failed to save Excel file: {e}")
-
-        print("Script execution completed.")
-        return tweets_data
-
-    except Exception as e:
-        print(f"Error in async_scrape_timeline_tweets: {e}")
+        logger.error(f"Type de source non supporté: {source_type}")
         return []
 
 async def async_scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
-    """Async version of user tweet scraping using twscrape."""
+    """Scraper asynchrone pour les tweets d'un utilisateur."""
     global api
     
-    # Clean username
+    # Nettoyer le nom d'utilisateur
     username = username.replace('@', '').strip()
     if not username:
-        print("Invalid username provided")
+        logger.error("Nom d'utilisateur invalide")
         return []
     
     try:
-        print(f"Starting to scrape user tweets for @{username} (limit: {limit})...")
+        logger.info(f"Récupération des tweets de @{username} (limite: {limit})")
         
-        # Get user info
+        # Obtenir les infos utilisateur
         user_info = await api.user_by_login(username)
         if not user_info:
-            print(f"User @{username} not found")
+            logger.error(f"Utilisateur @{username} non trouvé")
             return []
         
-        print(f"Found user: {user_info.displayname} (@{user_info.username})")
+        logger.info(f"Utilisateur trouvé: {user_info.displayname} (@{user_info.username})")
         
-        # Get user tweets
+        # Récupérer les tweets
         tweets = await gather(api.user_tweets(user_info.id, limit=limit))
         
         tweets_data = []
@@ -318,55 +313,33 @@ async def async_scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]
             if len(tweets_data) >= limit:
                 break
                 
-            bot_format_data = extract_tweet_data_bot_format(tweet)
-            if bot_format_data and bot_format_data.get('text', '').strip():
-                tweets_data.append(bot_format_data)
-                
-                # Print progress
-                original_data = extract_tweet_data_original_format(tweet)
-                if original_data:
-                    tweet_text, tweet_date, external_link, images_links = original_data
-                    print(f"Date: {tweet_date}, Tweet: {tweet_text}, Link: {external_link}, Images: {images_links}")
+            tweet_data = extract_tweet_data_bot_format(tweet)
+            if tweet_data:
+                tweets_data.append(tweet_data)
+                logger.info(f"Tweet récupéré: {tweet_data['text'][:100]}...")
 
-        # Save to Excel file
-        if tweets_data:
-            try:
-                original_format_data = []
-                for tweet_data in tweets_data:
-                    media_str = ', '.join(tweet_data.get('media', [])) if tweet_data.get('media') else "No Images"
-                    original_format_data.append([
-                        tweet_data.get('text', ''),
-                        tweet_data.get('created_at', '').split('T')[0],
-                        tweet_data.get('url', ''),
-                        media_str
-                    ])
-                
-                df = pd.DataFrame(original_format_data, columns=["Tweet", "Date", "Link", "Images"])
-                filename = f"{username}_tweets.xlsx"
-                df.to_excel(filename, index=False)
-                print(f"Total tweets collected: {len(original_format_data)}")
-            except Exception as e:
-                print(f"Failed to save Excel file: {e}")
-
-        print("Script execution completed.")
+        # Sauvegarder dans Excel
+        await save_tweets_to_excel(tweets_data, f"{username}_tweets.xlsx")
+        
+        logger.info(f"Récupération terminée: {len(tweets_data)} tweets")
         return tweets_data
 
     except Exception as e:
-        print(f"Error in async_scrape_user_tweets: {e}")
+        logger.error(f"Erreur dans async_scrape_user_tweets: {e}")
         return []
 
 async def async_scrape_search_tweets(query: str, limit: int = 20) -> List[Dict]:
-    """Async version of search tweet scraping using twscrape."""
+    """Scraper asynchrone pour la recherche de tweets."""
     global api
     
     if not query.strip():
-        print("Invalid search query provided")
+        logger.error("Requête de recherche invalide")
         return []
     
     try:
-        print(f"Starting to scrape search tweets for query: '{query}' (limit: {limit})...")
+        logger.info(f"Recherche de tweets pour: '{query}' (limite: {limit})")
         
-        # Search for tweets
+        # Rechercher des tweets
         tweets = await gather(api.search(query, limit=limit))
         
         tweets_data = []
@@ -374,177 +347,203 @@ async def async_scrape_search_tweets(query: str, limit: int = 20) -> List[Dict]:
             if len(tweets_data) >= limit:
                 break
                 
-            bot_format_data = extract_tweet_data_bot_format(tweet)
-            if bot_format_data and bot_format_data.get('text', '').strip():
-                tweets_data.append(bot_format_data)
-                
-                # Print progress
-                original_data = extract_tweet_data_original_format(tweet)
-                if original_data:
-                    tweet_text, tweet_date, external_link, images_links = original_data
-                    print(f"Date: {tweet_date}, Tweet: {tweet_text}, Link: {external_link}, Images: {images_links}")
+            tweet_data = extract_tweet_data_bot_format(tweet)
+            if tweet_data:
+                tweets_data.append(tweet_data)
+                logger.info(f"Tweet trouvé: {tweet_data['text'][:100]}...")
 
-        # Save to Excel file
-        if tweets_data:
-            try:
-                original_format_data = []
-                for tweet_data in tweets_data:
-                    media_str = ', '.join(tweet_data.get('media', [])) if tweet_data.get('media') else "No Images"
-                    original_format_data.append([
-                        tweet_data.get('text', ''),
-                        tweet_data.get('created_at', '').split('T')[0],
-                        tweet_data.get('url', ''),
-                        media_str
-                    ])
-                
-                df = pd.DataFrame(original_format_data, columns=["Tweet", "Date", "Link", "Images"])
-                safe_query = "".join(c for c in query if c.isalnum() or c in (' ', '-', '_')).rstrip()
-                filename = f"search_{safe_query[:30]}_tweets.xlsx"
-                df.to_excel(filename, index=False)
-                print(f"Total tweets collected: {len(original_format_data)}")
-            except Exception as e:
-                print(f"Failed to save Excel file: {e}")
-
-        print("Script execution completed.")
+        # Sauvegarder dans Excel
+        safe_query = "".join(c for c in query if c.isalnum() or c in (' ', '-', '_')).strip()
+        filename = f"search_{safe_query[:30]}_tweets.xlsx"
+        await save_tweets_to_excel(tweets_data, filename)
+        
+        logger.info(f"Recherche terminée: {len(tweets_data)} tweets")
         return tweets_data
 
     except Exception as e:
-        print(f"Error in async_scrape_search_tweets: {e}")
+        logger.error(f"Erreur dans async_scrape_search_tweets: {e}")
         return []
 
-# Synchronous wrapper functions to maintain compatibility
-def scrape_timeline_tweets(limit: int = 20) -> List[Dict]:
-    """Scrape timeline tweets - maintaining exact function signature."""
+async def save_tweets_to_excel(tweets_data: List[Dict], filename: str):
+    """Sauvegarde les tweets dans un fichier Excel."""
+    if not tweets_data:
+        return
+    
     try:
-        # Setup API
-        if not setup_driver():
-            print("Failed to setup twscrape API")
-            return []
+        # Convertir au format Excel
+        excel_data = []
+        for tweet in tweets_data:
+            media_str = ', '.join(tweet.get('media', [])) if tweet.get('media') else "No Images"
+            excel_data.append([
+                tweet.get('text', ''),
+                tweet.get('created_at', '').split('T')[0],
+                tweet.get('url', ''),
+                media_str
+            ])
         
-        # Run async function
-        return asyncio.run(async_timeline_wrapper(limit))
+        df = pd.DataFrame(excel_data, columns=["Tweet", "Date", "Link", "Images"])
+        df.to_excel(filename, index=False)
+        logger.info(f"Tweets sauvegardés dans {filename}")
+        
     except Exception as e:
-        print(f"Error in scrape_timeline_tweets: {e}")
-        return []
+        logger.error(f"Erreur lors de la sauvegarde Excel: {e}")
 
+# Fonctions synchrones pour la compatibilité
 def scrape_user_tweets(username: str, limit: int = 20) -> List[Dict]:
-    """Scrape user tweets - maintaining exact function signature."""
+    """Version synchrone du scraping utilisateur."""
     try:
-        # Setup API
         if not setup_driver():
-            print("Failed to setup twscrape API")
+            logger.error("Impossible d'initialiser l'API twscrape")
             return []
         
-        # Run async function
         return asyncio.run(async_user_wrapper(username, limit))
     except Exception as e:
-        print(f"Error in scrape_user_tweets: {e}")
+        logger.error(f"Erreur dans scrape_user_tweets: {e}")
         return []
 
 def scrape_search_tweets(query: str, limit: int = 20) -> List[Dict]:
-    """Scrape search tweets - maintaining exact function signature."""
+    """Version synchrone du scraping de recherche."""
     try:
-        # Setup API
         if not setup_driver():
-            print("Failed to setup twscrape API")
+            logger.error("Impossible d'initialiser l'API twscrape")
             return []
         
-        # Run async function
         return asyncio.run(async_search_wrapper(query, limit))
     except Exception as e:
-        print(f"Error in scrape_search_tweets: {e}")
+        logger.error(f"Erreur dans scrape_search_tweets: {e}")
         return []
-
-async def async_timeline_wrapper(limit: int) -> List[Dict]:
-    """Async wrapper for timeline scraping."""
-    if not await login():
-        print("Login failed!")
-        return []
-    return await async_scrape_timeline_tweets(limit)
 
 async def async_user_wrapper(username: str, limit: int) -> List[Dict]:
-    """Async wrapper for user scraping."""
+    """Wrapper asynchrone pour le scraping utilisateur."""
     if not await login():
-        print("Login failed!")
+        logger.error("Échec de la connexion!")
         return []
     return await async_scrape_user_tweets(username, limit)
 
 async def async_search_wrapper(query: str, limit: int) -> List[Dict]:
-    """Async wrapper for search scraping."""
+    """Wrapper asynchrone pour le scraping de recherche."""
     if not await login():
-        print("Login failed!")
+        logger.error("Échec de la connexion!")
         return []
     return await async_scrape_search_tweets(query, limit)
 
-# Utility functions maintained for compatibility
-def check_rate_limit() -> bool:
-    """Check if we've hit Twitter's rate limit - handled automatically by twscrape."""
-    return False
-
-def handle_popup_dialogs():
-    """Handle various popup dialogs - not needed with twscrape."""
-    pass
-
-def wait_for_stable_page(timeout: int = 30):
-    """Wait for page to become stable - not needed with twscrape."""
-    return True
-
-# Additional convenience functions
-async def get_user_info(username: str) -> Optional[Dict]:
-    """Get user information."""
-    global api
+# Fonction de test spécifique pour diagnostiquer les cookies
+async def test_cookies_format():
+    """Teste le format des cookies"""
+    if not TWITTER_COOKIES:
+        logger.warning("Aucun cookie défini")
+        return False
+    
     try:
-        if not await login():
-            return None
+        # Vérifier le format basique
+        if 'auth_token=' not in TWITTER_COOKIES:
+            logger.error("Cookie auth_token manquant - nécessaire pour l'authentification")
+            return False
         
-        username = username.replace('@', '').strip()
-        user_info = await api.user_by_login(username)
+        if 'ct0=' not in TWITTER_COOKIES:
+            logger.warning("Cookie ct0 manquant - peut causer des problèmes")
         
-        if user_info:
-            return {
-                "id": str(user_info.id),
-                "username": user_info.username,
-                "displayname": user_info.displayname,
-                "description": user_info.rawDescription or "",
-                "followers_count": user_info.followersCount or 0,
-                "following_count": user_info.followingCount or 0,
-                "tweet_count": user_info.tweetsCount or 0,
-                "verified": user_info.verified or False,
-                "profile_image": user_info.profileImageUrl or "",
-                "banner_image": user_info.profileBannerUrl or "",
-                "created_at": user_info.created.isoformat() if user_info.created else "",
-                "location": user_info.location or "",
-                "url": user_info.linkUrl or ""
-            }
-        return None
+        logger.info("Format des cookies semble correct")
+        return True
+        
     except Exception as e:
-        print(f"Error getting user info: {e}")
-        return None
+        logger.error(f"Erreur lors de la vérification des cookies: {e}")
+        return False
 
-def get_user_info_sync(username: str) -> Optional[Dict]:
-    """Synchronous version of get_user_info."""
+# Fonction de test simple pour vérifier si l'API fonctionne
+async def test_api_basic():
+    """Test basique de l'API sans authentification complète"""
     try:
-        if not setup_driver():
-            return None
-        return asyncio.run(get_user_info(username))
+        logger.info("Test basique de l'API...")
+        
+        # Essayer une recherche simple (peut fonctionner sans authentification complète)
+        try:
+            tweets = await gather(api.search("python", limit=1))
+            if tweets:
+                logger.info("✓ API fonctionne - recherche basique réussie")
+                return True
+        except Exception as search_error:
+            logger.warning(f"Recherche basique échouée: {search_error}")
+        
+        # Essayer d'obtenir des infos utilisateur
+        try:
+            user = await api.user_by_login("twitter")
+            if user:
+                logger.info("✓ API fonctionne - récupération utilisateur réussie")
+                return True
+        except Exception as user_error:
+            logger.warning(f"Récupération utilisateur échouée: {user_error}")
+        
+        logger.error("✗ Toutes les tentatives de test API ont échoué")
+        return False
+        
     except Exception as e:
-        print(f"Error in get_user_info_sync: {e}")
-        return None
+        logger.error(f"Erreur lors du test API: {e}")
+        return False
 
-# Main execution example
+# Fonction de diagnostic améliorée
+async def diagnose_account_status():
+    """Diagnostique le statut des comptes."""
+    try:
+        accounts = await api.pool.accounts_info()
+        logger.info(f"Nombre total de comptes: {len(accounts)}")
+        
+        if not accounts:
+            logger.warning("Aucun compte trouvé dans la base de données")
+            return
+        
+        for i, acc in enumerate(accounts):
+            if isinstance(acc, dict):
+                logger.info(f"Compte {i+1}: {acc.get('username', 'N/A')} - "
+                           f"Connecté: {acc.get('logged_in', False)} - "
+                           f"Actif: {acc.get('active', 'N/A')} - "
+                           f"Dernière utilisation: {acc.get('last_used', 'Jamais')}")
+            else:
+                logger.info(f"Compte {i+1}: {getattr(acc, 'username', 'N/A')} - "
+                           f"Connecté: {getattr(acc, 'logged_in', False)} - "
+                           f"Actif: {getattr(acc, 'active', False)}")
+                
+    except Exception as e:
+        logger.error(f"Erreur lors du diagnostic: {e}")
+
+def diagnose_account_status_sync():
+    """Version synchrone du diagnostic."""
+    if setup_driver():
+        asyncio.run(diagnose_account_status())
+
+# Script principal amélioré avec diagnostics approfondis
 if __name__ == "__main__":
-    # Example usage
-    print("Testing Twitter scraper with twscrape...")
+    print("=== Test du scraper Twitter avec twscrape (version améliorée) ===")
     
-    # Test user tweets
-    user_tweets = scrape_user_tweets("elonmusk", 5)
-    print(f"Retrieved {len(user_tweets)} user tweets")
+    # Test du format des cookies
+    print("\n0. Test du format des cookies...")
+    if setup_driver():
+        asyncio.run(test_cookies_format())
     
-    # Test search
-    search_tweets = scrape_search_tweets("python programming", 5)
-    print(f"Retrieved {len(search_tweets)} search tweets")
+    # Diagnostic des comptes
+    print("\n1. Diagnostic des comptes...")
+    diagnose_account_status_sync()
     
-    # Test user info
-    user_info = get_user_info_sync("elonmusk")
-    if user_info:
-        print(f"User info: {user_info['displayname']} (@{user_info['username']})")
+    # Test API basique
+    print("\n2. Test API basique...")
+    api_works = test_api_basic_sync()
+    if not api_works:
+        print("❌ L'API ne fonctionne pas correctement")
+        print("   Vérifiez vos cookies ou credentials")
+    else:
+        print("✅ L'API semble fonctionner")
+    
+    # Test des tweets utilisateur (seulement si API fonctionne)
+    if api_works:
+        print("\n3. Test scraping utilisateur...")
+        user_tweets = scrape_user_tweets("elonmusk", 2)
+        print(f"Tweets utilisateur récupérés: {len(user_tweets)}")
+        
+        # Test de recherche
+        print("\n4. Test scraping recherche...")
+        search_tweets = scrape_search_tweets("python", 2)
+        print(f"Tweets de recherche récupérés: {len(search_tweets)}")
+    else:
+        print("\n⚠️  Tests de scraping ignorés car l'API ne fonctionne pas")
+    
+    print("\n=== Fin des tests ===")
