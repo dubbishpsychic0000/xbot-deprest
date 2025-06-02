@@ -20,6 +20,9 @@ schedule>=1.2.0
 # Data processing
 pandas>=2.0.0
 openpyxl>=3.1.0
+twscrape  
+python-dotenv 
+openpyxl
 
 # Optional
 beautifulsoup4>=4.12.0
