@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 import asyncio
-import schedule
-import time
 import random
-import sys
+import json
+import os
 from datetime import datetime, timedelta
-from typing import List, Dict
+from typing import Dict, List, Optional
 import argparse
 
 from config import logger, validate_config
@@ -13,314 +12,386 @@ from ai_generator import generate_ai_content
 from poster import post_content
 from twscrape_client import fetch_tweets
 
-class TwitterBot:
-    def __init__(self):
-        self.last_thread_time = None
-        self.tweet_count_today = 0
-        self.last_reset_date = datetime.now().date()
-        
-    def reset_daily_counters(self):
-        """Reset daily counters if it's a new day"""
-        current_date = datetime.now().date()
-        if current_date != self.last_reset_date:
-            self.tweet_count_today = 0
-            self.last_reset_date = current_date
-            logger.info("Daily counters reset")
-
-    async def post_standalone_tweet(self, topic: str = None):
-        """Post a standalone tweet"""
+class PersistentScheduler:
+    """Gestionnaire d'état persistant pour le timing du bot"""
+    
+    def __init__(self, state_file: str = "bot_state.json"):
+        self.state_file = state_file
+        self.state = self._load_state()
+    
+    def _load_state(self) -> Dict:
+        """Charge l'état depuis le fichier"""
         try:
-            self.reset_daily_counters()
+            if os.path.exists(self.state_file):
+                with open(self.state_file, 'r') as f:
+                    return json.load(f)
+        except Exception as e:
+            logger.warning(f"Erreur lors du chargement de l'état: {e}")
+        
+        # État par défaut
+        return {
+            "last_tweet_times": [],
+            "last_thread_time": None,
+            "last_engagement_times": [],
+            "daily_tweet_count": 0,
+            "last_reset_date": datetime.now().isoformat()[:10]
+        }
+    
+    def _save_state(self):
+        """Sauvegarde l'état dans le fichier"""
+        try:
+            with open(self.state_file, 'w') as f:
+                json.dump(self.state, f, indent=2)
+        except Exception as e:
+            logger.error(f"Erreur lors de la sauvegarde de l'état: {e}")
+    
+    def should_post_tweet(self) -> bool:
+        """Détermine s'il faut poster un tweet"""
+        current_date = datetime.now().date().isoformat()
+        
+        # Reset quotidien
+        if self.state["last_reset_date"] != current_date:
+            self.state["daily_tweet_count"] = 0
+            self.state["last_tweet_times"] = []
+            self.state["last_reset_date"] = current_date
+        
+        # Limite de 4 tweets par jour
+        if self.state["daily_tweet_count"] >= 4:
+            logger.info("Limite quotidienne de tweets atteinte (4/4)")
+            return False
+        
+        # Vérifier l'espacement minimum (2 heures)
+        if self.state["last_tweet_times"]:
+            last_tweet = datetime.fromisoformat(self.state["last_tweet_times"][-1])
+            if datetime.now() - last_tweet < timedelta(hours=2):
+                logger.info("Espacement minimum non respecté entre les tweets")
+                return False
+        
+        return True
+    
+    def should_post_thread(self) -> bool:
+        """Détermine s'il faut poster un thread (une fois par jour à 15h)"""
+        current_hour = datetime.now().hour
+        current_date = datetime.now().date().isoformat()
+        
+        # Vérifier si c'est l'heure (15h ± 30 minutes)
+        if not (14.5 <= current_hour <= 15.5):
+            return False
+        
+        # Vérifier si déjà posté aujourd'hui
+        if self.state["last_thread_time"]:
+            last_thread_date = datetime.fromisoformat(self.state["last_thread_time"]).date().isoformat()
+            if last_thread_date == current_date:
+                logger.info("Thread déjà posté aujourd'hui")
+                return False
+        
+        return True
+    
+    def should_engage(self) -> bool:
+        """Détermine s'il faut faire de l'engagement"""
+        current_hour = datetime.now().hour
+        target_hours = [9, 10, 11, 12, 18, 21]
+        
+        if current_hour not in target_hours:
+            return False
+        
+        # Vérifier si déjà fait cette heure
+        current_datetime = datetime.now()
+        current_hour_start = current_datetime.replace(minute=0, second=0, microsecond=0)
+        
+        for engagement_time in self.state["last_engagement_times"]:
+            eng_time = datetime.fromisoformat(engagement_time)
+            eng_hour_start = eng_time.replace(minute=0, second=0, microsecond=0)
+            if eng_hour_start == current_hour_start:
+                logger.info(f"Engagement déjà effectué à {current_hour}h")
+                return False
+        
+        return True
+    
+    def record_tweet(self):
+        """Enregistre qu'un tweet a été posté"""
+        now = datetime.now().isoformat()
+        self.state["last_tweet_times"].append(now)
+        self.state["daily_tweet_count"] += 1
+        self._save_state()
+        logger.info(f"Tweet enregistré ({self.state['daily_tweet_count']}/4)")
+    
+    def record_thread(self):
+        """Enregistre qu'un thread a été posté"""
+        self.state["last_thread_time"] = datetime.now().isoformat()
+        self._save_state()
+        logger.info("Thread enregistré")
+    
+    def record_engagement(self):
+        """Enregistre qu'un engagement a été effectué"""
+        now = datetime.now().isoformat()
+        self.state["last_engagement_times"].append(now)
+        
+        # Garder seulement les 24 dernières heures
+        cutoff = datetime.now() - timedelta(hours=24)
+        self.state["last_engagement_times"] = [
+            t for t in self.state["last_engagement_times"]
+            if datetime.fromisoformat(t) > cutoff
+        ]
+        
+        self._save_state()
+        logger.info("Engagement enregistré")
+
+
+class AdvancedTwitterBot:
+    def __init__(self):
+        self.scheduler = PersistentScheduler()
+        
+    async def execute_random_delay(self, min_minutes: int = 5, max_minutes: int = 30):
+        """Ajoute un délai aléatoire pour simuler un comportement humain"""
+        delay_minutes = random.uniform(min_minutes, max_minutes)
+        delay_seconds = delay_minutes * 60
+        logger.info(f"Délai aléatoire de {delay_minutes:.1f} minutes...")
+        await asyncio.sleep(delay_seconds)
+    
+    async def post_standalone_tweet(self, topic: str = None) -> Optional[str]:
+        """Poste un tweet autonome avec vérifications"""
+        try:
+            if not self.scheduler.should_post_tweet():
+                return None
             
-            if self.tweet_count_today >= 4:
-                logger.info("Daily tweet limit reached (4/4)")
-                return
+            # Délai aléatoire pour paraître plus naturel
+            await self.execute_random_delay(1, 15)
             
             if not topic:
                 topics = [
-                    "AI and machine learning",
-                    "Technology trends",
-                    "Future of AI",
-                    "Machine learning insights",
-                    "AI ethics and responsibility",
-                    "Emerging technologies",
-                    "Data science",
-                    "Artificial intelligence applications"
+                    "Intelligence artificielle et apprentissage automatique",
+                    "Tendances technologiques émergentes",
+                    "L'avenir de l'IA et son impact",
+                    "Éthique et responsabilité en IA",
+                    "Applications pratiques du machine learning",
+                    "Innovation et transformation digitale",
+                    "Data science et analyse prédictive",
+                    "Automatisation intelligente"
                 ]
                 topic = random.choice(topics)
             
-            logger.info(f"Generating standalone tweet about: {topic}")
+            logger.info(f"Génération d'un tweet sur: {topic}")
             content = await generate_ai_content("standalone", topic)
             
             if content:
                 tweet_id = post_content("tweet", content)
                 if tweet_id:
-                    self.tweet_count_today += 1
-                    logger.info(f"Posted standalone tweet ({self.tweet_count_today}/4): {tweet_id}")
+                    self.scheduler.record_tweet()
+                    logger.info(f"Tweet posté avec succès: {tweet_id}")
                     return tweet_id
                 else:
-                    logger.error("Failed to post standalone tweet")
+                    logger.error("Échec de publication du tweet")
             else:
-                logger.error("Failed to generate standalone tweet content")
+                logger.error("Échec de génération du contenu du tweet")
                 
         except Exception as e:
-            logger.error(f"Error in post_standalone_tweet: {e}")
-
-    async def post_thread(self, topic: str = None):
-        """Post a thread (once every 2 days)"""
+            logger.error(f"Erreur dans post_standalone_tweet: {e}")
+        
+        return None
+    
+    async def post_daily_thread(self, topic: str = None) -> Optional[List[str]]:
+        """Poste un thread quotidien à 15h"""
         try:
-            current_time = datetime.now()
+            if not self.scheduler.should_post_thread():
+                return None
             
-            # Check if we should post a thread (every 2 days)
-            if self.last_thread_time:
-                time_diff = current_time - self.last_thread_time
-                if time_diff < timedelta(days=2):
-                    logger.info(f"Thread posted {time_diff} ago, waiting for 2-day interval")
-                    return
+            # Délai aléatoire léger
+            await self.execute_random_delay(0, 10)
             
             if not topic:
                 thread_topics = [
-                    "The evolution of AI in the past decade",
-                    "Understanding neural networks and deep learning",
-                    "AI ethics and responsible development",
-                    "The future of human-AI collaboration",
-                    "Machine learning in everyday applications",
-                    "Breakthrough AI research and implications",
-                    "The impact of AI on various industries",
-                    "Building trustworthy AI systems"
+                    "L'évolution de l'IA dans la dernière décennie",
+                    "Comprendre les réseaux de neurones et l'apprentissage profond",
+                    "Éthique de l'IA et développement responsable",
+                    "L'avenir de la collaboration humain-IA",
+                    "Applications du machine learning dans la vie quotidienne",
+                    "Percées en recherche IA et leurs implications",
+                    "Impact de l'IA sur différents secteurs industriels",
+                    "Construction de systèmes IA dignes de confiance"
                 ]
                 topic = random.choice(thread_topics)
             
-            logger.info(f"Generating thread about: {topic}")
-            thread_tweets = await generate_ai_content("thread", topic, num_tweets=3)
+            logger.info(f"Génération d'un thread sur: {topic}")
+            thread_tweets = await generate_ai_content("thread", topic, num_tweets=4)
             
             if thread_tweets and isinstance(thread_tweets, list) and len(thread_tweets) > 0:
                 posted_ids = post_content("thread", thread_tweets)
                 if posted_ids and len(posted_ids) > 0:
-                    self.last_thread_time = current_time
-                    logger.info(f"Posted thread with {len(posted_ids)} tweets: {posted_ids}")
+                    self.scheduler.record_thread()
+                    logger.info(f"Thread posté avec {len(posted_ids)} tweets: {posted_ids}")
                     return posted_ids
                 else:
-                    logger.error("Failed to post thread")
+                    logger.error("Échec de publication du thread")
             else:
-                logger.error("Failed to generate thread content")
+                logger.error("Échec de génération du contenu du thread")
                 
         except Exception as e:
-            logger.error(f"Error in post_thread: {e}")
-
-    async def engage_with_tweets(self):
-        """Fetch tweets and create replies/quotes (2 replies + 1 quote per hour)"""
+            logger.error(f"Erreur dans post_daily_thread: {e}")
+        
+        return None
+    
+    async def scheduled_engagement(self) -> bool:
+        """Effectue l'engagement programmé (2 réponses + 1 citation)"""
         try:
-            logger.info("Fetching timeline tweets for engagement")
+            if not self.scheduler.should_engage():
+                return False
             
-            # Fetch recent tweets from timeline
-            tweets = await fetch_tweets("timeline", "", limit=10)
+            # Délai aléatoire
+            await self.execute_random_delay(2, 20)
+            
+            logger.info("Récupération des tweets pour engagement...")
+            tweets = await fetch_tweets("timeline", "", limit=15)
             
             if not tweets:
-                logger.warning("No tweets fetched for engagement")
-                return
+                logger.warning("Aucun tweet récupéré pour l'engagement")
+                return False
             
-            # Filter tweets that are suitable for engagement
-            suitable_tweets = []
-            for tweet in tweets:
+            # Filtrer les tweets appropriés
+            suitable_tweets = [
+                tweet for tweet in tweets
                 if (tweet.get('text', '').strip() and 
-                    len(tweet.get('text', '')) > 20 and  # Minimum content length
-                    not tweet.get('text', '').startswith('RT @')):  # Not retweets
-                    suitable_tweets.append(tweet)
+                    len(tweet.get('text', '')) > 30 and
+                    not tweet.get('text', '').startswith('RT @') and
+                    'http' not in tweet.get('text', '').lower())
+            ]
             
             if len(suitable_tweets) < 3:
-                logger.warning(f"Only {len(suitable_tweets)} suitable tweets found, need at least 3")
-                # Use all available tweets if we don't have enough
+                logger.warning(f"Seulement {len(suitable_tweets)} tweets appropriés trouvés")
                 suitable_tweets = tweets[:3] if len(tweets) >= 3 else tweets
             
             if not suitable_tweets:
-                logger.warning("No suitable tweets found for engagement")
-                return
+                logger.warning("Aucun tweet approprié trouvé")
+                return False
             
-            # Randomly select tweets for engagement
+            # Sélectionner aléatoirement 3 tweets
             selected_tweets = random.sample(suitable_tweets, min(3, len(suitable_tweets)))
             
-            successful_engagements = 0
             replies_posted = 0
             quotes_posted = 0
             
-            for i, tweet in enumerate(selected_tweets):
+            for tweet in selected_tweets:
                 try:
                     if replies_posted < 2:
-                        # Post reply
-                        logger.info(f"Generating reply to tweet: {tweet['id']}")
+                        # Poster une réponse
+                        logger.info(f"Génération d'une réponse au tweet: {tweet['id']}")
                         reply_content = await generate_ai_content(
                             "reply", 
-                            tweet['text'], 
-                            context=f"Tweet by @{tweet.get('author', 'unknown')}"
+                            tweet['text'],
+                            context=f"Tweet de @{tweet.get('author', 'utilisateur')}"
                         )
                         
                         if reply_content:
-                            reply_id = post_content(
-                                "reply", 
-                                reply_content, 
-                                reply_to_id=tweet['id']
-                            )
+                            reply_id = post_content("reply", reply_content, reply_to_id=tweet['id'])
                             if reply_id:
                                 replies_posted += 1
-                                successful_engagements += 1
-                                logger.info(f"Posted reply ({replies_posted}/2): {reply_id}")
-                            else:
-                                logger.error(f"Failed to post reply to tweet {tweet['id']}")
-                        else:
-                            logger.error(f"Failed to generate reply for tweet {tweet['id']}")
+                                logger.info(f"Réponse postée ({replies_posted}/2): {reply_id}")
+                            
+                        # Délai entre les actions
+                        await asyncio.sleep(random.uniform(30, 90))
                     
                     elif quotes_posted < 1:
-                        # Post quote tweet
-                        logger.info(f"Generating quote tweet for: {tweet['id']}")
+                        # Poster une citation
+                        logger.info(f"Génération d'une citation pour: {tweet['id']}")
                         quote_content = await generate_ai_content(
-                            "quote", 
-                            tweet['text'], 
-                            context=f"Tweet by @{tweet.get('author', 'unknown')}"
+                            "quote",
+                            tweet['text'],
+                            context=f"Tweet de @{tweet.get('author', 'utilisateur')}"
                         )
                         
                         if quote_content:
-                            quote_id = post_content(
-                                "quote", 
-                                quote_content, 
-                                quoted_tweet_id=tweet['id']
-                            )
+                            quote_id = post_content("quote", quote_content, quoted_tweet_id=tweet['id'])
                             if quote_id:
                                 quotes_posted += 1
-                                successful_engagements += 1
-                                logger.info(f"Posted quote tweet ({quotes_posted}/1): {quote_id}")
-                            else:
-                                logger.error(f"Failed to post quote tweet for {tweet['id']}")
-                        else:
-                            logger.error(f"Failed to generate quote content for tweet {tweet['id']}")
-                    
-                    # Add delay between engagements
-                    if i < len(selected_tweets) - 1:
-                        await asyncio.sleep(random.uniform(30, 60))
-                        
+                                logger.info(f"Citation postée ({quotes_posted}/1): {quote_id}")
+                
                 except Exception as e:
-                    logger.error(f"Error engaging with tweet {tweet.get('id', 'unknown')}: {e}")
+                    logger.error(f"Erreur lors de l'engagement avec le tweet {tweet.get('id')}: {e}")
                     continue
             
-            logger.info(f"Engagement completed: {replies_posted} replies, {quotes_posted} quotes")
-            
-        except Exception as e:
-            logger.error(f"Error in engage_with_tweets: {e}")
-
-    async def run_scheduled_job(self, job_type: str, **kwargs):
-        """Run a specific scheduled job"""
-        try:
-            logger.info(f"Running scheduled job: {job_type}")
-            
-            if job_type == "standalone_tweet":
-                await self.post_standalone_tweet(kwargs.get('topic'))
-            elif job_type == "thread":
-                await self.post_thread(kwargs.get('topic'))
-            elif job_type == "engage":
-                await self.engage_with_tweets()
+            if replies_posted > 0 or quotes_posted > 0:
+                self.scheduler.record_engagement()
+                logger.info(f"Engagement terminé: {replies_posted} réponses, {quotes_posted} citations")
+                return True
             else:
-                logger.error(f"Unknown job type: {job_type}")
+                logger.warning("Aucun engagement réussi")
+                return False
                 
         except Exception as e:
-            logger.error(f"Error running scheduled job {job_type}: {e}")
+            logger.error(f"Erreur dans scheduled_engagement: {e}")
+            return False
 
-def run_async_job(coro):
-    """Helper function to run async jobs in sync scheduler"""
-    asyncio.run(coro)
-
-def setup_scheduler(bot: TwitterBot):
-    """Setup the scheduler with all jobs"""
-    logger.info("Setting up scheduler...")
-    
-    # Standalone tweets: 4 times a day at random times
-    # Schedule them at different times to spread throughout the day
-    schedule.every().day.at("09:00").do(
-        run_async_job, bot.run_scheduled_job("standalone_tweet")
-    )
-    schedule.every().day.at("13:30").do(
-        run_async_job, bot.run_scheduled_job("standalone_tweet")
-    )
-    schedule.every().day.at("17:45").do(
-        run_async_job, bot.run_scheduled_job("standalone_tweet")
-    )
-    schedule.every().day.at("21:15").do(
-        run_async_job, bot.run_scheduled_job("standalone_tweet")
-    )
-    
-    # Thread: once every 2 days (will be checked internally)
-    schedule.every().day.at("10:30").do(
-        run_async_job, bot.run_scheduled_job("thread")
-    )
-    
-    # Engagement: every hour (2 replies + 1 quote)
-    schedule.every().hour.at(":15").do(
-        run_async_job, bot.run_scheduled_job("engage")
-    )
-    
-    logger.info("Scheduler setup completed")
 
 def main():
-    """Main function"""
-    parser = argparse.ArgumentParser(description='Twitter Bot')
-    parser.add_argument('mode', nargs='?', default='continuous', 
-                       choices=['continuous', 'standalone', 'thread', 'engage', 'test'],
-                       help='Bot operation mode')
-    parser.add_argument('--topic', help='Topic for content generation')
-    parser.add_argument('--duration', type=int, default=23, 
-                       help='Duration in hours for continuous mode')
+    """Fonction principale avec gestion intelligente des actions"""
+    parser = argparse.ArgumentParser(description='Bot Twitter Avancé')
+    parser.add_argument('action', nargs='?', default='auto',
+                       choices=['auto', 'standalone', 'thread', 'engage', 'test'],
+                       help='Action à exécuter')
+    parser.add_argument('--topic', help='Sujet spécifique pour le contenu')
+    parser.add_argument('--force', action='store_true', 
+                       help='Forcer l\'exécution même si les conditions temporelles ne sont pas remplies')
     
     args = parser.parse_args()
     
     try:
-        # Validate configuration
         validate_config()
-        logger.info("Twitter bot starting...")
+        logger.info("Démarrage du bot Twitter avancé...")
         
-        bot = TwitterBot()
+        bot = AdvancedTwitterBot()
         
-        if args.mode == 'continuous':
-            logger.info(f"Starting continuous mode for {args.duration} hours")
-            setup_scheduler(bot)
+        async def run_bot():
+            if args.action == 'auto':
+                # Mode automatique - détermine quoi faire basé sur l'heure et l'état
+                logger.info("Mode automatique - analyse des conditions...")
+                
+                actions_performed = []
+                
+                # Vérifier les threads
+                if bot.scheduler.should_post_thread() or args.force:
+                    result = await bot.post_daily_thread(args.topic)
+                    if result:
+                        actions_performed.append(f"Thread posté ({len(result)} tweets)")
+                
+                # Vérifier l'engagement
+                if bot.scheduler.should_engage() or args.force:
+                    result = await bot.scheduled_engagement()
+                    if result:
+                        actions_performed.append("Engagement effectué")
+                
+                # Vérifier les tweets autonomes
+                if bot.scheduler.should_post_tweet() or args.force:
+                    result = await bot.post_standalone_tweet(args.topic)
+                    if result:
+                        actions_performed.append("Tweet autonome posté")
+                
+                if actions_performed:
+                    logger.info(f"Actions effectuées: {', '.join(actions_performed)}")
+                else:
+                    logger.info("Aucune action nécessaire pour le moment")
             
-            start_time = time.time()
-            end_time = start_time + (args.duration * 3600)  # Convert hours to seconds
+            elif args.action == 'standalone':
+                await bot.post_standalone_tweet(args.topic)
             
-            while time.time() < end_time:
-                try:
-                    schedule.run_pending()
-                    time.sleep(60)  # Check every minute
-                except KeyboardInterrupt:
-                    logger.info("Received interrupt signal, shutting down...")
-                    break
-                except Exception as e:
-                    logger.error(f"Error in main loop: {e}")
-                    time.sleep(300)  # Wait 5 minutes before retrying
+            elif args.action == 'thread':
+                await bot.post_daily_thread(args.topic)
             
-            logger.info("Continuous mode completed")
+            elif args.action == 'engage':
+                await bot.scheduled_engagement()
             
-        elif args.mode == 'standalone':
-            logger.info("Running standalone tweet mode")
-            asyncio.run(bot.post_standalone_tweet(args.topic))
-            
-        elif args.mode == 'thread':
-            logger.info("Running thread mode")
-            asyncio.run(bot.post_thread(args.topic))
-            
-        elif args.mode == 'engage':
-            logger.info("Running engagement mode")
-            asyncio.run(bot.engage_with_tweets())
-            
-        elif args.mode == 'test':
-            logger.info("Running test mode")
-            # Test all functions
-            asyncio.run(bot.post_standalone_tweet("Test topic"))
-            asyncio.run(bot.engage_with_tweets())
-            
+            elif args.action == 'test':
+                logger.info("Mode test - exécution de toutes les fonctions...")
+                await bot.post_standalone_tweet("Test - Sujet IA")
+                await asyncio.sleep(10)
+                await bot.scheduled_engagement()
+        
+        asyncio.run(run_bot())
+        
     except KeyboardInterrupt:
-        logger.info("Bot stopped by user")
+        logger.info("Bot arrêté par l'utilisateur")
     except Exception as e:
-        logger.error(f"Fatal error: {e}")
-        sys.exit(1)
+        logger.error(f"Erreur fatale: {e}")
+        exit(1)
 
 if __name__ == "__main__":
     main()
