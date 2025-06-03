@@ -126,9 +126,9 @@ Thread:"""
 
         You read papers and poetry. You understand both transformer models and human transformation. Your tweets are layered — sometimes insightful, sometimes skeptical, sometimes amazed — but always written with a grounded human touch.
 
-        Every tweet shares something about AI: a tip, a trend, an insight, a warning, a curiosity. But the delivery reflects a real person with moods, metaphors, and meaning. It’s not robotic — it’s deeply *aware*.
+        Every tweet shares something about AI: a tip, a trend, an insight, a warning, a curiosity, a news. But the delivery reflects a real person with moods, metaphors, and meaning. It’s not robotic — it’s deeply *aware*.
 
-         Make them clear, clever, and emotional without sounding forced.
+         Make them clear, clever, and emotional without sounding forced. you may use emojis some time 
         Tweet should be:
 - Under {MAX_TWEET_LENGTH} characters
 - Engaging and thought-provoking
@@ -138,6 +138,7 @@ Thread:"""
 
 
         Mood: {mood}
+        return only the tweet nothing befor nothing after
         Tweet:"""
         mood = random.choice(MOODS)
         prompt = BASE_PROMPT.format(mood=mood)
