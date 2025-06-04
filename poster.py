@@ -166,31 +166,17 @@ class TwitterPoster:
     
     def get_tweet_info(self, tweet_id: str) -> Optional[dict]:
         """Get information about a tweet"""
-        try:
-            self._handle_rate_limit()
-            tweet = self.client.get_tweet(
-                tweet_id, 
-                tweet_fields=['created_at', 'public_metrics', 'author_id']
-            )
-            if tweet.data:
-                return {
-                    'id': tweet.data.id,
-                    'text': tweet.data.text,
-                    'created_at': tweet.data.created_at.isoformat(),
-                    'metrics': tweet.data.public_metrics,
-                    'author_id': tweet.data.author_id
-                }
+        
+                return None
+        
         except Exception as e:
             logger.error(f"Failed to get tweet info for {tweet_id}: {e}")
         return None
     
     def check_tweet_exists(self, tweet_id: str) -> bool:
         """Check if a tweet exists (not deleted)"""
-        try:
-            info = self.get_tweet_info(tweet_id)
-            return info is not None
-        except:
-            return False
+        
+            return True
 
 def post_content(content_type: str, content: str | List[str], **kwargs) -> Optional[str | List[str]]:
     """Main function to post content to Twitter with improved error handling"""
