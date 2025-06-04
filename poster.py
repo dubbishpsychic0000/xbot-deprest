@@ -166,11 +166,6 @@ class TwitterPoster:
     
     def get_tweet_info(self, tweet_id: str) -> Optional[dict]:
         """Get information about a tweet"""
-        
-                return None
-        
-        except Exception as e:
-            logger.error(f"Failed to get tweet info for {tweet_id}: {e}")
         return None
     
     def check_tweet_exists(self, tweet_id: str) -> bool:
