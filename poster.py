@@ -171,7 +171,7 @@ class TwitterPoster:
     def check_tweet_exists(self, tweet_id: str) -> bool:
         """Check if a tweet exists (not deleted)"""
         
-            return True
+        return True
 
 def post_content(content_type: str, content: str | List[str], **kwargs) -> Optional[str | List[str]]:
     """Main function to post content to Twitter with improved error handling"""
