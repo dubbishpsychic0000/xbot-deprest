@@ -205,12 +205,12 @@ class AdvancedTwitterBot:
     def __init__(self):
         self.scheduler = PersistentScheduler()
 
-    async def execute_random_delay(self, min_minutes: int = 5, max_minutes: int = 30):
+    async def execute_random_delay(self, min_minutes: int = 2, max_minutes: int = 15):
         """Ajoute un délai aléatoire pour simuler un comportement humain"""
         # For new accounts, use longer delays
         if hasattr(self, 'is_new_account') and getattr(self, 'is_new_account', True):
-            min_minutes = max(min_minutes, 15)  # Minimum 15 minutes for new accounts
-            max_minutes = max(max_minutes, 60)  # Up to 1 hour for new accounts
+            min_minutes = max(min_minutes, 10)  # Minimum 15 minutes for new accounts
+            max_minutes = max(max_minutes, 20)  # Up to 1 hour for new accounts
             
         delay_minutes = random.uniform(min_minutes, max_minutes)
         delay_seconds = delay_minutes * 60
@@ -309,7 +309,7 @@ class AdvancedTwitterBot:
                 return False
 
             # Délai aléatoire
-            await self.execute_random_delay(2, 20)
+            await self.execute_random_delay(2, 15)
 
             logger.info("Récupération des tweets pour engagement...")
             tweets = await fetch_tweets("timeline", "", limit=20)
