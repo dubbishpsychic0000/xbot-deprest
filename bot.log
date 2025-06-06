@@ -1,0 +1,1111 @@
+2025-05-30 10:21:43,326 - INFO - Configuration validated successfully
+2025-05-30 10:21:54,681 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyCvKmCgCpqynrBD9BHiIZ35x0OIZ2k_Zso "HTTP/1.1 404 Not Found"
+2025-05-30 10:21:54,682 - ERROR - AI generation failed: Client error '404 Not Found' for url 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyCvKmCgCpqynrBD9BHiIZ35x0OIZ2k_Zso'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-05-30 10:30:18,944 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=AIzaSyCvKmCgCpqynrBD9BHiIZ35x0OIZ2k_Zso "HTTP/1.1 429 Too Many Requests"
+2025-05-30 10:30:18,945 - ERROR - AI generation failed: Client error '429 Too Many Requests' for url 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=AIzaSyCvKmCgCpqynrBD9BHiIZ35x0OIZ2k_Zso'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+2025-05-30 10:30:23,509 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=AIzaSyCvKmCgCpqynrBD9BHiIZ35x0OIZ2k_Zso "HTTP/1.1 429 Too Many Requests"
+2025-05-30 10:30:23,510 - ERROR - AI generation failed: Client error '429 Too Many Requests' for url 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=AIzaSyCvKmCgCpqynrBD9BHiIZ35x0OIZ2k_Zso'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+2025-05-30 10:37:31,013 - ERROR - AI generation failed: module 'google.genai' has no attribute 'GenerateContentConfig'
+2025-05-30 10:39:19,816 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-30 10:39:20,907 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-05-30 10:39:20,908 - INFO - Generated reply: Agreed! Exciting & challenging. How do we ensure A...
+2025-05-30 10:39:38,758 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-30 10:39:39,438 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-05-30 10:39:39,439 - INFO - Generated reply: Indeed! Exciting and a little daunting. Staying in...
+2025-05-30 10:39:52,078 - INFO - HTTP Request: GET https://example.com/image.jpg "HTTP/1.1 404 Not Found"
+2025-05-30 10:39:52,079 - ERROR - Failed to download media from https://example.com/image.jpg: Client error '404 Not Found' for url 'https://example.com/image.jpg'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-06-05 12:59:19,032 - root - INFO - Target accounts configured: 3
+2025-06-05 12:59:19,032 - root - INFO - Configuration validated successfully
+2025-06-05 12:59:19,033 - root - INFO - Bot username: your_bot_name
+2025-06-05 12:59:19,034 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 12:59:19,034 - root - INFO - ============================================================
+2025-06-05 12:59:19,035 - root - INFO - Twitter Bot Starting Up
+2025-06-05 12:59:19,035 - root - INFO - ============================================================
+2025-06-05 12:59:19,035 - root - INFO - Timestamp: 2025-06-05T12:59:19.035632
+2025-06-05 12:59:19,036 - root - INFO - Bot Username: your_bot_name
+2025-06-05 12:59:19,036 - root - INFO - Twitter Username: your_twitter_username
+2025-06-05 12:59:19,036 - root - INFO - Gemini API: ✓
+2025-06-05 12:59:19,036 - root - INFO - Twitter API: ✓
+2025-06-05 12:59:19,037 - root - INFO - Twitter Access: ✓
+2025-06-05 12:59:19,037 - root - INFO - Scraping Credentials: ✓
+2025-06-05 12:59:19,037 - root - INFO - Target Accounts: 3
+2025-06-05 12:59:19,037 - root - INFO - ============================================================
+2025-06-05 12:59:23,002 - root - INFO - Target accounts configured: 3
+2025-06-05 12:59:23,002 - root - INFO - Configuration validated successfully
+2025-06-05 12:59:23,003 - root - INFO - Bot username: your_bot_name
+2025-06-05 12:59:23,003 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 12:59:23,003 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 12:59:23)
+2025-06-05 12:59:23,005 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 12:59:23,005 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-05 12:59:23,005 - root - INFO - Conditions remplies pour l'engagement
+2025-06-05 12:59:23,006 - root - INFO - Délai aléatoire de 19.7 minutes...
+2025-06-05 13:03:12,418 - root - INFO - Target accounts configured: 3
+2025-06-05 13:03:12,418 - root - INFO - Configuration validated successfully
+2025-06-05 13:03:12,418 - root - INFO - Bot username: your_bot_name
+2025-06-05 13:03:12,418 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 13:03:12,418 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 13:03:12)
+2025-06-05 13:03:12,419 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 13:03:12,419 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-05 13:03:12,419 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-05 13:03:12,419 - root - INFO - Délai aléatoire de 5.1 minutes...
+2025-06-05 13:08:15,804 - root - INFO - Génération d'un tweet sur: Automatisation intelligente
+2025-06-05 13:08:16,055 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 13:08:16,083 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 400 Bad Request"
+2025-06-05 13:08:16,084 - root - ERROR - AI generation failed: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+2025-06-05 13:08:16,084 - root - ERROR - Échec de génération du contenu du tweet
+2025-06-05 13:08:16,084 - root - WARNING - Échec du tweet autonome
+2025-06-05 13:08:16,084 - root - INFO - ℹ️  Aucune action nécessaire pour le moment
+2025-06-05 13:11:14,761 - root - INFO - Target accounts configured: 3
+2025-06-05 13:11:14,761 - root - INFO - Configuration validated successfully
+2025-06-05 13:11:14,761 - root - INFO - Bot username: your_bot_name
+2025-06-05 13:11:14,761 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 13:11:14,762 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 13:11:14)
+2025-06-05 13:11:14,762 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 13:11:14,762 - root - INFO - Conditions remplies pour un thread
+2025-06-05 13:11:14,763 - root - INFO - Délai aléatoire de 5.9 minutes...
+2025-06-05 13:17:07,127 - root - INFO - Génération d'un thread sur: Percées en recherche IA et leurs implications
+2025-06-05 13:17:07,391 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 13:17:07,417 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 400 Bad Request"
+2025-06-05 13:17:07,418 - root - ERROR - AI generation failed: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+2025-06-05 13:17:07,418 - root - ERROR - Échec de génération du contenu du thread
+2025-06-05 13:17:07,418 - root - WARNING - Échec du thread
+2025-06-05 13:17:07,418 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-05 13:17:07,418 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-05 13:17:07,419 - root - INFO - Délai aléatoire de 8.6 minutes...
+2025-06-05 13:19:06,823 - root - INFO - Récupération des tweets pour engagement...
+2025-06-05 13:19:06,823 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-05 13:19:06,823 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-05 13:19:06,825 - twscrape_client - ERROR - Cookies manquants ou invalides: auth_token (Authentication token), ct0 (CSRF token), guest_id (Guest identifier)
+2025-06-05 13:19:06,825 - twscrape_client - ERROR - Échec de la connexion à Twitter
+2025-06-05 13:19:06,825 - root - WARNING - Aucun tweet récupéré pour l'engagement
+2025-06-05 13:19:06,826 - root - WARNING - Échec de l'engagement
+2025-06-05 13:19:06,826 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-05 13:19:06,826 - root - INFO - Délai aléatoire de 2.9 minutes...
+2025-06-05 13:21:58,788 - root - INFO - Génération d'un tweet sur: Tendances technologiques émergentes
+2025-06-05 13:21:59,141 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 13:21:59,179 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 400 Bad Request"
+2025-06-05 13:21:59,181 - root - ERROR - AI generation failed: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+2025-06-05 13:21:59,181 - root - ERROR - Échec de génération du contenu du tweet
+2025-06-05 13:21:59,181 - root - WARNING - Échec du tweet autonome
+2025-06-05 13:21:59,182 - root - INFO - ℹ️  Aucune action nécessaire pour le moment
+2025-06-05 13:22:05,166 - root - INFO - Target accounts configured: 3
+2025-06-05 13:22:05,168 - root - INFO - Configuration validated successfully
+2025-06-05 13:22:05,168 - root - INFO - Bot username: your_bot_name
+2025-06-05 13:22:05,168 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 13:22:05,169 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 13:22:05)
+2025-06-05 13:22:05,169 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 13:22:05,169 - root - INFO - Conditions remplies pour un thread
+2025-06-05 13:22:05,169 - root - INFO - Délai aléatoire de 0.2 minutes...
+2025-06-05 13:22:17,531 - root - INFO - Génération d'un thread sur: Impact de l'IA sur différents secteurs industriels
+2025-06-05 13:22:17,663 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 13:22:17,686 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 400 Bad Request"
+2025-06-05 13:22:17,687 - root - ERROR - AI generation failed: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+2025-06-05 13:22:17,687 - root - ERROR - Échec de génération du contenu du thread
+2025-06-05 13:22:17,688 - root - WARNING - Échec du thread
+2025-06-05 13:22:17,688 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-05 13:22:17,688 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-05 13:22:17,688 - root - INFO - Délai aléatoire de 13.7 minutes...
+2025-06-05 13:25:44,775 - root - INFO - Génération d'un tweet sur: Intelligence artificielle et apprentissage automatique
+2025-06-05 13:25:44,784 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 13:25:44,804 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 400 Bad Request"
+2025-06-05 13:25:44,805 - root - ERROR - AI generation failed: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+2025-06-05 13:25:44,805 - root - ERROR - Échec de génération du contenu du tweet
+2025-06-05 13:25:44,805 - root - WARNING - Échec du tweet autonome
+2025-06-05 13:25:44,805 - root - INFO - ℹ️  Aucune action nécessaire pour le moment
+2025-06-05 13:28:24,647 - root - INFO - Target accounts configured: 3
+2025-06-05 13:28:24,647 - root - INFO - Configuration validated successfully
+2025-06-05 13:28:24,647 - root - INFO - Bot username: your_bot_name
+2025-06-05 13:28:24,647 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 13:28:24,647 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 13:28:24)
+2025-06-05 13:28:24,647 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 13:28:24,648 - root - INFO - Conditions remplies pour un thread
+2025-06-05 13:28:24,648 - root - INFO - Délai aléatoire de 9.1 minutes...
+2025-06-05 13:30:22,037 - root - INFO - Target accounts configured: 3
+2025-06-05 13:30:22,037 - root - INFO - Configuration validated successfully
+2025-06-05 13:30:22,037 - root - INFO - Bot username: your_bot_name
+2025-06-05 13:30:22,037 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 13:30:22,037 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 13:30:22)
+2025-06-05 13:30:22,038 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 13:30:22,038 - root - INFO - Conditions remplies pour un thread
+2025-06-05 13:30:22,038 - root - INFO - Délai aléatoire de 9.9 minutes...
+2025-06-05 13:35:48,250 - root - INFO - Bot arrêté par l'utilisateur
+2025-06-05 13:37:20,976 - root - INFO - Target accounts configured: 3
+2025-06-05 13:37:20,976 - root - INFO - Configuration validated successfully
+2025-06-05 13:37:20,977 - root - INFO - Bot username: your_bot_name
+2025-06-05 13:37:20,977 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 13:37:20,977 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 13:37:20)
+2025-06-05 13:37:20,978 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 13:37:20,978 - root - INFO - Conditions remplies pour un thread
+2025-06-05 13:37:20,978 - root - INFO - Délai aléatoire de 8.8 minutes...
+2025-06-05 13:46:08,160 - root - INFO - Génération d'un thread sur: Impact de l'IA sur différents secteurs industriels
+2025-06-05 13:46:08,341 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 13:46:09,457 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 13:46:09,459 - root - INFO - Generated thread with 4 tweets
+2025-06-05 13:46:09,709 - root - INFO - Posted tweet: 1930622171568574966
+2025-06-05 13:46:14,897 - root - INFO - Posted tweet: 1930622193341247966
+2025-06-05 13:46:20,118 - root - INFO - Posted tweet: 1930622215159963818
+2025-06-05 13:46:25,310 - root - INFO - Posted tweet: 1930622236987142569
+2025-06-05 13:46:25,310 - root - INFO - Posted thread with 4/4 tweets
+2025-06-05 13:46:25,311 - root - INFO - Thread enregistré
+2025-06-05 13:46:25,311 - root - INFO - Thread posté avec 4 tweets: ['1930622171568574966', '1930622193341247966', '1930622215159963818', '1930622236987142569']
+2025-06-05 13:46:25,313 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-05 13:46:25,313 - root - INFO - Conditions remplies pour l'engagement
+2025-06-05 13:46:25,313 - root - INFO - Délai aléatoire de 11.4 minutes...
+2025-06-05 13:57:50,608 - root - INFO - Récupération des tweets pour engagement...
+2025-06-05 13:57:50,610 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-05 13:57:50,610 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-05 13:57:50,611 - twscrape_client - INFO - ✓ Cookies validés avec succès
+2025-06-05 13:57:50,611 - twscrape_client - INFO - Configuration du compte Twitter avec cookies (version améliorée)...
+2025-06-05 13:57:50,757 - twscrape_client - INFO - Comptes existants trouvés: 0
+2025-06-05 13:57:50,757 - twscrape_client - INFO - Aucun compte existant - ajout via cookies...
+2025-06-05 13:57:50,758 - twscrape_client - INFO - Ajout du compte avec cookies (version améliorée)...
+2025-06-05 13:57:50,820 - twscrape_client - INFO - ✓ Compte ajouté avec succès: cookie_user_76a41f8b
+2025-06-05 13:57:51,824 - twscrape_client - INFO - ✓ Compte cookie_user_76a41f8b activé
+2025-06-05 13:57:51,826 - twscrape_client - INFO - ✓ Configuration terminée: 1 comptes, 1 actifs
+2025-06-05 13:57:51,826 - twscrape_client - INFO - Récupération de la timeline personnelle (limite: 20)
+2025-06-05 13:57:51,826 - twscrape_client - INFO - Stratégie timeline: trending
+2025-06-05 13:57:51,826 - twscrape_client - INFO - Recherche timeline: #AI
+2025-06-05 13:57:51,958 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:57:53,054 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:57:54,169 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:57:55,691 - twscrape_client - INFO - Recherche timeline: #technology
+2025-06-05 13:57:55,860 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:57:56,966 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:57:58,063 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:57:59,992 - twscrape_client - INFO - Recherche timeline: #programming
+2025-06-05 13:58:00,121 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:01,220 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:02,318 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:04,241 - twscrape_client - INFO - Recherche timeline: #startup
+2025-06-05 13:58:04,364 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:05,474 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:06,582 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:08,100 - twscrape_client - INFO - Stratégie timeline: general
+2025-06-05 13:58:08,102 - twscrape_client - INFO - Recherche timeline: python programming
+2025-06-05 13:58:08,237 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:09,345 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:10,452 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:11,999 - twscrape_client - INFO - Recherche timeline: artificial intelligence
+2025-06-05 13:58:12,131 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:13,248 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:14,346 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:15,862 - twscrape_client - INFO - Recherche timeline: tech news
+2025-06-05 13:58:15,974 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:17,078 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:18,197 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:19,760 - twscrape_client - INFO - Recherche timeline: innovation
+2025-06-05 13:58:19,887 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:20,993 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:22,103 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:23,620 - twscrape_client - INFO - Stratégie timeline: language
+2025-06-05 13:58:23,621 - twscrape_client - INFO - Recherche timeline: lang:en AI
+2025-06-05 13:58:23,734 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:24,838 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:25,942 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:27,458 - twscrape_client - INFO - Recherche timeline: lang:en tech
+2025-06-05 13:58:27,583 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:28,683 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:29,798 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:31,318 - twscrape_client - INFO - Recherche timeline: lang:en python
+2025-06-05 13:58:31,469 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:32,572 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:33,697 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 403 Forbidden"
+2025-06-05 13:58:35,256 - twscrape_client - INFO - Timeline récupérée: 0 tweets uniques
+2025-06-05 13:58:35,257 - root - WARNING - Aucun tweet récupéré pour l'engagement
+2025-06-05 13:58:35,257 - root - WARNING - Échec de l'engagement
+2025-06-05 13:58:35,257 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-05 13:58:35,257 - root - INFO - Délai aléatoire de 5.0 minutes...
+2025-06-05 14:03:34,473 - root - INFO - Génération d'un tweet sur: Applications pratiques du machine learning
+2025-06-05 14:03:34,485 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 14:03:35,486 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 14:03:35,487 - root - INFO - Generated standalone tweet: Just saw an AI model compose a surprisingly moving...
+2025-06-05 14:03:35,730 - root - INFO - Posted tweet: 1930626558911201306
+2025-06-05 14:03:35,731 - root - INFO - Tweet enregistré (1/10)
+2025-06-05 14:03:35,731 - root - INFO - Tweet posté avec succès: 1930626558911201306
+2025-06-05 14:03:35,731 - root - INFO - ✅ Actions effectuées: Thread posté (4 tweets), Tweet autonome posté
+2025-06-05 14:12:16,759 - root - INFO - Target accounts configured: 3
+2025-06-05 14:12:16,759 - root - INFO - Configuration validated successfully
+2025-06-05 14:12:16,759 - root - INFO - Bot username: your_bot_name
+2025-06-05 14:12:16,759 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 14:12:16,759 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 14:12:16)
+2025-06-05 14:12:16,760 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 14:12:16,760 - root - INFO - Conditions remplies pour un thread
+2025-06-05 14:12:16,760 - root - INFO - Délai aléatoire de 3.9 minutes...
+2025-06-05 14:14:05,342 - root - INFO - Target accounts configured: 3
+2025-06-05 14:14:05,343 - root - INFO - Configuration validated successfully
+2025-06-05 14:14:05,344 - root - INFO - Bot username: your_bot_name
+2025-06-05 14:14:05,345 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 14:14:05,348 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 14:14:05)
+2025-06-05 14:14:05,350 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 14:14:05,350 - root - INFO - Espacement minimum non respecté pour thread (encore 5.5h à attendre)
+2025-06-05 14:14:05,351 - root - INFO - Conditions remplies pour l'engagement
+2025-06-05 14:14:05,351 - root - INFO - Délai aléatoire de 8.2 minutes...
+2025-06-05 14:22:17,675 - root - INFO - Récupération des tweets pour engagement...
+2025-06-05 14:22:17,675 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-05 14:22:17,675 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-05 14:22:17,676 - twscrape_client - INFO - ✓ Cookies validés avec succès
+2025-06-05 14:22:17,676 - twscrape_client - INFO - Configuration du compte Twitter avec cookies (version améliorée)...
+2025-06-05 14:22:17,680 - twscrape_client - INFO - Comptes existants trouvés: 1
+2025-06-05 14:22:17,682 - twscrape_client - INFO - ✓ 1 compte(s) actif(s) trouvé(s)
+2025-06-05 14:22:17,685 - twscrape_client - INFO - ✓ Configuration terminée: 1 comptes, 1 actifs
+2025-06-05 14:22:17,685 - twscrape_client - INFO - Récupération de la timeline personnelle RÉELLE (limite: 20)
+2025-06-05 14:22:17,685 - twscrape_client - INFO - Essai méthode timeline 1...
+2025-06-05 14:22:17,686 - twscrape_client - WARNING - Méthode 1 échouée: 'API' object has no attribute 'timeline'
+2025-06-05 14:22:17,686 - twscrape_client - INFO - Essai méthode timeline 2...
+2025-06-05 14:22:17,686 - twscrape_client - WARNING - Méthode 2 échouée: 'API' object has no attribute 'home_timeline'
+2025-06-05 14:22:17,686 - twscrape_client - INFO - Essai méthode timeline 3...
+2025-06-05 14:22:18,054 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-05 14:22:18,276 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.d850d5ca.js "HTTP/1.1 200 OK"
+2025-06-05 14:22:18,672 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22min_faves%3A5+-filter%3Areplies%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-05 14:22:19,285 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22min_faves%3A5+-filter%3Areplies%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%2C%22cursor%22%3A%22DAADDAABCgABGsr65VeWoKEKAAIayvrhcpog6QAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUayvro7oAnEAoABhrK-ujuf9jwAAA%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-05 14:22:19,699 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22min_faves%3A5+-filter%3Areplies%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%2C%22cursor%22%3A%22DAADDAABCgABGsr65VeWoKEKAAIayvrcpBaQYAAIAAIAAAACCAADAAAAAAgABAAAAAEKAAUayvro7oAnEAoABhrK-ujuf7HgAAA%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-05 14:22:19,722 - twscrape_client - INFO - ✓ Méthode 3 réussie: 20 tweets
+2025-06-05 14:22:20,007 - twscrape_client - INFO - Tweets sauvegardés dans timeline_tweets.xlsx
+2025-06-05 14:22:20,007 - twscrape_client - INFO - Timeline récupérée: 20 tweets réels
+2025-06-05 14:22:20,008 - root - INFO - Tweets récupérés: 20
+2025-06-05 14:22:20,008 - root - INFO - Tweets appropriés trouvés: 9
+2025-06-05 14:22:20,008 - root - INFO - Tweets sélectionnés pour engagement: 3
+2025-06-05 14:22:20,008 - root - INFO - Traitement du tweet 1/3: 1930631218590290077
+2025-06-05 14:22:20,008 - root - INFO - Texte: ทั้งหมดทั้งมวล รูปที่ดีที่สุดคือกับนก555555555555 ที่เหลือ มีม! 😂🦜 https://t.co/kgXk6rkIzO...
+2025-06-05 14:22:20,008 - root - INFO - Génération d'une réponse au tweet de @sonyasarann
+2025-06-05 14:22:20,018 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 14:22:20,866 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 14:22:20,868 - root - INFO - Generated reply: รูปกับนกน่ารักมากค่ะ! 😂 ที่เหลือก็มีมได้ใจสุดๆ ค่ะ...
+2025-06-05 14:22:20,868 - root - INFO - Contenu de réponse généré: รูปกับนกน่ารักมากค่ะ! 😂 ที่เหลือก็มีมได้ใจสุดๆ ค่ะ! 🦜 สนุกมากเลยค่ะที่ได้ดู!...
+2025-06-05 14:22:20,869 - root - INFO - Posting reply to tweet 1930631218590290077
+2025-06-05 14:22:21,084 - root - INFO - Posted tweet: 1930631279042605309
+2025-06-05 14:22:21,085 - root - INFO - Engagement enregistré (1/6): Replies: 1/20, Quotes: 0/5
+2025-06-05 14:22:21,086 - root - INFO - ✅ Réponse postée (1/3): 1930631279042605309
+2025-06-05 14:23:14,075 - root - INFO - Traitement du tweet 2/3: 1930631219315659173
+2025-06-05 14:23:14,076 - root - INFO - Texte: 🚨 BREAKING 🚨
+
+JAMES WYNN IS $120 AWAY FROM LIQUIDATION https://t.co/alrVhpwU2C...
+2025-06-05 14:23:14,076 - root - INFO - Génération d'une réponse au tweet de @cryptobeastreal
+2025-06-05 14:23:14,084 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 14:23:14,663 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 14:23:14,664 - root - INFO - Generated reply: That's a tight margin! Hopefully, James can naviga...
+2025-06-05 14:23:14,665 - root - INFO - Contenu de réponse généré: That's a tight margin! Hopefully, James can navigate the volatility. Good luck to him, and thanks fo...
+2025-06-05 14:23:14,665 - root - INFO - Posting reply to tweet 1930631219315659173
+2025-06-05 14:23:14,878 - root - INFO - Posted tweet: 1930631504658321848
+2025-06-05 14:23:14,878 - root - INFO - Engagement enregistré (2/6): Replies: 2/20, Quotes: 0/5
+2025-06-05 14:23:14,879 - root - INFO - ✅ Réponse postée (2/3): 1930631504658321848
+2025-06-05 14:24:43,328 - root - INFO - Traitement du tweet 3/3: 1930631198298018167
+2025-06-05 14:24:43,328 - root - INFO - Texte: 🥣🕌
+ 
+外围会考验学生的耐性，资源是坚持的奖赏。
+ 
+广州 成都 上海 杭州 北京
+ 
+上门见付，同城约见不喜包换 
+ 
+会员电报群 https://t.co/ktjimZM00z
+ 
+X:@YHS...
+2025-06-05 14:24:43,328 - root - INFO - Génération d'une réponse au tweet de @MdFarmer61217
+2025-06-05 14:24:43,337 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 14:24:44,188 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 14:24:44,190 - root - INFO - Generated reply: This tweet seems to be offering… services. Not my ...
+2025-06-05 14:24:44,190 - root - INFO - Contenu de réponse généré: This tweet seems to be offering… services. Not my area of expertise, but I hope everyone finds what ...
+2025-06-05 14:24:44,190 - root - INFO - Posting reply to tweet 1930631198298018167
+2025-06-05 14:24:44,445 - root - INFO - Posted tweet: 1930631880182829528
+2025-06-05 14:24:44,446 - root - INFO - Engagement enregistré (3/6): Replies: 3/20, Quotes: 0/5
+2025-06-05 14:24:44,446 - root - INFO - ✅ Réponse postée (3/3): 1930631880182829528
+2025-06-05 14:26:10,040 - root - INFO - ✅ Engagement terminé avec succès: 3 réponses, 0 citations
+2025-06-05 14:26:10,040 - root - INFO - Espacement minimum non respecté entre les tweets
+2025-06-05 14:26:10,040 - root - INFO - ✅ Actions effectuées: Engagement effectué
+2025-06-05 14:41:43,762 - root - INFO - Target accounts configured: 3
+2025-06-05 14:41:43,763 - root - INFO - Configuration validated successfully
+2025-06-05 14:41:43,763 - root - INFO - Bot username: your_bot_name
+2025-06-05 14:41:43,763 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 14:41:43,763 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 14:41:43)
+2025-06-05 14:41:43,763 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 14:41:43,763 - root - INFO - Espacement minimum non respecté pour thread (encore 5.1h à attendre)
+2025-06-05 14:41:43,764 - root - INFO - Espacement minimum non respecté entre les tweets
+2025-06-05 14:41:43,764 - root - INFO - ℹ️  Aucune action nécessaire pour le moment
+2025-06-05 14:42:56,722 - root - INFO - Target accounts configured: 3
+2025-06-05 14:42:56,722 - root - INFO - Configuration validated successfully
+2025-06-05 14:42:56,722 - root - INFO - Bot username: your_bot_name
+2025-06-05 14:42:56,722 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 14:42:56,722 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 14:42:56)
+2025-06-05 14:42:56,722 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 14:42:56,723 - root - INFO - Thread autorisé (0/2)
+2025-06-05 14:42:56,723 - root - INFO - Conditions remplies pour un thread
+2025-06-05 14:42:56,723 - root - INFO - Thread autorisé (0/2)
+2025-06-05 14:42:56,723 - root - INFO - Délai aléatoire de 3.8 minutes...
+2025-06-05 14:46:43,636 - root - INFO - Génération d'un thread sur: Impact de l'IA sur différents secteurs industriels
+2025-06-05 14:46:43,884 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 14:46:45,317 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 14:46:45,319 - root - INFO - Generated thread with 4 tweets
+2025-06-05 14:46:45,569 - root - INFO - Posted tweet: 1930637421454012508
+2025-06-05 14:46:50,800 - root - INFO - Posted tweet: 1930637443239150031
+2025-06-05 14:46:56,012 - root - INFO - Posted tweet: 1930637465192157299
+2025-06-05 14:47:01,226 - root - INFO - Posted tweet: 1930637487040328028
+2025-06-05 14:47:01,226 - root - INFO - Posted thread with 4/4 tweets
+2025-06-05 14:47:01,226 - root - INFO - Thread enregistré
+2025-06-05 14:47:01,227 - root - INFO - Thread posté avec 4 tweets: ['1930637421454012508', '1930637443239150031', '1930637465192157299', '1930637487040328028']
+2025-06-05 14:47:01,227 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-05 14:47:01,227 - root - INFO - Conditions remplies pour l'engagement
+2025-06-05 14:47:01,227 - root - INFO - Délai aléatoire de 11.1 minutes...
+2025-06-05 14:58:09,444 - root - INFO - Récupération des tweets pour engagement...
+2025-06-05 14:58:09,445 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-05 14:58:09,446 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-05 14:58:09,446 - twscrape_client - INFO - ✓ Cookies validés avec succès
+2025-06-05 14:58:09,446 - twscrape_client - INFO - Configuration du compte Twitter avec cookies (version améliorée)...
+2025-06-05 14:58:09,452 - twscrape_client - INFO - Comptes existants trouvés: 1
+2025-06-05 14:58:09,454 - twscrape_client - INFO - ✓ 1 compte(s) actif(s) trouvé(s)
+2025-06-05 14:58:09,462 - twscrape_client - INFO - ✓ Configuration terminée: 1 comptes, 1 actifs
+2025-06-05 14:58:09,462 - twscrape_client - INFO - Récupération de la timeline personnelle RÉELLE (limite: 20)
+2025-06-05 14:58:09,462 - twscrape_client - INFO - Essai méthode timeline 1...
+2025-06-05 14:58:09,713 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-05 14:58:09,934 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.d850d5ca.js "HTTP/1.1 200 OK"
+2025-06-05 14:58:10,040 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22min_faves%3A10+-filter%3Areplies+-is%3Aretweet%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 404 Not Found"
+2025-06-05 14:58:11,283 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-05 14:58:11,497 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.d850d5ca.js "HTTP/1.1 200 OK"
+2025-06-05 14:58:12,155 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22min_faves%3A10+-filter%3Areplies+-is%3Aretweet%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-05 14:58:12,236 - twscrape_client - INFO - ✓ Méthode 1 réussie: 21 tweets
+2025-06-05 14:58:12,350 - twscrape_client - INFO - Tweets sauvegardés dans timeline_tweets.xlsx
+2025-06-05 14:58:12,350 - twscrape_client - INFO - Timeline récupérée: 20 tweets réels
+2025-06-05 14:58:12,350 - root - INFO - Tweets récupérés: 20
+2025-06-05 14:58:12,350 - root - INFO - Tweets appropriés trouvés: 14
+2025-06-05 14:58:12,350 - root - INFO - Tweets sélectionnés pour engagement: 3
+2025-06-05 14:58:12,350 - root - INFO - Traitement du tweet 1/3: 1930640122564739122
+2025-06-05 14:58:12,350 - root - INFO - Texte: Liam Delap will inherit that Diego Costa's chant at Stamford Bridge. I can feel it. He fights for 90...
+2025-06-05 14:58:12,351 - root - INFO - Génération d'une réponse au tweet de @Blue_Footy
+2025-06-05 14:58:12,362 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 14:58:13,117 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 14:58:13,118 - root - INFO - Generated reply: He's definitely got that tenacity! It'll be intere...
+2025-06-05 14:58:13,118 - root - INFO - Contenu de réponse généré: He's definitely got that tenacity! It'll be interesting to see if the Bridge faithful embrace him wi...
+2025-06-05 14:58:13,118 - root - INFO - Posting reply to tweet 1930640122564739122
+2025-06-05 14:58:13,438 - root - INFO - Posted tweet: 1930640306292023312
+2025-06-05 14:58:13,440 - root - INFO - Engagement enregistré (1/6): Replies: 1/20, Quotes: 0/5
+2025-06-05 14:58:13,440 - root - INFO - ✅ Réponse postée (1/2): 1930640306292023312
+2025-06-05 14:58:29,719 - root - INFO - Target accounts configured: 3
+2025-06-05 14:58:29,719 - root - INFO - Configuration validated successfully
+2025-06-05 14:58:29,719 - root - INFO - Bot username: your_bot_name
+2025-06-05 14:58:29,719 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 14:58:29,719 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 14:58:29)
+2025-06-05 14:58:29,720 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 14:58:29,721 - root - INFO - Espacement minimum non respecté pour thread (encore 5.8h à attendre)
+2025-06-05 14:58:29,721 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-05 14:58:29,721 - root - INFO - Délai aléatoire de 7.5 minutes...
+2025-06-05 14:59:14,419 - root - INFO - Target accounts configured: 3
+2025-06-05 14:59:14,419 - root - INFO - Configuration validated successfully
+2025-06-05 14:59:14,419 - root - INFO - Bot username: your_bot_name
+2025-06-05 14:59:14,419 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 14:59:14,419 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 14:59:14)
+2025-06-05 14:59:14,420 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 14:59:14,420 - root - INFO - Thread autorisé (0/2)
+2025-06-05 14:59:14,420 - root - INFO - Conditions remplies pour un thread
+2025-06-05 14:59:14,420 - root - INFO - Thread autorisé (0/2)
+2025-06-05 14:59:14,420 - root - INFO - Délai aléatoire de 3.1 minutes...
+2025-06-05 15:02:21,263 - root - INFO - Génération d'un thread sur: L'évolution de l'IA dans la dernière décennie
+2025-06-05 15:02:21,380 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 15:02:23,099 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 15:02:23,101 - root - INFO - Generated thread with 4 tweets
+2025-06-05 15:02:23,314 - root - INFO - Posted tweet: 1930641354696098168
+2025-06-05 15:02:28,517 - root - INFO - Posted tweet: 1930641376426791414
+2025-06-05 15:02:33,576 - tweepy.client - WARNING - Rate limit exceeded. Sleeping for 891 seconds.
+2025-06-05 15:07:41,811 - root - INFO - Target accounts configured: 3
+2025-06-05 15:07:41,811 - root - INFO - Configuration validated successfully
+2025-06-05 15:07:41,811 - root - INFO - Bot username: your_bot_name
+2025-06-05 15:07:41,811 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 15:07:41,811 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 15:07:41)
+2025-06-05 15:07:41,812 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 15:07:41,812 - root - INFO - Thread autorisé (0/2)
+2025-06-05 15:07:41,812 - root - INFO - Conditions remplies pour un thread
+2025-06-05 15:07:41,812 - root - INFO - Thread autorisé (0/2)
+2025-06-05 15:07:41,812 - root - INFO - Délai aléatoire de 7.8 minutes...
+2025-06-05 15:15:32,215 - root - INFO - Génération d'un thread sur: Construction de systèmes IA dignes de confiance
+2025-06-05 15:15:32,342 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 15:15:33,703 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 15:15:33,704 - root - INFO - Generated thread with 4 tweets
+2025-06-05 15:15:33,831 - tweepy.client - WARNING - Rate limit exceeded. Sleeping for 111 seconds.
+2025-06-05 15:17:24,917 - tweepy.client - WARNING - Rate limit exceeded. Sleeping for 901 seconds.
+2025-06-05 15:20:05,215 - root - INFO - Target accounts configured: 3
+2025-06-05 15:20:05,215 - root - INFO - Configuration validated successfully
+2025-06-05 15:20:05,215 - root - INFO - Bot username: your_bot_name
+2025-06-05 15:20:05,215 - root - INFO - Twitter username: your_twitter_username
+2025-06-05 15:20:05,215 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 15:20:05)
+2025-06-05 15:20:05,216 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 15:20:05,216 - root - INFO - Thread autorisé (0/2)
+2025-06-05 15:20:05,216 - root - INFO - Conditions remplies pour un thread
+2025-06-05 15:20:05,216 - root - INFO - Thread autorisé (0/2)
+2025-06-05 15:20:05,216 - root - INFO - Délai aléatoire de 6.0 minutes...
+2025-06-05 15:26:08,105 - root - INFO - Génération d'un thread sur: Comprendre les réseaux de neurones et l'apprentissage profond
+2025-06-05 15:26:08,222 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 15:26:10,017 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 15:26:10,018 - root - INFO - Generated thread with 4 tweets
+2025-06-05 15:26:10,019 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 15:26:10,139 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 15:26:10,140 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-05 15:26:40,243 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 15:26:40,243 - root - INFO - Calculated delay: 60s (consecutive limits: 2)
+2025-06-05 15:27:40,380 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 15:27:40,380 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 15:27:40,380 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 15:27:40,380 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 15:42:40,481 - root - ERROR - Failed to post tweet 1 in thread
+2025-06-05 15:42:40,482 - root - INFO - Posted thread with 0/4 tweets
+2025-06-05 15:42:40,482 - root - ERROR - Échec de publication du thread
+2025-06-05 15:42:40,482 - root - WARNING - Échec du thread
+2025-06-05 15:42:40,482 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-05 15:42:40,482 - root - INFO - Conditions remplies pour l'engagement
+2025-06-05 15:42:40,482 - root - INFO - Délai aléatoire de 5.2 minutes...
+2025-06-05 15:47:51,922 - root - INFO - Récupération des tweets pour engagement...
+2025-06-05 15:47:51,922 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-05 15:47:51,922 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-05 15:47:51,922 - twscrape_client - INFO - ✓ Cookies validés avec succès
+2025-06-05 15:47:51,922 - twscrape_client - INFO - Configuration du compte Twitter avec cookies (version améliorée)...
+2025-06-05 15:47:51,926 - twscrape_client - INFO - Comptes existants trouvés: 1
+2025-06-05 15:47:51,928 - twscrape_client - INFO - ✓ 1 compte(s) actif(s) trouvé(s)
+2025-06-05 15:47:51,930 - twscrape_client - INFO - ✓ Configuration terminée: 1 comptes, 1 actifs
+2025-06-05 15:47:51,930 - twscrape_client - INFO - Récupération de la timeline personnelle RÉELLE (limite: 20)
+2025-06-05 15:47:51,930 - twscrape_client - INFO - Essai méthode timeline 1...
+2025-06-05 15:47:52,156 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-05 15:47:52,352 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.d850d5ca.js "HTTP/1.1 200 OK"
+2025-06-05 15:47:53,071 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22min_faves%3A10+-filter%3Areplies+-is%3Aretweet%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-05 15:47:53,113 - twscrape_client - INFO - ✓ Méthode 1 réussie: 24 tweets
+2025-06-05 15:47:53,435 - twscrape_client - INFO - Tweets sauvegardés dans timeline_tweets.xlsx
+2025-06-05 15:47:53,436 - twscrape_client - INFO - Timeline récupérée: 20 tweets réels
+2025-06-05 15:47:53,436 - root - INFO - Tweets récupérés: 20
+2025-06-05 15:47:53,436 - root - INFO - Tweets appropriés trouvés: 18
+2025-06-05 15:47:53,436 - root - INFO - Tweets sélectionnés pour engagement: 3
+2025-06-05 15:47:53,436 - root - INFO - Traitement du tweet 1/3: 1930652568763462078
+2025-06-05 15:47:53,436 - root - INFO - Texte: Who is the face of the French National Team right now? 🤔 https://t.co/9xFujqWkrJ...
+2025-06-05 15:47:53,436 - root - INFO - Génération d'une réponse au tweet de @TouchlineX
+2025-06-05 15:47:53,446 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 15:47:54,075 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 15:47:54,077 - root - INFO - Generated reply: While Mbappé is a superstar, Griezmann's tactical ...
+2025-06-05 15:47:54,077 - root - INFO - Contenu de réponse généré: While Mbappé is a superstar, Griezmann's tactical brilliance and leadership make a strong case for h...
+2025-06-05 15:47:54,077 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 15:47:54,077 - root - INFO - Posting reply to tweet 1930652568763462078
+2025-06-05 15:47:54,191 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 15:47:54,191 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-05 15:48:24,290 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 15:48:24,291 - root - INFO - Calculated delay: 60s (consecutive limits: 2)
+2025-06-05 15:49:24,410 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 15:49:24,410 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 15:49:24,410 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 15:49:24,411 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 16:04:24,511 - root - ERROR - ❌ Échec de publication de la réponse
+2025-06-05 16:04:24,511 - root - INFO - Traitement du tweet 2/3: 1930652609620136219
+2025-06-05 16:04:24,511 - root - INFO - Texte: how mad would everyone be if i started at 6:30pm instead...
+2025-06-05 16:04:24,511 - root - INFO - Génération d'une réponse au tweet de @aimseytwo
+2025-06-05 16:04:24,524 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 16:04:25,375 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 16:04:25,377 - root - INFO - Generated reply: The AI in me says data suggests 6:30pm could boost...
+2025-06-05 16:04:25,377 - root - INFO - Contenu de réponse généré: The AI in me says data suggests 6:30pm could boost engagement! 😉 But seriously, do what works best f...
+2025-06-05 16:04:25,377 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 16:04:25,377 - root - INFO - Posting reply to tweet 1930652609620136219
+2025-06-05 16:04:25,492 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 16:04:25,492 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-05 16:04:49,423 - root - INFO - Target accounts configured: 3
+2025-06-05 16:04:49,425 - root - INFO - Configuration validated successfully
+2025-06-05 16:04:49,425 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 16:04:49,425 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 16:04:49,425 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 16:04:49)
+2025-06-05 16:04:49,426 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 16:04:49,426 - root - INFO - Thread autorisé (0/2)
+2025-06-05 16:04:49,426 - root - INFO - Conditions remplies pour un thread
+2025-06-05 16:04:49,426 - root - INFO - Thread autorisé (0/2)
+2025-06-05 16:04:49,426 - root - INFO - Délai aléatoire de 5.9 minutes...
+2025-06-05 16:10:42,201 - root - INFO - Génération d'un thread sur: Applications du machine learning dans la vie quotidienne
+2025-06-05 16:10:42,448 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 16:10:44,763 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 16:10:44,766 - root - INFO - Generated thread with 4 tweets
+2025-06-05 16:10:44,766 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 16:10:44,867 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 16:10:44,867 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-05 16:11:14,960 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 16:11:14,960 - root - INFO - Calculated delay: 60s (consecutive limits: 2)
+2025-06-05 16:12:15,090 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 16:12:15,090 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 16:12:15,090 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 16:12:15,090 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 16:14:11,623 - root - INFO - Target accounts configured: 3
+2025-06-05 16:14:11,624 - root - INFO - Configuration validated successfully
+2025-06-05 16:14:11,624 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 16:14:11,624 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 16:14:11,624 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 16:14:11)
+2025-06-05 16:14:11,626 - root - INFO - Mode manuel: Tweet autonome
+2025-06-05 16:14:11,626 - root - INFO - Délai aléatoire de 1.9 minutes...
+2025-06-05 16:16:04,648 - root - INFO - Génération d'un tweet sur: Testing new account setup
+2025-06-05 16:16:05,050 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 16:16:05,779 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 16:16:05,781 - root - INFO - Generated standalone tweet: AI is mirroring our data, biases and all. Are we b...
+2025-06-05 16:16:05,782 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 16:16:05,894 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 16:16:05,894 - root - WARNING - NEW ACCOUNT - Conservative delay: 300s (consecutive limits: 1)
+2025-06-05 16:21:06,057 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 16:21:06,057 - root - WARNING - NEW ACCOUNT - Conservative delay: 600s (consecutive limits: 2)
+2025-06-05 16:21:06,058 - root - WARNING - Long delay (600s) - consider stopping bot temporarily
+2025-06-05 16:24:52,270 - root - INFO - Target accounts configured: 3
+2025-06-05 16:24:52,270 - root - INFO - Configuration validated successfully
+2025-06-05 16:24:52,271 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 16:24:52,271 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 16:24:52,271 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 16:24:52)
+2025-06-05 16:24:52,272 - root - INFO - Mode manuel: Tweet autonome
+2025-06-05 16:24:52,273 - root - INFO - Délai aléatoire de 9.1 minutes...
+2025-06-05 16:34:00,761 - root - INFO - Génération d'un tweet sur: Testing new account setup
+2025-06-05 16:34:01,118 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 16:34:01,789 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 16:34:01,792 - root - INFO - Generated standalone tweet: AI is teaching itself to dream, and honestly, it’s...
+2025-06-05 16:34:01,792 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 16:34:01,904 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 16:34:01,904 - root - WARNING - NEW ACCOUNT - Conservative delay: 300s (consecutive limits: 1)
+2025-06-05 16:39:02,070 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 16:39:02,070 - root - WARNING - NEW ACCOUNT - Conservative delay: 600s (consecutive limits: 2)
+2025-06-05 16:39:02,070 - root - WARNING - Long delay (600s) - consider stopping bot temporarily
+2025-06-05 16:49:02,285 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 16:49:02,285 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 16:49:02,285 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 16:49:02,285 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 16:49:20,339 - root - INFO - Target accounts configured: 3
+2025-06-05 16:49:20,339 - root - INFO - Configuration validated successfully
+2025-06-05 16:49:20,339 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 16:49:20,340 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 16:49:20,340 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 16:49:20)
+2025-06-05 16:49:20,341 - root - INFO - Mode manuel: Tweet autonome
+2025-06-05 16:49:20,341 - root - INFO - Délai aléatoire de 9.2 minutes...
+2025-06-05 16:57:48,660 - root - INFO - Target accounts configured: 3
+2025-06-05 16:57:48,660 - root - INFO - Configuration validated successfully
+2025-06-05 16:57:48,660 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 16:57:48,660 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 16:57:48,660 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 16:57:48)
+2025-06-05 16:57:48,661 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 16:57:48,661 - root - INFO - Thread autorisé (0/2)
+2025-06-05 16:57:48,661 - root - INFO - Conditions remplies pour un thread
+2025-06-05 16:57:48,661 - root - INFO - Thread autorisé (0/2)
+2025-06-05 16:57:48,661 - root - INFO - Délai aléatoire de 9.8 minutes...
+2025-06-05 16:58:30,644 - root - INFO - Génération d'un tweet sur: Testing new account setup
+2025-06-05 16:58:31,074 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 16:58:31,881 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 16:58:31,883 - root - INFO - Generated standalone tweet: AI is teaching itself to read between the lines, n...
+2025-06-05 16:58:31,884 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 16:58:31,982 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 16:58:31,982 - root - WARNING - NEW ACCOUNT - Conservative delay: 300s (consecutive limits: 1)
+2025-06-05 17:03:32,151 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 17:03:32,151 - root - WARNING - NEW ACCOUNT - Conservative delay: 600s (consecutive limits: 2)
+2025-06-05 17:03:32,152 - root - WARNING - Long delay (600s) - consider stopping bot temporarily
+2025-06-05 17:04:02,386 - root - ERROR - Échec de publication du tweet
+2025-06-05 17:04:02,386 - root - ERROR - ❌ Échec du tweet autonome
+2025-06-05 17:07:39,084 - root - INFO - Génération d'un thread sur: Comprendre les réseaux de neurones et l'apprentissage profond
+2025-06-05 17:07:39,259 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 17:07:41,416 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 17:07:41,418 - root - INFO - Generated thread with 4 tweets
+2025-06-05 17:07:41,418 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 17:07:41,516 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 17:07:41,516 - root - WARNING - NEW ACCOUNT - Conservative delay: 300s (consecutive limits: 1)
+2025-06-05 17:12:41,689 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 17:12:41,689 - root - WARNING - NEW ACCOUNT - Conservative delay: 600s (consecutive limits: 2)
+2025-06-05 17:12:41,690 - root - WARNING - Long delay (600s) - consider stopping bot temporarily
+2025-06-05 17:13:32,360 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 17:13:32,361 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 17:13:32,361 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 17:13:32,361 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 17:14:26,023 - root - INFO - Target accounts configured: 3
+2025-06-05 17:14:26,023 - root - INFO - Configuration validated successfully
+2025-06-05 17:14:26,024 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 17:14:26,024 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 17:14:26,024 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 17:14:26)
+2025-06-05 17:14:26,025 - root - INFO - Mode manuel: Tweet autonome
+2025-06-05 17:14:26,025 - root - INFO - Délai aléatoire de 2.4 minutes...
+2025-06-05 17:16:50,430 - root - INFO - Génération d'un tweet sur: Fresh start with new Twitter account
+2025-06-05 17:16:50,794 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 17:16:51,547 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 17:16:51,550 - root - INFO - Generated standalone tweet: AI's accelerating. It's easy to get caught up in t...
+2025-06-05 17:16:51,550 - root - INFO - Rate limiting state refreshed
+2025-06-05 17:16:51,550 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 17:16:51,648 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 17:16:51,648 - root - WARNING - NEW ACCOUNT - Conservative delay: 300s (consecutive limits: 1)
+2025-06-05 17:21:51,815 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 17:21:51,816 - root - WARNING - NEW ACCOUNT - Conservative delay: 600s (consecutive limits: 2)
+2025-06-05 17:21:51,816 - root - WARNING - Long delay (600s) - consider stopping bot temporarily
+2025-06-05 17:21:55,590 - root - INFO - Target accounts configured: 3
+2025-06-05 17:21:55,590 - root - INFO - Configuration validated successfully
+2025-06-05 17:21:55,590 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 17:21:55,590 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 17:21:55,590 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 17:21:55)
+2025-06-05 17:21:55,591 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 17:21:55,591 - root - INFO - Thread autorisé (0/2)
+2025-06-05 17:21:55,591 - root - INFO - Conditions remplies pour un thread
+2025-06-05 17:21:55,591 - root - INFO - Thread autorisé (0/2)
+2025-06-05 17:21:55,591 - root - INFO - Délai aléatoire de 5.9 minutes...
+2025-06-05 17:26:13,791 - root - INFO - Target accounts configured: 3
+2025-06-05 17:26:13,791 - root - INFO - Configuration validated successfully
+2025-06-05 17:26:13,791 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 17:26:13,792 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 17:26:13,792 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 17:26:13)
+2025-06-05 17:26:13,793 - root - INFO - Mode manuel: Tweet autonome
+2025-06-05 17:26:13,793 - root - INFO - Délai aléatoire de 4.7 minutes...
+2025-06-05 17:27:47,736 - root - INFO - Génération d'un thread sur: Éthique de l'IA et développement responsable
+2025-06-05 17:27:47,875 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 17:27:49,224 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 17:27:49,226 - root - INFO - Generated thread with 4 tweets
+2025-06-05 17:27:49,226 - root - INFO - Rate limiting state refreshed
+2025-06-05 17:27:49,227 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 17:27:49,334 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 17:27:49,335 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-05 17:28:19,433 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 17:28:19,434 - root - INFO - Calculated delay: 60s (consecutive limits: 2)
+2025-06-05 17:28:32,465 - root - ERROR - Échec de publication du tweet
+2025-06-05 17:28:32,465 - root - ERROR - ❌ Échec du tweet autonome
+2025-06-05 17:29:19,564 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 17:29:19,564 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 17:29:19,564 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 17:29:19,565 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 17:30:54,477 - root - INFO - Génération d'un tweet sur: Testing without new account restrictions
+2025-06-05 17:30:54,856 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 17:30:55,546 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 17:30:55,549 - root - INFO - Generated standalone tweet: AI helping us understand ourselves better? Maybe m...
+2025-06-05 17:30:55,550 - root - INFO - Rate limiting state refreshed
+2025-06-05 17:30:55,550 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 17:30:55,652 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 17:30:55,653 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-05 17:31:25,742 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 17:31:25,742 - root - INFO - Calculated delay: 60s (consecutive limits: 2)
+2025-06-05 17:31:52,021 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 17:31:52,021 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 17:31:52,022 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 17:31:52,022 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 17:32:25,875 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 17:32:25,875 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 17:32:25,875 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 17:32:25,876 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 17:40:07,479 - root - INFO - Target accounts configured: 3
+2025-06-05 17:40:07,479 - root - INFO - Configuration validated successfully
+2025-06-05 17:40:07,479 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 17:40:07,480 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 17:40:07,480 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 17:40:07)
+2025-06-05 17:40:07,481 - root - INFO - Mode manuel: Tweet autonome
+2025-06-05 17:40:07,481 - root - INFO - Délai aléatoire de 3.7 minutes...
+2025-06-05 17:43:48,376 - root - INFO - Génération d'un tweet sur: Testing without new account restrictions
+2025-06-05 17:43:48,876 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 17:43:49,659 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 17:43:49,662 - root - INFO - Generated standalone tweet: The AI gaze upon our data. Do we see ourselves ref...
+2025-06-05 17:43:49,663 - root - INFO - Rate limiting state refreshed
+2025-06-05 17:43:49,663 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 17:43:49,774 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 17:43:49,774 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-05 17:44:19,865 - root - WARNING - Rate limit hit (attempt 2/3)
+2025-06-05 17:44:19,866 - root - INFO - Calculated delay: 60s (consecutive limits: 2)
+2025-06-05 17:45:19,986 - root - WARNING - Rate limit hit (attempt 3/3)
+2025-06-05 17:45:19,986 - root - ERROR - Max retries reached for rate limiting
+2025-06-05 17:45:19,987 - root - ERROR - Rate limit exceeded: 429 Too Many Requests
+Too Many Requests
+2025-06-05 17:45:19,987 - root - INFO - Waiting 15 minutes for rate limit reset...
+2025-06-05 17:46:52,123 - root - ERROR - Échec de publication du tweet
+2025-06-05 17:46:52,124 - root - ERROR - ❌ Échec du tweet autonome
+2025-06-05 18:29:57,360 - root - INFO - Target accounts configured: 3
+2025-06-05 18:29:57,362 - root - INFO - Configuration validated successfully
+2025-06-05 18:29:57,362 - root - INFO - Bot username: your_new_bot_name
+2025-06-05 18:29:57,362 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-05 18:29:57,362 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-05 18:29:57)
+2025-06-05 18:29:57,363 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-05 18:29:57,363 - root - INFO - Thread autorisé (0/2)
+2025-06-05 18:29:57,363 - root - INFO - Conditions remplies pour un thread
+2025-06-05 18:29:57,363 - root - INFO - Thread autorisé (0/2)
+2025-06-05 18:29:57,363 - root - INFO - Délai aléatoire de 8.4 minutes...
+2025-06-05 18:38:23,956 - root - INFO - Génération d'un thread sur: Comprendre les réseaux de neurones et l'apprentissage profond
+2025-06-05 18:38:24,496 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-05 18:38:26,307 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-05 18:38:26,309 - root - INFO - Generated thread with 4 tweets
+2025-06-05 18:38:26,309 - root - INFO - Rate limiting state refreshed
+2025-06-05 18:38:26,310 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-05 18:38:26,418 - root - WARNING - Rate limit hit (attempt 1/3)
+2025-06-05 18:38:26,418 - root - INFO - Calculated delay: 30s (consecutive limits: 1)
+2025-06-06 09:52:46,746 - root - INFO - Target accounts configured: 3
+2025-06-06 09:52:46,749 - root - INFO - Configuration validated successfully
+2025-06-06 09:52:46,749 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 09:52:46,749 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 09:52:46,750 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 09:52:46)
+2025-06-06 09:52:46,750 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 09:52:46,750 - root - INFO - Thread autorisé (0/2)
+2025-06-06 09:52:46,750 - root - INFO - Conditions remplies pour un thread
+2025-06-06 09:52:46,750 - root - INFO - Thread autorisé (0/2)
+2025-06-06 09:52:46,751 - root - INFO - Délai aléatoire de 8.1 minutes...
+2025-06-06 10:00:55,044 - root - INFO - Génération d'un thread sur: L'évolution de l'IA dans la dernière décennie
+2025-06-06 10:00:55,659 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:00:57,470 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:00:57,472 - root - INFO - Generated thread with 4 tweets
+2025-06-06 10:00:57,472 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:00:57,473 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:00:57,727 - root - INFO - Rate limit counter reset
+2025-06-06 10:00:57,727 - root - INFO - Posted tweet: 1930927886023758308
+2025-06-06 10:01:02,924 - root - INFO - Rate limit counter reset
+2025-06-06 10:01:02,924 - root - INFO - Posted tweet: 1930927907859304481
+2025-06-06 10:01:08,121 - root - INFO - Rate limit counter reset
+2025-06-06 10:01:08,122 - root - INFO - Posted tweet: 1930927929657106765
+2025-06-06 10:01:13,311 - root - INFO - Rate limit counter reset
+2025-06-06 10:01:13,312 - root - INFO - Posted tweet: 1930927951454855486
+2025-06-06 10:01:13,312 - root - INFO - Posted thread with 4/4 tweets
+2025-06-06 10:01:13,313 - root - INFO - Thread enregistré
+2025-06-06 10:01:13,313 - root - INFO - Thread posté avec 4 tweets: ['1930927886023758308', '1930927907859304481', '1930927929657106765', '1930927951454855486']
+2025-06-06 10:01:13,313 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-06 10:01:13,313 - root - INFO - Conditions remplies pour l'engagement
+2025-06-06 10:01:13,314 - root - INFO - Délai aléatoire de 3.0 minutes...
+2025-06-06 10:04:13,969 - root - INFO - Récupération des tweets pour engagement...
+2025-06-06 10:04:13,969 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-06 10:04:13,969 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-06 10:04:13,970 - twscrape_client - INFO - ✓ Cookies validés avec succès
+2025-06-06 10:04:13,970 - twscrape_client - INFO - Configuration du compte Twitter avec cookies (version améliorée)...
+2025-06-06 10:04:13,992 - twscrape_client - INFO - Comptes existants trouvés: 1
+2025-06-06 10:04:13,998 - twscrape_client - INFO - ✓ 1 compte(s) actif(s) trouvé(s)
+2025-06-06 10:04:14,001 - twscrape_client - INFO - ✓ Configuration terminée: 1 comptes, 1 actifs
+2025-06-06 10:04:14,002 - twscrape_client - INFO - Récupération de la timeline personnelle RÉELLE (limite: 20)
+2025-06-06 10:04:14,002 - twscrape_client - INFO - Essai méthode timeline 1...
+2025-06-06 10:04:14,245 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-06 10:04:14,446 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.268bb76a.js "HTTP/1.1 200 OK"
+2025-06-06 10:04:15,027 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22min_faves%3A10+-filter%3Areplies+-is%3Aretweet%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-06 10:04:15,084 - twscrape_client - INFO - ✓ Méthode 1 réussie: 22 tweets
+2025-06-06 10:04:15,783 - twscrape_client - INFO - Tweets sauvegardés dans timeline_tweets.xlsx
+2025-06-06 10:04:15,783 - twscrape_client - INFO - Timeline récupérée: 20 tweets réels
+2025-06-06 10:04:15,783 - root - INFO - Tweets récupérés: 20
+2025-06-06 10:04:15,783 - root - INFO - Tweets appropriés trouvés: 12
+2025-06-06 10:04:15,783 - root - INFO - Tweets sélectionnés pour engagement: 3
+2025-06-06 10:04:15,783 - root - INFO - Traitement du tweet 1/3: 1930928602142634141
+2025-06-06 10:04:15,784 - root - INFO - Texte: 1st Single 「Go Getter feat. AK-69」 
+リリース記念イベント追加開催決定✨
+
+📣大阪初開催！
+リリイベ第2弾は東京・大阪の2都市で開催！
+
+特典会(握手会)も予定してい...
+2025-06-06 10:04:15,784 - root - INFO - Génération d'une réponse au tweet de @issei_171_staff
+2025-06-06 10:04:15,797 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:04:16,451 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:04:16,452 - root - INFO - Generated reply: 大阪での初開催おめでとうございます！🎉 リリイベ楽しみです！ 握手会もぜひ参加したいです！ #GGリ...
+2025-06-06 10:04:16,452 - root - INFO - Contenu de réponse généré: 大阪での初開催おめでとうございます！🎉 リリイベ楽しみです！ 握手会もぜひ参加したいです！ #GGリリイベ #GoGetter #ISSEI_123 #TOBE_ISSEI...
+2025-06-06 10:04:16,452 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:04:16,453 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:04:16,453 - root - INFO - Posting reply to tweet 1930928602142634141
+2025-06-06 10:04:16,665 - root - INFO - Rate limit counter reset
+2025-06-06 10:04:16,667 - root - INFO - Posted tweet: 1930928720576913890
+2025-06-06 10:04:16,668 - root - INFO - Engagement enregistré (1/6): Replies: 1/20, Quotes: 0/5
+2025-06-06 10:04:16,670 - root - INFO - ✅ Réponse postée (1/2): 1930928720576913890
+2025-06-06 10:05:20,700 - root - INFO - Traitement du tweet 2/3: 1930928609197179081
+2025-06-06 10:05:20,700 - root - INFO - Texte: ﷽
+
+﴿إن الله وملائكته يصلّون على النبييا أيها الّذين آمنوا صلّوا عليه وسلّموا تسليما﴾
+
+اللهُمّ صَلِ...
+2025-06-06 10:05:20,700 - root - INFO - Génération d'une réponse au tweet de @ittihad
+2025-06-06 10:05:20,710 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:05:21,310 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:05:21,312 - root - INFO - Generated reply: Peace and blessings to all. May we strive to embod...
+2025-06-06 10:05:21,312 - root - INFO - Contenu de réponse généré: Peace and blessings to all. May we strive to embody the values of compassion and wisdom in all our e...
+2025-06-06 10:05:21,312 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:05:21,313 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:05:21,313 - root - INFO - Posting reply to tweet 1930928609197179081
+2025-06-06 10:05:21,530 - root - INFO - Rate limit counter reset
+2025-06-06 10:05:21,530 - root - INFO - Posted tweet: 1930928992548254137
+2025-06-06 10:05:21,531 - root - INFO - Engagement enregistré (2/6): Replies: 2/20, Quotes: 0/5
+2025-06-06 10:05:21,531 - root - INFO - ✅ Réponse postée (2/2): 1930928992548254137
+2025-06-06 10:05:55,874 - root - INFO - Traitement du tweet 3/3: 1930928576838418481
+2025-06-06 10:05:55,874 - root - INFO - Texte: うおおおおおおおおおお！！！！
+ついに届いたぞSwitch2🎮！！！！
+
+うおおおおおおお！！！！！！
+
+↓↓動画はこちら↓↓
+https://t.co/aG4v6uMX2a https://t.co...
+2025-06-06 10:05:55,874 - root - INFO - Génération d'une citation pour le tweet de @omesis_rio
+2025-06-06 10:05:55,887 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:05:56,547 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:05:56,549 - root - INFO - Generated quote tweet: Is this the real deal?! 🤩 I wonder what kind of AI...
+2025-06-06 10:05:56,549 - root - INFO - Contenu de citation généré: Is this the real deal?! 🤩 I wonder what kind of AI enhancements Nintendo is planning for the Switch ...
+2025-06-06 10:05:56,549 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:05:56,549 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:05:56,824 - root - INFO - Rate limit counter reset
+2025-06-06 10:05:56,825 - root - INFO - Posted quote tweet: 1930929140359721021
+2025-06-06 10:05:56,825 - root - INFO - Engagement enregistré (3/6): Replies: 2/20, Quotes: 1/5
+2025-06-06 10:05:56,826 - root - INFO - ✅ Citation postée (1/2): 1930929140359721021
+2025-06-06 10:07:02,129 - root - INFO - ✅ Engagement terminé avec succès: 2 réponses, 1 citations
+2025-06-06 10:07:02,129 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-06 10:07:02,129 - root - INFO - Délai aléatoire de 1.1 minutes...
+2025-06-06 10:08:06,533 - root - INFO - Génération d'un tweet sur: Tendances technologiques émergentes
+2025-06-06 10:08:06,543 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:08:07,057 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:08:07,059 - root - INFO - Generated standalone tweet: AI is learning so fast, it's bittersweet. Like wat...
+2025-06-06 10:08:07,059 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:08:07,059 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:08:07,334 - root - INFO - Rate limit counter reset
+2025-06-06 10:08:07,334 - root - INFO - Posted tweet: 1930929687850565649
+2025-06-06 10:08:07,334 - root - INFO - Tweet enregistré (1/10)
+2025-06-06 10:08:07,335 - root - INFO - Tweet posté avec succès: 1930929687850565649
+2025-06-06 10:08:07,335 - root - INFO - ✅ Actions effectuées: Thread posté (4 tweets), Engagement effectué, Tweet autonome posté
+2025-06-06 10:14:52,180 - root - INFO - Target accounts configured: 3
+2025-06-06 10:14:52,180 - root - INFO - Configuration validated successfully
+2025-06-06 10:14:52,180 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 10:14:52,180 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 10:14:52,180 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 10:14:52)
+2025-06-06 10:14:52,181 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 10:14:52,181 - root - INFO - Espacement minimum non respecté pour thread (encore 5.8h à attendre)
+2025-06-06 10:14:52,181 - root - INFO - Espacement minimum non respecté entre les tweets
+2025-06-06 10:14:52,181 - root - INFO - ℹ️  Aucune action nécessaire pour le moment
+2025-06-06 10:19:46,953 - root - INFO - Target accounts configured: 3
+2025-06-06 10:19:46,953 - root - INFO - Configuration validated successfully
+2025-06-06 10:19:46,953 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 10:19:46,953 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 10:19:46,953 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 10:19:46)
+2025-06-06 10:19:46,954 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 10:19:46,954 - root - INFO - Thread autorisé (0/2)
+2025-06-06 10:19:46,954 - root - INFO - Conditions remplies pour un thread
+2025-06-06 10:19:46,954 - root - INFO - Thread autorisé (0/2)
+2025-06-06 10:19:46,954 - root - INFO - Délai aléatoire de 3.8 minutes...
+2025-06-06 10:23:35,808 - root - INFO - Génération d'un thread sur: Éthique de l'IA et développement responsable
+2025-06-06 10:23:35,951 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:23:37,321 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:23:37,323 - root - INFO - Generated thread with 4 tweets
+2025-06-06 10:23:37,323 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:23:37,323 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:23:37,542 - root - INFO - Rate limit counter reset
+2025-06-06 10:23:37,542 - root - INFO - Posted tweet: 1930933589622816991
+2025-06-06 10:23:42,742 - root - INFO - Rate limit counter reset
+2025-06-06 10:23:42,742 - root - INFO - Posted tweet: 1930933611366121752
+2025-06-06 10:23:47,937 - root - INFO - Rate limit counter reset
+2025-06-06 10:23:47,938 - root - INFO - Posted tweet: 1930933633201684953
+2025-06-06 10:23:53,127 - root - INFO - Rate limit counter reset
+2025-06-06 10:23:53,128 - root - INFO - Posted tweet: 1930933654957469697
+2025-06-06 10:23:53,128 - root - INFO - Posted thread with 4/4 tweets
+2025-06-06 10:23:53,129 - root - INFO - Thread enregistré
+2025-06-06 10:23:53,129 - root - INFO - Thread posté avec 4 tweets: ['1930933589622816991', '1930933611366121752', '1930933633201684953', '1930933654957469697']
+2025-06-06 10:23:53,129 - root - INFO - Reset quotidien de l'engagement effectué
+2025-06-06 10:23:53,129 - root - INFO - Conditions remplies pour l'engagement
+2025-06-06 10:23:53,129 - root - INFO - Délai aléatoire de 9.6 minutes...
+2025-06-06 10:33:30,025 - root - INFO - Récupération des tweets pour engagement...
+2025-06-06 10:33:30,025 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-06 10:33:30,025 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-06 10:33:30,025 - twscrape_client - INFO - ✓ Cookies validés avec succès
+2025-06-06 10:33:30,025 - twscrape_client - INFO - Configuration du compte Twitter avec cookies (version améliorée)...
+2025-06-06 10:33:30,028 - twscrape_client - INFO - Comptes existants trouvés: 1
+2025-06-06 10:33:30,030 - twscrape_client - INFO - ✓ 1 compte(s) actif(s) trouvé(s)
+2025-06-06 10:33:30,033 - twscrape_client - INFO - ✓ Configuration terminée: 1 comptes, 1 actifs
+2025-06-06 10:33:30,033 - twscrape_client - INFO - Récupération de la timeline personnelle RÉELLE (limite: 20)
+2025-06-06 10:33:30,034 - twscrape_client - INFO - Fetching from influential account: @elonmusk
+2025-06-06 10:33:30,266 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-06 10:33:30,465 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.268bb76a.js "HTTP/1.1 200 OK"
+2025-06-06 10:33:30,650 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/HeWHY26ItCfUmm1e6ITjeA/UserTweets?variables=%7B%22userId%22%3A%22elonmusk%22%2C%22count%22%3A40%2C%22includePromotedContent%22%3Atrue%2C%22withQuickPromoteEligibilityTweetFields%22%3Atrue%2C%22withVoice%22%3Atrue%2C%22withV2Timeline%22%3Atrue%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D "HTTP/1.1 400 Bad Request"
+2025-06-06 10:33:30,673 - twscrape_client - INFO - Fetching from influential account: @sundarpichai
+2025-06-06 10:33:30,796 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/HeWHY26ItCfUmm1e6ITjeA/UserTweets?variables=%7B%22userId%22%3A%22sundarpichai%22%2C%22count%22%3A40%2C%22includePromotedContent%22%3Atrue%2C%22withQuickPromoteEligibilityTweetFields%22%3Atrue%2C%22withVoice%22%3Atrue%2C%22withV2Timeline%22%3Atrue%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D "HTTP/1.1 400 Bad Request"
+2025-06-06 10:33:30,819 - twscrape_client - INFO - Fetching from influential account: @satyanadella
+2025-06-06 10:33:30,945 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/HeWHY26ItCfUmm1e6ITjeA/UserTweets?variables=%7B%22userId%22%3A%22satyanadella%22%2C%22count%22%3A40%2C%22includePromotedContent%22%3Atrue%2C%22withQuickPromoteEligibilityTweetFields%22%3Atrue%2C%22withVoice%22%3Atrue%2C%22withV2Timeline%22%3Atrue%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D "HTTP/1.1 400 Bad Request"
+2025-06-06 10:33:30,965 - twscrape_client - INFO - Essai méthode de recherche 1...
+2025-06-06 10:33:31,603 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28artificial+intelligence+OR+machine+learning+OR+AI+OR+ML%29+min_faves%3A50+min_retweets%3A10+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-06 10:33:32,181 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28artificial+intelligence+OR+machine+learning+OR+AI+OR+ML%29+min_faves%3A50+min_retweets%3A10+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%2C%22cursor%22%3A%22DAADDAABCgABGswJLzNXAeAKAAIaynVVLBqxSwAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUazBAibUAnEAoABhrMECJtP9jwAAA%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-06 10:33:32,224 - twscrape_client - INFO - ✓ Méthode 1 réussie: 40 tweets
+2025-06-06 10:33:32,396 - twscrape_client - INFO - Tweets sauvegardés dans timeline_tweets.xlsx
+2025-06-06 10:33:32,396 - twscrape_client - INFO - Timeline récupérée: 20 tweets réels
+2025-06-06 10:33:32,396 - root - INFO - Tweets récupérés: 20
+2025-06-06 10:33:32,397 - root - INFO - Tweets appropriés trouvés: 20
+2025-06-06 10:33:32,397 - root - INFO - Tweets sélectionnés pour engagement: 3
+2025-06-06 10:33:32,397 - root - INFO - Traitement du tweet 1/3: 1930484398954295627
+2025-06-06 10:33:32,397 - root - INFO - Texte: Report: Nvidia Describes “Explosion” in AI Demand, Reveals 100 AI Factories Being Built Worldwide
+
+N...
+2025-06-06 10:33:32,397 - root - INFO - Génération d'une citation pour le tweet de @Jukanlosreve
+2025-06-06 10:33:32,409 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:33:33,167 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:33:33,169 - root - INFO - Generated quote tweet: 🤯 100 AI factories! Inference is the new gold rush...
+2025-06-06 10:33:33,169 - root - INFO - Contenu de citation généré: 🤯 100 AI factories! Inference is the new gold rush for AI chips. Power & adoption are the key hurdle...
+2025-06-06 10:33:33,169 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:33:33,169 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:33:33,460 - root - INFO - Rate limit counter reset
+2025-06-06 10:33:33,460 - root - INFO - Posted quote tweet: 1930936088861794717
+2025-06-06 10:33:33,461 - root - INFO - Engagement enregistré (1/6): Replies: 0/20, Quotes: 1/5
+2025-06-06 10:33:33,461 - root - INFO - ✅ Citation postée (1/2): 1930936088861794717
+2025-06-06 10:34:07,440 - root - INFO - Traitement du tweet 2/3: 1930524292212806096
+2025-06-06 10:34:07,440 - root - INFO - Texte: 🚨BREAKING: This AI will replace your entire video editing team.
+
+SnapCut turns boring 60 minute vide...
+2025-06-06 10:34:07,440 - root - INFO - Génération d'une réponse au tweet de @chatgptricks
+2025-06-06 10:34:07,449 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:34:08,065 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:34:08,067 - root - INFO - Generated reply: AI tools like SnapCut can boost video editing effi...
+2025-06-06 10:34:08,067 - root - INFO - Contenu de réponse généré: AI tools like SnapCut can boost video editing efficiency, but creative vision and nuanced storytelli...
+2025-06-06 10:34:08,067 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:34:08,067 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:34:08,067 - root - INFO - Posting reply to tweet 1930524292212806096
+2025-06-06 10:34:08,339 - root - INFO - Rate limit counter reset
+2025-06-06 10:34:08,339 - root - INFO - Posted tweet: 1930936235154903341
+2025-06-06 10:34:08,340 - root - INFO - Engagement enregistré (2/6): Replies: 1/20, Quotes: 1/5
+2025-06-06 10:34:08,340 - root - INFO - ✅ Réponse postée (1/2): 1930936235154903341
+2025-06-06 10:35:30,768 - root - INFO - Traitement du tweet 3/3: 1930878071579529630
+2025-06-06 10:35:30,768 - root - INFO - Texte: ❌ Myth:
+AI can learn and improve on its own, just like a human being who naturally gains knowledge o...
+2025-06-06 10:35:30,768 - root - INFO - Génération d'une réponse au tweet de @Real_DeFi_
+2025-06-06 10:35:30,780 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:35:31,448 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:35:31,450 - root - INFO - Generated reply: Great point! Emphasizing the crucial role of human...
+2025-06-06 10:35:31,450 - root - INFO - Contenu de réponse généré: Great point! Emphasizing the crucial role of human input in AI development is key. It's about collab...
+2025-06-06 10:35:31,450 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:35:31,451 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:35:31,451 - root - INFO - Posting reply to tweet 1930878071579529630
+2025-06-06 10:35:31,656 - root - INFO - Rate limit counter reset
+2025-06-06 10:35:31,656 - root - INFO - Posted tweet: 1930936584808923409
+2025-06-06 10:35:31,657 - root - INFO - Engagement enregistré (3/6): Replies: 2/20, Quotes: 1/5
+2025-06-06 10:35:31,657 - root - INFO - ✅ Réponse postée (2/2): 1930936584808923409
+2025-06-06 10:36:59,168 - root - INFO - ✅ Engagement terminé avec succès: 2 réponses, 1 citations
+2025-06-06 10:36:59,168 - root - INFO - Conditions remplies pour un tweet autonome
+2025-06-06 10:36:59,169 - root - INFO - Délai aléatoire de 9.8 minutes...
+2025-06-06 10:46:48,467 - root - INFO - Génération d'un tweet sur: Data science et analyse prédictive
+2025-06-06 10:46:48,478 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 10:46:49,128 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 10:46:49,130 - root - INFO - Generated standalone tweet: Is this AI hype cycle ever going to end? 🙄 Show me...
+2025-06-06 10:46:49,130 - root - INFO - Rate limiting state refreshed
+2025-06-06 10:46:49,130 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 10:46:49,349 - root - INFO - Rate limit counter reset
+2025-06-06 10:46:49,349 - root - INFO - Posted tweet: 1930939427284533714
+2025-06-06 10:46:49,350 - root - INFO - Tweet enregistré (1/10)
+2025-06-06 10:46:49,350 - root - INFO - Tweet posté avec succès: 1930939427284533714
+2025-06-06 10:46:49,350 - root - INFO - ✅ Actions effectuées: Thread posté (4 tweets), Engagement effectué, Tweet autonome posté
+2025-06-06 11:04:11,043 - root - INFO - Target accounts configured: 3
+2025-06-06 11:04:11,043 - root - INFO - Configuration validated successfully
+2025-06-06 11:04:11,043 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 11:04:11,043 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 11:04:11,043 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 11:04:11)
+2025-06-06 11:04:11,044 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 11:04:11,044 - root - INFO - Espacement minimum non respecté pour thread (encore 5.3h à attendre)
+2025-06-06 11:04:11,044 - root - INFO - Espacement minimum non respecté entre les tweets
+2025-06-06 11:04:11,044 - root - INFO - ℹ️  Aucune action nécessaire pour le moment
+2025-06-06 11:13:21,710 - root - INFO - Target accounts configured: 3
+2025-06-06 11:13:21,710 - root - INFO - Configuration validated successfully
+2025-06-06 11:13:21,710 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 11:13:21,710 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 11:13:21,710 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 11:13:21)
+2025-06-06 11:13:21,711 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 11:13:21,711 - root - INFO - Espacement minimum non respecté pour thread (encore 5.2h à attendre)
+2025-06-06 11:13:21,711 - root - INFO - Conditions remplies pour l'engagement
+2025-06-06 11:13:21,711 - root - INFO - Délai aléatoire de 11.1 minutes...
+2025-06-06 11:24:28,367 - root - INFO - Récupération des tweets pour engagement...
+2025-06-06 11:24:28,367 - twscrape_client - INFO - Initializing twscrape API...
+2025-06-06 11:24:28,367 - twscrape_client - INFO - twscrape API initialized successfully
+2025-06-06 11:24:28,368 - twscrape_client - INFO - ✓ Cookies validés avec succès
+2025-06-06 11:24:28,368 - twscrape_client - INFO - Configuration du compte Twitter avec cookies (version améliorée)...
+2025-06-06 11:24:28,370 - twscrape_client - INFO - Comptes existants trouvés: 1
+2025-06-06 11:24:28,371 - twscrape_client - INFO - ✓ 1 compte(s) actif(s) trouvé(s)
+2025-06-06 11:24:28,373 - twscrape_client - INFO - ✓ Configuration terminée: 1 comptes, 1 actifs
+2025-06-06 11:24:28,373 - twscrape_client - INFO - Récupération de la timeline personnelle RÉELLE (limite: 20)
+2025-06-06 11:24:28,373 - twscrape_client - INFO - Fetching from influential account: @elonmusk
+2025-06-06 11:24:28,707 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-06 11:24:28,872 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.268bb76a.js "HTTP/1.1 200 OK"
+2025-06-06 11:24:28,968 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/HeWHY26ItCfUmm1e6ITjeA/UserTweets?variables=%7B%22userId%22%3A%22elonmusk%22%2C%22count%22%3A40%2C%22includePromotedContent%22%3Atrue%2C%22withQuickPromoteEligibilityTweetFields%22%3Atrue%2C%22withVoice%22%3Atrue%2C%22withV2Timeline%22%3Atrue%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D "HTTP/1.1 400 Bad Request"
+2025-06-06 11:24:28,993 - twscrape_client - INFO - Fetching from influential account: @sundarpichai
+2025-06-06 11:24:29,126 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/HeWHY26ItCfUmm1e6ITjeA/UserTweets?variables=%7B%22userId%22%3A%22sundarpichai%22%2C%22count%22%3A40%2C%22includePromotedContent%22%3Atrue%2C%22withQuickPromoteEligibilityTweetFields%22%3Atrue%2C%22withVoice%22%3Atrue%2C%22withV2Timeline%22%3Atrue%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D "HTTP/1.1 400 Bad Request"
+2025-06-06 11:24:29,153 - twscrape_client - INFO - Fetching from influential account: @satyanadella
+2025-06-06 11:24:29,316 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/HeWHY26ItCfUmm1e6ITjeA/UserTweets?variables=%7B%22userId%22%3A%22satyanadella%22%2C%22count%22%3A40%2C%22includePromotedContent%22%3Atrue%2C%22withQuickPromoteEligibilityTweetFields%22%3Atrue%2C%22withVoice%22%3Atrue%2C%22withV2Timeline%22%3Atrue%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D "HTTP/1.1 400 Bad Request"
+2025-06-06 11:24:29,343 - twscrape_client - INFO - Essai méthode de recherche 1...
+2025-06-06 11:24:29,467 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28artificial+intelligence+OR+machine+learning+OR+AI+OR+ML%29+min_faves%3A50+min_retweets%3A10+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 404 Not Found"
+2025-06-06 11:24:30,625 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-06 11:24:30,810 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.268bb76a.js "HTTP/1.1 200 OK"
+2025-06-06 11:24:30,862 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28artificial+intelligence+OR+machine+learning+OR+AI+OR+ML%29+min_faves%3A50+min_retweets%3A10+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 404 Not Found"
+2025-06-06 11:24:32,066 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 400 Bad Request"
+2025-06-06 11:24:33,224 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-06 11:24:33,432 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.268bb76a.js "HTTP/1.1 200 OK"
+2025-06-06 11:24:33,487 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28artificial+intelligence+OR+machine+learning+OR+AI+OR+ML%29+min_faves%3A50+min_retweets%3A10+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 404 Not Found"
+2025-06-06 11:24:34,575 - twscrape_client - INFO - Essai méthode de recherche 2...
+2025-06-06 11:24:34,689 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28technology+OR+tech+OR+innovation+OR+startup%29+min_faves%3A30+min_retweets%3A5+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 404 Not Found"
+2025-06-06 11:24:35,831 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 400 Bad Request"
+2025-06-06 11:24:36,962 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 400 Bad Request"
+2025-06-06 11:24:38,120 - httpx - INFO - HTTP Request: GET https://x.com/tesla "HTTP/1.1 200 OK"
+2025-06-06 11:24:38,307 - httpx - INFO - HTTP Request: GET https://abs.twimg.com/responsive-web/client-web/ondemand.s.268bb76a.js "HTTP/1.1 200 OK"
+2025-06-06 11:24:38,962 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28technology+OR+tech+OR+innovation+OR+startup%29+min_faves%3A30+min_retweets%3A5+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-06 11:24:39,585 - httpx - INFO - HTTP Request: GET https://x.com/i/api/graphql/AIdc203rPpK_k_2KWSdm7g/SearchTimeline?variables=%7B%22rawQuery%22%3A%22%28technology+OR+tech+OR+innovation+OR+startup%29+min_faves%3A30+min_retweets%3A5+-filter%3Areplies+-is%3Aretweet+lang%3Aen%22%2C%22count%22%3A20%2C%22product%22%3A%22Latest%22%2C%22querySource%22%3A%22typed_query%22%2C%22cursor%22%3A%22DAADDAABCgABGswbFYZX0ZUKAAIazAmnfhpRIgAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUazBvV5IAnEAoABhrMG9Xkf9jwAAA%22%7D&features=%7B%22articles_preview_enabled%22%3Afalse%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_media_download_video_enabled%22%3Afalse%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22rweb_video_timestamps_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_media_interstitial_enabled%22%3Afalse%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Afalse%2C%22responsive_web_grok_image_annotation_enabled%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Afalse%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22rweb_video_screen_enabled%22%3Atrue%2C%22responsive_web_grok_show_grok_translated_post%22%3Atrue%7D&fieldToggles=%7B%22withArticleRichContentState%22%3Afalse%7D "HTTP/1.1 200 OK"
+2025-06-06 11:24:39,621 - twscrape_client - INFO - ✓ Méthode 2 réussie: 41 tweets
+2025-06-06 11:24:39,721 - twscrape_client - INFO - Tweets sauvegardés dans timeline_tweets.xlsx
+2025-06-06 11:24:39,722 - twscrape_client - INFO - Timeline récupérée: 20 tweets réels
+2025-06-06 11:24:39,722 - root - INFO - Tweets récupérés: 20
+2025-06-06 11:24:39,722 - root - INFO - Tweets appropriés trouvés: 19
+2025-06-06 11:24:39,722 - root - INFO - Tweets sélectionnés pour engagement: 3
+2025-06-06 11:24:39,722 - root - INFO - Traitement du tweet 1/3: 1930928955214942498
+2025-06-06 11:24:39,722 - root - INFO - Texte: super kind words from @believeapp, who have been amazing & pushing the meta forward in so many ways....
+2025-06-06 11:24:39,722 - root - INFO - Génération d'une réponse au tweet de @weremeow
+2025-06-06 11:24:39,731 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 11:24:40,430 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 11:24:40,432 - root - INFO - Generated reply: So glad to hear @MeteoraAG is providing such valua...
+2025-06-06 11:24:40,432 - root - INFO - Contenu de réponse généré: So glad to hear @MeteoraAG is providing such valuable support! Killer apps need killer foundations. ...
+2025-06-06 11:24:40,433 - root - INFO - Rate limiting state refreshed
+2025-06-06 11:24:40,433 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 11:24:40,433 - root - INFO - Posting reply to tweet 1930928955214942498
+2025-06-06 11:24:40,689 - root - INFO - Rate limit counter reset
+2025-06-06 11:24:40,689 - root - INFO - Posted tweet: 1930948953832370566
+2025-06-06 11:24:40,690 - root - INFO - Engagement enregistré (4/6): Replies: 3/20, Quotes: 1/5
+2025-06-06 11:24:40,690 - root - INFO - ✅ Réponse postée (1/2): 1930948953832370566
+2025-06-06 11:25:29,843 - root - INFO - Traitement du tweet 2/3: 1930924011422445668
+2025-06-06 11:25:29,844 - root - INFO - Texte: Our All-Party delegation to the Americas engaged with think tanks and young professionals in Washing...
+2025-06-06 11:25:29,844 - root - INFO - Génération d'une citation pour le tweet de @Tejasvi_Surya
+2025-06-06 11:25:29,856 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 11:25:30,640 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 11:25:30,642 - root - INFO - Contenu de citation généré: AI can play a crucial role in identifying & countering terrorist narratives online, bolstering natio...
+2025-06-06 11:25:30,642 - root - INFO - Rate limiting state refreshed
+2025-06-06 11:25:30,643 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 11:25:30,917 - root - INFO - Rate limit counter reset
+2025-06-06 11:25:30,917 - root - INFO - Posted quote tweet: 1930949164382269770
+2025-06-06 11:25:30,918 - root - INFO - Engagement enregistré (5/6): Replies: 3/20, Quotes: 2/5
+2025-06-06 11:25:30,918 - root - INFO - ✅ Citation postée (1/2): 1930949164382269770
+2025-06-06 11:26:36,678 - root - INFO - Traitement du tweet 3/3: 1930933698775457817
+2025-06-06 11:26:36,678 - root - INFO - Texte: I have spent a lot of time working at tech startups
+
+user acquisition and retention is a big part of...
+2025-06-06 11:26:36,678 - root - INFO - Génération d'une citation pour le tweet de @shax_btc
+2025-06-06 11:26:36,686 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-06-06 11:26:37,326 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent "HTTP/1.1 200 OK"
+2025-06-06 11:26:37,327 - root - INFO - Generated quote tweet: AI can help predict churn & personalize onboarding...
+2025-06-06 11:26:37,327 - root - INFO - Contenu de citation généré: AI can help predict churn & personalize onboarding! Retention is key, & understanding user behavior ...
+2025-06-06 11:26:37,327 - root - INFO - Rate limiting state refreshed
+2025-06-06 11:26:37,328 - root - INFO - Twitter APIs initialized successfully with custom rate limiting
+2025-06-06 11:26:37,586 - root - INFO - Rate limit counter reset
+2025-06-06 11:26:37,586 - root - INFO - Posted quote tweet: 1930949444100321416
+2025-06-06 11:26:37,587 - root - INFO - Engagement enregistré (6/6): Replies: 3/20, Quotes: 3/5
+2025-06-06 11:26:37,587 - root - INFO - ✅ Citation postée (2/2): 1930949444100321416
+2025-06-06 11:27:45,505 - root - INFO - ✅ Engagement terminé avec succès: 1 réponses, 2 citations
+2025-06-06 11:27:45,505 - root - INFO - Espacement minimum non respecté entre les tweets
+2025-06-06 11:27:45,505 - root - INFO - ✅ Actions effectuées: Engagement effectué
+2025-06-06 12:24:38,316 - root - INFO - Target accounts configured: 3
+2025-06-06 12:24:38,316 - root - INFO - Configuration validated successfully
+2025-06-06 12:24:38,316 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 12:24:38,316 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 12:24:38,316 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 12:24:38)
+2025-06-06 12:24:38,317 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 12:24:38,317 - root - INFO - Espacement minimum non respecté pour thread (encore 4.0h à attendre)
+2025-06-06 12:24:38,317 - root - INFO - Conditions remplies pour l'engagement
+2025-06-06 12:24:38,317 - root - INFO - Délai aléatoire de 11.1 minutes...
+2025-06-06 12:26:27,398 - root - INFO - Target accounts configured: 3
+2025-06-06 12:26:27,398 - root - INFO - Configuration validated successfully
+2025-06-06 12:26:27,398 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 12:26:27,398 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 12:26:27,398 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 12:26:27)
+2025-06-06 12:26:27,399 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 12:26:27,399 - root - INFO - Espacement minimum non respecté pour thread (encore 4.0h à attendre)
+2025-06-06 12:26:27,399 - root - INFO - Conditions remplies pour l'engagement
+2025-06-06 12:26:27,399 - root - INFO - Délai aléatoire de 2.1 minutes...
+2025-06-06 12:27:10,592 - root - INFO - Target accounts configured: 3
+2025-06-06 12:27:10,593 - root - INFO - Configuration validated successfully
+2025-06-06 12:27:10,598 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 12:27:10,598 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 12:27:10,598 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 12:27:10)
+2025-06-06 12:27:10,599 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 12:27:10,600 - root - INFO - Espacement minimum non respecté pour thread (encore 3.9h à attendre)
+2025-06-06 12:27:10,600 - root - INFO - Conditions remplies pour l'engagement
+2025-06-06 12:27:10,600 - root - INFO - Délai aléatoire de 9.7 minutes...
+2025-06-06 12:28:42,892 - root - INFO - Target accounts configured: 3
+2025-06-06 12:28:42,892 - root - INFO - Configuration validated successfully
+2025-06-06 12:28:42,892 - root - INFO - Bot username: your_new_bot_name
+2025-06-06 12:28:42,893 - root - INFO - Twitter username: your_new_twitter_username
+2025-06-06 12:28:42,893 - root - INFO - Démarrage du bot Twitter avancé... (Heure UTC: 2025-06-06 12:28:42)
+2025-06-06 12:28:42,893 - root - INFO - Mode automatique - analyse des conditions...
+2025-06-06 12:28:42,893 - root - INFO - Espacement minimum non respecté pour thread (encore 3.9h à attendre)
+2025-06-06 12:28:42,893 - root - INFO - Conditions remplies pour l'engagement
+2025-06-06 12:28:42,894 - root - INFO - Délai aléatoire de 16.5 minutes...
